@@ -9,7 +9,7 @@ This project is started with [Leptos Axum Workspace](https://github.com/leptos-r
 This project is still in the experimental level. Only one component is written and complete tooling is still being worked out.
 
 ## Credits
-Special thanks to [Leptail](https://github.com/lpotthast/leptonic) project(a component library for Leptos) through which some of the code example is copied from.
+Special thanks to [Leptonic](https://github.com/lpotthast/leptonic) project(a component library for Leptos) through which some of the code example is copied from.
 
 ## How to build
 
