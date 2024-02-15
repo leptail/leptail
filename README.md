@@ -33,5 +33,13 @@ The core project that provides headless reactive component.
 The helper libraries that defines types and utitliy function for tailwindcss, which is  
 
 ### theme-moonlight 
+A light and dark theme that is easy on eyes  
 
 ### theme-gradiance 
+A light and dark theme with colourful gradiance backgrounds and more.
+
+### app 
+The demo app for leptail components. 
+
+### server 
+The server part which servces the demo app. 
