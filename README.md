@@ -21,7 +21,12 @@ cargo leptos watch
 
 For more detail on how to build or deploy axum project, checkout [Leptos Axum Workspace Project](https://github.com/leptos-rs/start-axum-workspace)
 
-
+If you would like to build and run in release mode, 
+```bash 
+cargo leptos build --release 
+# then run the server form the project root directory. 
+./target/server/release/server
+```
 
 ## Project Organisation 
 The project is divided into sub projects
