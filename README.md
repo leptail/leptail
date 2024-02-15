@@ -1,6 +1,6 @@
 # Leptail
 
-*Component Library for [Leptos](https://github.com/leptos-rs/leptos)*: Component Library that aims to be headless, themeable using [tailwindcss](https://github.com/tailwindlabs/tailwindcss). While being flexible to how developer/designer willing to theme, the library aims to provide off the shelf themes so that one can get started quickly. Read more at [Leptail Readme](https://github.com/leptail/leptail/leptail).  
+*Component Library for [Leptos](https://github.com/leptos-rs/leptos)*: Component Library that aims to be headless, themeable using [tailwindcss](https://github.com/tailwindlabs/tailwindcss). While being flexible to how developer/designer willing to theme, the library aims to provide off the shelf themes so that one can get started quickly. Read more at [Leptail Core Readme](https://github.com/leptail/leptail/tree/main/leptail).  
 
 This project is started with [Leptos Axum Workspace](https://github.com/leptos-rs/start-axum-workspace) template using tool [cargo-leptos](https://github.com/akesson/cargo-leptos) with [Axum](https://github.com/tokio-rs/axum) as server for the demo app.
 
