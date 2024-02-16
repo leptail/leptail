@@ -9,35 +9,41 @@ impl DrawerVariant {
     pub fn base_theme() -> DrawerTheme{
         
         let left_side = DrawerSideTheme {
-            side: String::from("h-full top-0 left-0 transition-all delay-100 duration-1000 ease-out"),
-            minimized: String::from("w-0"),
-            maximized: String::from("w-80"),
+            side: String::from("h-full w-80 top-0 left-0 transition-all duration-500 ease-out"),
+            minimized: String::from("-translate-x-full"),
+            maximized: String::from("translate-x-0"),
         };
 
         let right_side = DrawerSideTheme {
-            side: String::from("h-full top-0 right-0 transition-all duration-1000 ease-out"),
-            minimized: String::from("w-0"),
-            maximized: String::from("w-80"),
+            side: String::from("h-full w-80 top-0 right-0 transition-all duration-500 ease-out"),
+            minimized: String::from("translate-x-full"),
+            maximized: String::from("translate-x-0"),
         };
 
         let top_side = DrawerSideTheme {
-            side: String::from("w-full top-0 right-0 left-0 transition-all duration-1000 ease-out"),
-            minimized: String::from("h-0"),
-            maximized: String::from("h-40"),
+            side: String::from("w-full h-40 top-0 right-0 left-0 transition-all duration-500 ease-out"),
+            minimized: String::from("-translate-y-full"),
+            maximized: String::from("translate-y-0"),
         };
 
         let bottom_side = DrawerSideTheme {
-            side: String::from("w-full bottom-0 right-0 left-0 transition-all duration-1000 ease-out"),
-            minimized: String::from("h-0"),
-            maximized: String::from("h-40"),
+            side: String::from("w-full h-40 bottom-0 right-0 left-0 transition-all duration-500 ease-out"),
+            minimized: String::from("translate-y-full"),
+            maximized: String::from("translate-y-0"),
         };
 
+        let bg_gradient = Gradient::Linear(Direction::Left)
+            .make("bg".into(), 
+                GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
+                GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
+            );
+
         let drawer_theme = DrawerTheme {
-            container: String::from("bg-rose-500 fixed overflow-x-hidden"),
-            left_side: left_side,
-            right_side: right_side,
-            top_side: top_side,
-            bottom_side: bottom_side 
+            container: format!("{bg_gradient} z-[101] fixed overflow-x-hidden"),
+            left_side,
+            right_side,
+            top_side,
+            bottom_side 
         };
     
         drawer_theme

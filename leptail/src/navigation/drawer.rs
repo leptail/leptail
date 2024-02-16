@@ -41,9 +41,9 @@ impl DrawerSide {
 #[component]
 pub fn Drawer( 
     /// state to control if the drawer is open or not
-    #[prop(into)] is_open: ReadSignal<bool>,
+    #[prop(into)] is_open: MaybeSignal<bool>,
     /// state to control if when backdrop is clicked on the drawer
-    #[prop(into)] set_open: WriteSignal<bool>,
+    #[prop(into)] set_open: Out<bool>,
     /// which side the drawer is shown
     side: DrawerSide,
     children: Children,
@@ -56,18 +56,31 @@ pub fn Drawer(
 
     view! { 
         <div 
-            class:hidden=move || is_open() == false
+            // class:hidden=move || is_open() == false
             // class=move || if is_open() { "" } else { "hidden" }
             // class=move || if is_open() { "opacity-1" } else { "opacity-0" }
         >
-            <Overlay on_click=move || set_open(false) >
-                <div
-                    class=move || format!("{} {} {}", theme.container, side_theme.side, dimension_class())
-                    on:click=move |e| { e.stop_propagation() }
-                >
-                    {children()}
-                </div>
-            </Overlay>
+            // <div
+            //     class=move || format!("{} {} {}", theme.container, side_theme.side, dimension_class())
+            //     on:click=move |e| { e.stop_propagation() }
+            // >
+            //     {children()}
+            // </div>
+            <div
+                class=move || format!("{} {} {}", theme.container, side_theme.side, dimension_class())
+                on:click=move |e| { e.stop_propagation() }
+            >
+                {children()}
+            </div>
+            <Show
+                when=is_open
+                fallback=move || { view! {  <div></div> } }
+            >
+                <Overlay on_click=move || set_open.set(false) >
+                    <div></div>
+                </Overlay>
+            </Show>
+            
         </div>
     }
 }

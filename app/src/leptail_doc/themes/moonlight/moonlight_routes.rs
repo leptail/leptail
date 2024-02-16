@@ -4,7 +4,7 @@ use leptos_router::*;
 use leptail::prelude::*;
 use leptos_meta::*;
 
-use crate::leptail_doc::themes::moonlight::pages::switch_doc::PageSwitch;
+use crate::leptail_doc::themes::moonlight::pages::{drawer_doc::PageDrawer, switch_doc::PageSwitch};
 
 #[derive(Debug, Copy, Clone)]
 pub enum MoonlightRoutes { 
@@ -126,8 +126,8 @@ where
             }
         >  
             // <Route path=MoonlightRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
-            // <Route path=MoonlightRoutes::Drawer view=|| { view! {  <PageDrawer/> } } />
-            <Route path=MoonlightRoutes::Switch view=|| { view! {  <PageSwitch/> } } /> 
+            <Route path=MoonlightRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
+            <Route path=MoonlightRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
         </Route>
     }
 }

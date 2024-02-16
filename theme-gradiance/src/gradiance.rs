@@ -172,7 +172,8 @@ pub fn build_theme() -> AppTheme {
     let drawer_theme = DrawerVariant::base_theme();
 
     let overlay_theme = OverlayTheme {
-        overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ", 
+        // overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",
+        overlay: "z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop" 
     }; 
 
     let base_switch_theme = SwitchVariant::variant(None, None);

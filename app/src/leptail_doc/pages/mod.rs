@@ -1,7 +1,7 @@
 use leptos::*;
 
 pub mod appbar;
-pub mod drawer;
+pub mod drawer_doc;
 pub mod overview;
 pub mod switch_doc;
 

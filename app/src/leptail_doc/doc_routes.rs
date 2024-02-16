@@ -6,7 +6,7 @@ use leptos::*;
 use std::fmt::Display;
 
 use crate::leptail_doc::pages::appbar::PageAppbar;
-use crate::leptail_doc::pages::drawer::PageDrawer;
+use crate::leptail_doc::pages::drawer_doc::PageDrawer;
 use crate::leptail_doc::pages::overview::PageOverview;
 use crate::leptail_doc::pages::switch_doc::PageSwitch;
 

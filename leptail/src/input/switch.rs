@@ -48,9 +48,8 @@ pub fn Switch(
     #[prop(into, optional)] set_on: Option<Out<bool>>,
     /// disabled property; if disabled, click event will have no effect
     #[prop(into, optional)] disabled: OptionalMaybeSignal<bool>,
-    // TODO: add the optional tabindex property
+    /// tab_index property;  Optional tab index; if not set, then tabindex will be by default 0
     #[prop(into, optional)] tab_index: OptionalMaybeSignal<i32>,
-    // TODO: add the optional tabindex property
     /// optional on icon
     #[prop(into, optional)] on_icon: OptionalMaybeSignal<icondata::Icon>,
     /// optional off icon
@@ -65,9 +64,6 @@ pub fn Switch(
     let on_icon = on_icon.or_else(move || theme.on_icon.unwrap_or(icondata::BsCircleFill));
     let off_icon = off_icon.or_else(move || theme.off_icon.unwrap_or(icondata::BsCircle));
     
-    // let theme: SwitchTheme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().switch);
-    // let on_icon: MaybeSignal<icondata::Icon> = on_icon.or(icondata::BsCircleFill);
-    // let off_icon: MaybeSignal<icondata::Icon> = off_icon.or(icondata::BsCircle);
     let is_disabled = disabled.or(false);
     
     //TODO: these are derived signals; use memo to do it; refer: leptos documentation 
