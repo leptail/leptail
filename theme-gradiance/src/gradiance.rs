@@ -9,12 +9,12 @@ pub mod navigation;
 
 #[derive(Debug, Clone, PartialEq, Default)]
 pub enum Size{
-    Xsmall,
+    XSmall,
     Small,
     #[default]
     Medium,
     Large,
-    Xlarge, 
+    XLarge, 
 }
 
 
@@ -53,7 +53,7 @@ impl Color {
     }
 }
  
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Direction {
     Top,
     TopRight,
@@ -63,6 +63,14 @@ pub enum Direction {
     BottomLeft,
     Left,
     TopLeft
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Side { 
+    Left,
+    Right,
+    Top,
+    Bottom,
 }
 
 
@@ -150,10 +158,10 @@ impl Gradient {
 
 pub fn build_theme() -> AppTheme {
 
-    let bg_gradient = Gradient::Linear(Direction::Left)
+    let bg_gradient = Gradient::Radial(None)
         .make("bg".into(), 
-            GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
-            GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
+            GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
+            GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
         );
 
     let appbar_theme = AppbarTheme {
@@ -169,7 +177,7 @@ pub fn build_theme() -> AppTheme {
         menu: "flex space-x-4",
     };
 
-    let drawer_theme = DrawerVariant::base_theme();
+    let drawer_theme = DrawerVariant::variant(None, None);
 
     let overlay_theme = OverlayTheme {
         // overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",

@@ -64,21 +64,21 @@ impl SwitchVariant {
 
     fn switch_size(size: &Size) -> String {
         match  size {
-            Size::Xsmall => String::from("w-8 h-4"),
+            Size::XSmall => String::from("w-8 h-4"),
             Size::Small => String::from("w-10 h-5"),
             Size::Medium => String::from("w-12 h-6"),
             Size::Large => String::from("w-16 h-8"),
-            Size::Xlarge => String::from("w-20 h-10"),
+            Size::XLarge => String::from("w-20 h-10"),
         }
     }
 
     fn icon_size(size: &Size) -> String {
         match  size {
-            Size::Xsmall => String::from("text-[1rem]"),
+            Size::XSmall => String::from("text-[1rem]"),
             Size::Small => String::from("text-[1.25rem]"),
             Size::Medium => String::from("text-[1.5rem]"),
             Size::Large => String::from("text-[2rem]"),
-            Size::Xlarge => String::from("text-[2.5rem]"),
+            Size::XLarge => String::from("text-[2.5rem]"),
         }
     }
 

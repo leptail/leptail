@@ -173,7 +173,6 @@ pub mod prelude {
     pub use super::input::SwitchBaseTheme;
     pub use super::input::SwitchTheme;
     pub use super::navigation::Drawer;
-    pub use super::navigation::DrawerSide;
     pub use super::navigation::DrawerTheme;
     pub use super::OptionalMaybeSignal; 
     pub use super::OptionalSignal; 

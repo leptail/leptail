@@ -3,71 +3,45 @@ use crate::prelude::*;
 
 
 #[derive(Debug, Clone, Default)]
-pub struct DrawerSideTheme {
-    pub side: String,
+pub struct DrawerTheme {
+    pub base: String,
     pub minimized: String,
     pub maximized: String,
 }
 
-#[derive(Debug, Clone, Default)]
-pub struct DrawerTheme {
-    pub container: String,
-    pub left_side: DrawerSideTheme,
-    pub right_side: DrawerSideTheme,
-    pub top_side: DrawerSideTheme,
-    pub bottom_side: DrawerSideTheme,
-}
 
-#[derive(Default, Debug, Clone, Copy, PartialEq, Eq)]
-pub enum DrawerSide {
-    #[default]
-    Left,
-    Right,
-    Top,
-    Bottom,
-}
 
-impl DrawerSide {
-    pub fn class_name(self, theme: &DrawerTheme) -> DrawerSideTheme {
-        match self {
-            DrawerSide::Left => theme.left_side.clone(),
-            DrawerSide::Right => theme.right_side.clone(),
-            DrawerSide::Top => theme.top_side.clone(),
-            DrawerSide::Bottom => theme.bottom_side.clone(),
-        }
-    }
-}
+// Drawer Variants and Funtions
+// -----------------------------
+// 1. Drawer Sides -- Theme 
+// 2. Insert drawers -- Theme (Not attached to screen like MUI(joy) drawers variants)
+// 3. Resposive drawers -- Theme (Closed on mobile and open on large screen; seen on on MUI drawer)
+// 4. Persistent Drawers (Body shifts when drawer opens; seen on on MUI drawer)
+// 5. Drawer size -- Theme (xs, sm, md, lg, xl, 2xl, full etc)
+// 6. Focus on specific element -- Prop (Seen on chakra UI)
+// 7. Disable click on the backdrop to close -- Prop  
+// 8. Close on escape key press -- Prop
+// 9. Half minimized drawer, which can also be persistent -- (MUI largescreen )
+
 
 #[component]
 pub fn Drawer( 
     /// state to control if the drawer is open or not
     #[prop(into)] is_open: MaybeSignal<bool>,
     /// state to control if when backdrop is clicked on the drawer
-    #[prop(into)] set_open: Out<bool>,
-    /// which side the drawer is shown
-    side: DrawerSide,
+    #[prop(into)] set_open: Out<bool>, 
+    /// optional drawer theme variant
+    #[prop(into, optional)] variant: Option<DrawerTheme>,
     children: Children,
 ) -> impl IntoView{
     
-    let theme = use_context::<AppTheme>().unwrap_or_default();
-    let theme = theme.drawer;
-    let side_theme = side.class_name(&theme);
-    let dimension_class = move || if is_open() { side_theme.maximized.clone() } else { side_theme.minimized.clone() };
+    let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().drawer);
+    let dimension_class = move || if is_open() { theme.maximized.clone() } else { theme.minimized.clone() };
 
     view! { 
-        <div 
-            // class:hidden=move || is_open() == false
-            // class=move || if is_open() { "" } else { "hidden" }
-            // class=move || if is_open() { "opacity-1" } else { "opacity-0" }
-        >
-            // <div
-            //     class=move || format!("{} {} {}", theme.container, side_theme.side, dimension_class())
-            //     on:click=move |e| { e.stop_propagation() }
-            // >
-            //     {children()}
-            // </div>
+        <div>
             <div
-                class=move || format!("{} {} {}", theme.container, side_theme.side, dimension_class())
+                class=move || format!("{} {}", theme.base, dimension_class())
                 on:click=move |e| { e.stop_propagation() }
             >
                 {children()}
@@ -79,8 +53,7 @@ pub fn Drawer(
                 <Overlay on_click=move || set_open.set(false) >
                     <div></div>
                 </Overlay>
-            </Show>
-            
+            </Show> 
         </div>
     }
 }

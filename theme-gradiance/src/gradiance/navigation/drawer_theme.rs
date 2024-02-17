@@ -1,4 +1,4 @@
-use leptail::navigation::DrawerSideTheme;
+
 
 use crate::gradiance::*;
 
@@ -6,56 +6,90 @@ pub struct DrawerVariant {}
 
 impl DrawerVariant {
 
-    pub fn base_theme() -> DrawerTheme{
-        
-        let left_side = DrawerSideTheme {
-            side: String::from("h-full w-80 top-0 left-0 transition-all duration-500 ease-out"),
-            minimized: String::from("-translate-x-full"),
-            maximized: String::from("translate-x-0"),
-        };
-
-        let right_side = DrawerSideTheme {
-            side: String::from("h-full w-80 top-0 right-0 transition-all duration-500 ease-out"),
-            minimized: String::from("translate-x-full"),
-            maximized: String::from("translate-x-0"),
-        };
-
-        let top_side = DrawerSideTheme {
-            side: String::from("w-full h-40 top-0 right-0 left-0 transition-all duration-500 ease-out"),
-            minimized: String::from("-translate-y-full"),
-            maximized: String::from("translate-y-0"),
-        };
-
-        let bottom_side = DrawerSideTheme {
-            side: String::from("w-full h-40 bottom-0 right-0 left-0 transition-all duration-500 ease-out"),
-            minimized: String::from("translate-y-full"),
-            maximized: String::from("translate-y-0"),
-        };
+    fn base_theme() -> DrawerTheme{
 
         let bg_gradient = Gradient::Linear(Direction::Left)
             .make("bg".into(), 
                 GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
                 GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
             );
-
-        let drawer_theme = DrawerTheme {
-            container: format!("{bg_gradient} z-[101] fixed overflow-x-hidden"),
-            left_side,
-            right_side,
-            top_side,
-            bottom_side 
+        
+        let base_theme = DrawerTheme {
+            base: format!("{bg_gradient} z-[101] fixed overflow-x-hidden transition-all duration-500 ease-out"),
+            minimized: String::from(""),
+            maximized: String::from(""),
         };
-    
-        drawer_theme
+
+        base_theme
     }
 
-    pub fn variant(color: Option<Color>, size: Option<Size>) -> DrawerTheme{
-        
-        let mut theme = Self::base_theme().clone();
-       
-        // Self::apply_color(&mut theme, color.unwrap_or_default());
-        // Self::apply_size(&mut theme, size.unwrap_or_default());
+    fn drawer_width(size: &Size) -> String {
+        match  size {
+            Size::XSmall => String::from("w-40"), 
+            Size::Small => String::from("w-60"), 
+            Size::Medium => String::from("w-80"), 
+            Size::Large => String::from("w-80"),
+            Size::XLarge => String::from("w-80"),
+        }
+    }
 
+    fn drawer_height(size: &Size) -> String {
+        match size {
+            Size::XSmall => String::from("h-40"), 
+            Size::Small => String::from("h-40"), 
+            Size::Medium => String::from("h-40"), 
+            Size::Large => String::from("h-40"),
+            Size::XLarge => String::from("h-40"),
+        }
+    }
+
+    fn side_modifier(side: &Side, size: &Size) -> DrawerTheme {
+        let height = Self::drawer_height(&size);
+        let width = Self::drawer_width(&size);
+        match side {
+            Side::Left => DrawerTheme {
+                base: format!("h-full {width} top-0 left-0"),
+                minimized: String::from("-translate-x-full"),
+                maximized: String::from("translate-x-0"),
+            },
+            Side::Right => DrawerTheme {
+                base: format!("h-full {width} top-0 right-0"),
+                minimized: String::from("translate-x-full"),
+                maximized: String::from("translate-x-0"),
+            },
+            Side::Top => DrawerTheme {
+                base: format!("w-full {height} top-0 right-0 left-0"),
+                minimized: String::from("-translate-y-full"),
+                maximized: String::from("translate-y-0"),
+            },
+            Side::Bottom => DrawerTheme {
+                base: format!("w-full {height} bottom-0 right-0 left-0"),
+                minimized: String::from("translate-y-full"),
+                maximized: String::from("translate-y-0"),
+            },
+        }
+    }
+
+
+    fn merge(first_theme: DrawerTheme, second_theme: DrawerTheme) -> DrawerTheme { 
+        let merged = DrawerTheme {
+            base: format!("{} {}", first_theme.base, second_theme.base),
+            minimized: format!("{} {}", first_theme.minimized, second_theme.minimized),
+            maximized: format!("{} {}", first_theme.maximized, second_theme.maximized),
+        };
+        merged
+    }
+
+    pub fn variant(side: Option<Side>, size: Option<Size>) -> DrawerTheme{
+
+        let side = side.unwrap_or(Side::Left);
+        let size = size.unwrap_or(Size::Medium);
+        
+        let base = Self::base_theme();
+        let side_modified_theme = Self::side_modifier(&side, &size);
+
+        let theme = Self::merge(base, side_modified_theme);
         theme
     }
 }
+

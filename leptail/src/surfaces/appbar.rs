@@ -74,7 +74,7 @@ where
                     <div class=theme.right_side_container>{right_menu()}</div>
                 </div>
             </div>
-            <Drawer is_open=is_drawer_open set_open=set_drawer_open side=DrawerSide::Left >
+            <Drawer is_open=is_drawer_open set_open=set_drawer_open >
                 <>
                     // TODO: provide theming option for close menu on drawer
                     <div>

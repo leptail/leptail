@@ -16,7 +16,7 @@ pub fn PageDrawer() -> impl IntoView {
                 class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
                 on:click=move |_| set_drawer_open(true)
             >"Open Drawer"</button>
-            <Drawer is_open=is_drawer_open set_open=set_drawer_open side=DrawerSide::Left > 
+            <Drawer is_open=is_drawer_open set_open=set_drawer_open > 
                 <div class="flex flex-row" >
                     <h1 class="text-2xl font-semibold" >"Left side drawer"</h1>
                     <button 

@@ -97,11 +97,14 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
 9. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --  
 10. Drawer implemenation                                                                                    -- 
     1. should take the minDim and maxDim                                                                    --
-    2. What is the data type of dim? How should it get updated?                                             --
-    3. Is it possible to use tailwindcss animations instead of using RAF??                                  -- 
-    4. Remove the close button from drawer. Let the user decide if there need to be close button            -- 
+    2. What is the data type of dim? How should it get updated?                                             -- 
+    3. Is it possible to use tailwindcss animations instead of using RAF??                                  -- done
+        Ans: Yes
+    4. Remove the close button from drawer. Let the user decide if there need to be close button            -- done
     5. The app-bar can have drawer that can have intermidate (for like icon drawer, full menu drawer)       -- 
-    6. 
+11. Take a look at Taildwind Variants and NextUI                                                            -- 
+    0. It may help in designing themes...                                                                   -- 
+    1. https://github.com/nextui-org/tailwind-variants
 
 ## Design Decisions
 1. Arguments about component variants should be provided by theme! 

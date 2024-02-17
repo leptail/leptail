@@ -28,7 +28,7 @@ module.exports = {
   },
   safelist: [ 
     {
-      pattern: /(bg|from|to|via|ring)-(slate|cyan|fuchsia|sky|indigo|emerald|amber|rose)-(50|100|200|300|600|700|900|950)/,
+      pattern: /(bg|from|to|via|ring)-(slate|cyan|fuchsia|violet|sky|indigo|blue|emerald|amber|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
       variants: ['dark', 'hover', 'dark:hover'],
     },
     {
