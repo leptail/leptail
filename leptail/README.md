@@ -79,10 +79,6 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
 ## TODO: 
 1. Create a backdrop/overlay component                                                                      -- 
 2. Create Drawer component (which uses backdrop) and use it to make appbar                                  -- 
-3. Create a switch component                                                                                -- done 
-    1. Make the switch API cover more usescase                                                              -- done
-    2. Make the swith API follow component ergonomics discussed below                                       -- done
-4. Enhance the documentation as discussed below in the design decissions                                    -- done
 5. Animation: Can you use already existing animations                                                       -- 
     1. Add animiation for drawer                                                                            --  
 6. Keyboard integration and accessability                                                                   -- 
