@@ -29,7 +29,7 @@ jobs:
               run: cargo binstall cargo-leptos -y
             - name: Build
               run: | 
-                  cargo leptos build --release --features nightly
+                  cargo leptos build --release 
             - name: Deploy
               uses: amondnet/vercel-action@v20
               with:
