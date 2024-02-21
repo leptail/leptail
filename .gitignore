@@ -18,3 +18,10 @@ playwright/.cache/
 
 # IDE
 .vscode
+
+# others
+.env
+node_modules
+package.json
+pnpm-lock.yaml
+.vercel
