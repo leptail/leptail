@@ -27,6 +27,8 @@ jobs:
               uses: cargo-bins/cargo-binstall@main
             - name: Install Cargo Leptos
               run: cargo binstall cargo-leptos -y
+            - name: Install wasm-bindgen-cli
+              run: cargo install -f wasm-bindgen-cli --version 0.2.87
             - name: Build
               run: | 
                   cargo leptos build --release 
