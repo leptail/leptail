@@ -1,0 +1,3 @@
+name = "leptail"
+
+assets = ["target/site/*"]
