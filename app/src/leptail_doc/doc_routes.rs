@@ -182,7 +182,7 @@ pub fn DocLayout() -> impl IntoView {
             right_menu=right_menu
             mobile_menu=mobile_menu
         />
-        <div class="mx-auto max-w-screen-xl" >
+        <div class="mx-auto" >
             <div class="flex gap-4 mx-4">
                 <div class="flex-none w-80 text-left hidden md:inline-block ">
                     {links()}

@@ -166,7 +166,7 @@ pub fn build_theme() -> AppTheme {
 
     let appbar_theme = AppbarTheme {
         nav: format!("{} text-blue-900 dark:text-blue-300", bg_gradient),
-        nav_inner: "mx-auto max-w-screen-xl sm:px-6 md:px-0",
+        nav_inner: "mx-auto max-w-screen-2xl sm:px-6 md:px-0",
         lg_menu_container: "relative flex h-16 items-center justify-between",
         sm_menu_container: "space-y-1 px-2 pb-3 pt-2",
         hamburger_container: "left-0 flex items-center sm:hidden",

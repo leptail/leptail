@@ -6,8 +6,12 @@ use leptos_axum::{generate_route_list, LeptosRoutes};
 
 pub mod fileserv;
 
+
 #[tokio::main]
 async fn main() {
+// #[cfg(feature = "ssr")]
+// #[shuttle_runtime::main]
+// async fn axum() {
     simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
@@ -50,3 +54,10 @@ async fn main() {
         .unwrap();
 
 }
+
+// #[cfg(not(feature = "ssr"))]
+// pub fn main() {
+//     // no client-side main function
+//     // unless we want this to work with e.g., Trunk for a purely client-side app
+//     // see lib.rs for hydration function instead
+// }

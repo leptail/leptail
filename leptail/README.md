@@ -98,6 +98,13 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
         Ans: Yes
     4. Remove the close button from drawer. Let the user decide if there need to be close button            -- done
     5. The app-bar can have drawer that can have intermidate (for like icon drawer, full menu drawer)       -- 
+        1. The leptail app can have two appbars                                                             -- 
+            1. One used by home page                                                                        -- 
+                1. Drawer variant: more web landing page looking app;                                       -- 
+                2. Layout brakeover: 2xl or xl customizazble; 
+            2. One used by doc pages                                                                        --
+                1. Drawer variant: persistent drawer on desktop;                                            -- 
+                2. Layout brakeover: full width page                                                        --  
 11. Take a look at Taildwind Variants and NextUI                                                            -- 
     0. It may help in designing themes...                                                                   -- 
     1. https://github.com/nextui-org/tailwind-variants

@@ -11,3 +11,7 @@ leptail-tailwind-utils = { path = "../tailwind-utils" }
 leptos_icons = { workspace = true }
 icondata = { workspace = true }
 
+# leptos.workspace = true
+# leptos_meta.workspace = true
+
+

@@ -1,3 +1,5 @@
+// The code is copied from ssr-shuttle example; 
+// See more at: https://github.com/leptos-community/deployment-ssr-shuttle/blob/main/build.rs
 use camino::Utf8PathBuf;
 use cargo_leptos::ext::PathBufExt;
 use cargo_leptos::{

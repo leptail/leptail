@@ -17,7 +17,8 @@ pub struct AppbarTheme {
 }
 
 
-
+// TODO: persistent drawer: Theme should have drawer vairant; can be passed on
+// TODO: 
 #[component]
 pub fn Appbar<L, LM, SM, RM, IV>( 
     hamburger_icon: icondata::Icon,
