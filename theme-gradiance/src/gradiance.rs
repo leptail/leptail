@@ -7,7 +7,7 @@ use self::navigation::drawer_theme::DrawerVariant;
 pub mod input; 
 pub mod navigation;
 
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Default)]
 pub enum Size{
     XSmall,
     Small,
@@ -20,7 +20,7 @@ pub enum Size{
 
 
 
-#[derive(Debug, Clone, PartialEq, Default)] 
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Default)] 
 pub enum Color{
     #[default]
     Default,
@@ -53,7 +53,7 @@ impl Color {
     }
 }
  
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Direction {
     Top,
     TopRight,
@@ -65,12 +65,19 @@ pub enum Direction {
     TopLeft
 }
 
+ 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Side { 
     Left,
     Right,
     Top,
     Bottom,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HorizontalSide { 
+    Left,
+    Right, 
 }
 
 
@@ -177,7 +184,7 @@ pub fn build_theme() -> AppTheme {
         menu: "flex space-x-4",
     };
 
-    let drawer_theme = DrawerVariant::variant(None, None);
+    let drawer_theme = DrawerVariant::default();
 
     let overlay_theme = OverlayTheme {
         // overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",

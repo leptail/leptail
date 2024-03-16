@@ -1,7 +1,7 @@
 use leptos::*;
 use crate::prelude::*;
 
-
+// TODO: drawer theme is part of the AppbarTheme
 #[derive(Debug, Clone, Default)]
 pub struct AppbarTheme {
     pub nav: String,
@@ -17,8 +17,6 @@ pub struct AppbarTheme {
 }
 
 
-// TODO: persistent drawer: Theme should have drawer vairant; can be passed on
-// TODO: 
 #[component]
 pub fn Appbar<L, LM, SM, RM, IV>( 
     hamburger_icon: icondata::Icon,

@@ -104,7 +104,9 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
                 2. Layout brakeover: 2xl or xl customizazble; 
             2. One used by doc pages                                                                        --
                 1. Drawer variant: persistent drawer on desktop;                                            -- 
-                2. Layout brakeover: full width page                                                        --  
+                2. Layout brakeover: full width page                                                        --
+11. Check if we can use tailwind fuse library                                                               -- 
+    1. https://github.com/gaucho-labs/tailwind-fuse
 11. Take a look at Taildwind Variants and NextUI                                                            -- 
     0. It may help in designing themes...                                                                   -- 
     1. https://github.com/nextui-org/tailwind-variants

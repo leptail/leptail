@@ -39,7 +39,7 @@ impl SwitchVariant {
     }
 
     // This doesn't work since it dynamically gnerated and tailwind compiler doesn't know at the compile time
-    fn switch_color(color: Color) -> String {
+    fn switch_color(color: &Color) -> String {
         format!("{} {}", color.make_shade("hover:ring", Palette::S200), color.make_shade("dark:hover:ring", Palette::S800))
     }
 
@@ -53,7 +53,7 @@ impl SwitchVariant {
             )
     }
 
-    fn switch_on_color(color: Color) -> String {
+    fn switch_on_color(color: &Color) -> String {
         // format!("{} {}", color.make_shade("bg", Palette::S300), color.make_shade("dark:bg", Palette::S700)) 
         Gradient::Radial(None)
             .make("bg".into(), 
@@ -82,10 +82,10 @@ impl SwitchVariant {
         }
     }
 
-    fn apply_color(theme: &mut SwitchTheme, color: Color) { 
-        theme.base.switch = format!("{} {}", theme.base.switch, Self::switch_color(color.clone()));
+    fn apply_color(theme: &mut SwitchTheme, color: &Color) { 
+        theme.base.switch = format!("{} {}", theme.base.switch, Self::switch_color(color));
         theme.off_modifier.switch = format!("{} {}", theme.off_modifier.switch, Self::switch_off_color());
-        theme.on_modifier.switch = format!("{} {}", theme.on_modifier.switch, Self::switch_on_color(color.clone()));
+        theme.on_modifier.switch = format!("{} {}", theme.on_modifier.switch, Self::switch_on_color(color));
     } 
 
     fn apply_size(theme: &mut SwitchTheme, size: Size) { 
@@ -93,11 +93,14 @@ impl SwitchVariant {
         theme.base.icon_container = format!("{} {}", theme.base.icon_container, Self::icon_size(&size));
     } 
 
+    pub fn default() -> SwitchTheme {
+        Self::variant(None, None)
+    }
     pub fn variant(color: Option<Color>, size: Option<Size>) -> SwitchTheme{
         
         let mut theme = Self::base_theme().clone();
        
-        Self::apply_color(&mut theme, color.unwrap_or_default());
+        Self::apply_color(&mut theme, &color.unwrap_or_default());
         Self::apply_size(&mut theme, size.unwrap_or_default());
 
         theme

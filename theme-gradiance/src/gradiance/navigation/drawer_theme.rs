@@ -3,11 +3,13 @@
 use crate::gradiance::*;
 
 
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DrawerVariant {
     Temporary{size: Size, side: Side, has_inset: bool}, 
-    Persistent(Size), // argument: breakover_point, drawer size is md, and side is left 
-    PersistentMini(Size), // argument: breakover_point, drawer size is md, and side is left
+    Persistent{breakover_point: Size, side: HorizontalSide}, 
+    PersistentMini{breakover_point: Size, side: HorizontalSide}, 
 }
+
 
 impl DrawerVariant {
 
@@ -34,8 +36,8 @@ impl DrawerVariant {
             Size::XSmall => String::from("w-40"), 
             Size::Small => String::from("w-60"), 
             Size::Medium => String::from("w-80"), 
-            Size::Large => String::from("w-80"),
-            Size::XLarge => String::from("w-80"),
+            Size::Large => String::from("w-96"),
+            Size::XLarge => String::from("w-1/2"),
         }
     }
 
@@ -44,12 +46,12 @@ impl DrawerVariant {
             Size::XSmall => String::from("h-40"), 
             Size::Small => String::from("h-40"), 
             Size::Medium => String::from("h-40"), 
-            Size::Large => String::from("h-40"),
-            Size::XLarge => String::from("h-40"),
+            Size::Large => String::from("h-60"),
+            Size::XLarge => String::from("h-80"),
         }
     }
 
-    fn side_modifier(side: &Side, size: &Size, has_overlay: bool) -> DrawerTheme {
+    fn side_modifier(side: &Side, size: &Size, has_overlay: bool, has_inset: bool) -> DrawerTheme {
         let height = Self::drawer_height(&size);
         let width = Self::drawer_width(&size);
         match side {
@@ -80,29 +82,41 @@ impl DrawerVariant {
         }
     }
 
+    fn has_overlay(variant: &DrawerVariant) -> bool {
+        match  variant {
+            DrawerVariant::Temporary {..} => true,
+            DrawerVariant::Persistent {..} => false,
+            DrawerVariant::PersistentMini {..} => false,
+        }
+    }
+
 
     fn merge(first_theme: DrawerTheme, second_theme: DrawerTheme) -> DrawerTheme { 
-        let merged = DrawerTheme {
+        DrawerTheme {
             base: format!("{} {}", first_theme.base, second_theme.base),
             minimized: format!("{} {}", first_theme.minimized, second_theme.minimized),
             maximized: format!("{} {}", first_theme.maximized, second_theme.maximized),
             has_overlay: first_theme.has_overlay && second_theme.has_overlay,
-        };
-        merged
+        }
+    }
+
+    pub fn default() -> DrawerTheme {
+        let dv = DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false };
+        Self::variant(&dv)
     }
 
     // TODO: add variant: 
-    // TODO: 
-    pub fn variant(side: Option<Side>, size: Option<Size>) -> DrawerTheme{
-
-        let side = side.unwrap_or(Side::Left);
-        let size = size.unwrap_or(Size::Medium);
-        
-        let base = Self::base_theme(true);
-        let side_modified_theme = Self::side_modifier(&side, &size, true);
-
-        let theme = Self::merge(base, side_modified_theme);
-        theme
+    pub fn variant(variant: &DrawerVariant) -> DrawerTheme{
+        let has_overlay = Self::has_overlay(variant);
+        match variant {
+            DrawerVariant::Temporary { size, side, has_inset } => {
+                let base = Self::base_theme(true);
+                let side_modified_theme = Self::side_modifier(side, size, has_overlay, *has_inset);
+                Self::merge(base, side_modified_theme)
+            }
+            DrawerVariant::Persistent { breakover_point, side } => todo!(),
+            DrawerVariant::PersistentMini { breakover_point, side } => todo!(),
+        }
     }
 }
 

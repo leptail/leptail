@@ -11,7 +11,7 @@ pub fn PageDrawer() -> impl IntoView {
     view! { 
         <Title text="Leptail: Gradiance Drawer and Variants"/>
 
-        <div class="flex flex-col gap-4" >
+        <div class="flex flex-col lg:flex-row gap-4" >
             <button 
                 class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
                 on:click=move |_| set_drawer_open(true)
