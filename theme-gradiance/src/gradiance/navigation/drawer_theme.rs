@@ -1,11 +1,14 @@
 
 
+use leptail::overlay;
+
 use crate::gradiance::*;
 
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DrawerVariant {
     Temporary{size: Size, side: Side, has_inset: bool}, 
+    Responsive{side: HorizontalSide}, 
     Persistent{breakover_point: Size, side: HorizontalSide}, 
     PersistentMini{breakover_point: Size, side: HorizontalSide}, 
 }
@@ -13,19 +16,26 @@ pub enum DrawerVariant {
 
 impl DrawerVariant {
 
-    fn base_theme(has_overlay: bool) -> DrawerTheme{
+    fn base_theme() -> DrawerTheme{
 
-        let bg_gradient = Gradient::Linear(Direction::Left)
+        let bg_gradient = Gradient::Radial(None)
             .make("bg".into(), 
-                GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
-                GradientColors::from(TWColorPalette::from(TWColor::Fuchsia, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
             );
+
+        // let bg_gradient = Gradient::Linear(Direction::Left)
+        //     .make("bg".into(), 
+        //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
+        //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
+        //     );
         
         let base_theme = DrawerTheme {
-            base: format!("{bg_gradient} z-[101] fixed overflow-x-hidden transition-all duration-500 ease-out"),
+            wrapper: "z-[101] fixed overflow-x-hidden transition-all duration-500 ease-out".to_string(),
+            inner: format!("{bg_gradient}"),
             minimized: String::from(""),
-            maximized: String::from(""),
-            has_overlay: has_overlay,
+            maximized: String::from(""), 
+            overlay_theme: None,
         };
 
         base_theme
@@ -51,52 +61,97 @@ impl DrawerVariant {
         }
     }
 
-    fn side_modifier(side: &Side, size: &Size, has_overlay: bool, has_inset: bool) -> DrawerTheme {
+    fn gen_temprovary_drawer(side: &Side, size: &Size, has_inset: bool) -> DrawerTheme {
         let height = Self::drawer_height(&size);
         let width = Self::drawer_width(&size);
+        let inset_class = if has_inset { "p-0 md:p-5" } else {""};
+        let inset_inner_class = if has_inset { "p-2 md:p-3 md:rounded-lg" } else {""};
+
         match side {
             Side::Left => DrawerTheme {
-                base: format!("h-full {width} top-0 left-0"),
+                wrapper: format!("h-full {width} top-0 left-0 {inset_class}"),
+                inner: format!("h-full w-full {inset_inner_class}"),
                 minimized: String::from("-translate-x-full"),
-                maximized: String::from("translate-x-0"),
-                has_overlay: has_overlay,
+                maximized: String::from("translate-x-0"), 
+                overlay_theme: None,
             },
             Side::Right => DrawerTheme {
-                base: format!("h-full {width} top-0 right-0"),
+                wrapper: format!("h-full {width} top-0 right-0 {inset_class}"),
+                inner: format!("h-full w-full {inset_inner_class}"),
                 minimized: String::from("translate-x-full"),
-                maximized: String::from("translate-x-0"),
-                has_overlay: has_overlay,
+                maximized: String::from("translate-x-0"), 
+                overlay_theme: None,
             },
             Side::Top => DrawerTheme {
-                base: format!("w-full {height} top-0 right-0 left-0"),
+                wrapper: format!("w-full {height} top-0 right-0 left-0 {inset_class}"),
+                inner: format!("h-full w-full {inset_inner_class}"),
                 minimized: String::from("-translate-y-full"),
-                maximized: String::from("translate-y-0"),
-                has_overlay: has_overlay,
+                maximized: String::from("translate-y-0"), 
+                overlay_theme: None,
             },
             Side::Bottom => DrawerTheme {
-                base: format!("w-full {height} bottom-0 right-0 left-0"),
+                wrapper: format!("w-full {height} bottom-0 right-0 left-0 {inset_class}"),
+                inner: format!("h-full w-full {inset_inner_class}"),
                 minimized: String::from("translate-y-full"),
-                maximized: String::from("translate-y-0"),
-                has_overlay: has_overlay,
+                maximized: String::from("translate-y-0"), 
+                overlay_theme: None,
             },
         }
     }
 
-    fn has_overlay(variant: &DrawerVariant) -> bool {
-        match  variant {
-            DrawerVariant::Temporary {..} => true,
-            DrawerVariant::Persistent {..} => false,
-            DrawerVariant::PersistentMini {..} => false,
-        }
+
+    fn gen_responsive_drawer(side: &HorizontalSide) -> DrawerTheme {
+        let width = "w-80";
+
+        let bg_gradient = Gradient::Radial(None)
+            .make("bg".into(), 
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
+            );
+
+        let base_theme = DrawerTheme {
+            wrapper: "z-[101] md:z-1 fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-500 ease-out".to_string(),
+            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent"),
+            minimized: String::from(""),
+            maximized: String::from(""), 
+            overlay_theme: None,
+        };
+
+        let side_modifier = match side {
+            HorizontalSide::Left => DrawerTheme {
+                wrapper: format!("h-full {width} top-0 left-0 md:top-auto md:left-auto"),
+                inner: format!("h-full {width}"),
+                minimized: String::from("-translate-x-full md:translate-x-0"),
+                maximized: String::from("translate-x-0"), 
+                overlay_theme: None,
+            },
+            HorizontalSide::Right => DrawerTheme {
+                wrapper: format!("h-full {width} top-0 right-0 md:top-auto md:left-auto"),
+                inner: format!("h-full {width}"),
+                minimized: String::from("translate-x-full md:translate-x-0"),
+                maximized: String::from("translate-x-0"), 
+                overlay_theme: None,
+            }, 
+        };
+
+        let overlay_theme = OverlayTheme {
+            wrapper: "relative md:hidden".to_string(),
+            inner: "z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
+        }; 
+
+        let mut theme = Self::merge(base_theme, side_modifier);
+        theme.overlay_theme = Some(overlay_theme);
+        theme
     }
 
 
     fn merge(first_theme: DrawerTheme, second_theme: DrawerTheme) -> DrawerTheme { 
         DrawerTheme {
-            base: format!("{} {}", first_theme.base, second_theme.base),
+            wrapper: format!("{} {}", first_theme.wrapper, second_theme.wrapper),
+            inner: format!("{} {}", first_theme.inner, second_theme.inner),
             minimized: format!("{} {}", first_theme.minimized, second_theme.minimized),
-            maximized: format!("{} {}", first_theme.maximized, second_theme.maximized),
-            has_overlay: first_theme.has_overlay && second_theme.has_overlay,
+            maximized: format!("{} {}", first_theme.maximized, second_theme.maximized), 
+            overlay_theme: None,
         }
     }
 
@@ -106,14 +161,15 @@ impl DrawerVariant {
     }
 
     // TODO: add variant: 
-    pub fn variant(variant: &DrawerVariant) -> DrawerTheme{
-        let has_overlay = Self::has_overlay(variant);
+    pub fn variant(variant: &DrawerVariant) -> DrawerTheme{ 
         match variant {
             DrawerVariant::Temporary { size, side, has_inset } => {
-                let base = Self::base_theme(true);
-                let side_modified_theme = Self::side_modifier(side, size, has_overlay, *has_inset);
+                // TODO: simplify this 
+                let base = Self::base_theme();
+                let side_modified_theme = Self::gen_temprovary_drawer(side, size, *has_inset);
                 Self::merge(base, side_modified_theme)
             }
+            DrawerVariant::Responsive { side } => Self::gen_responsive_drawer(side),
             DrawerVariant::Persistent { breakover_point, side } => todo!(),
             DrawerVariant::PersistentMini { breakover_point, side } => todo!(),
         }

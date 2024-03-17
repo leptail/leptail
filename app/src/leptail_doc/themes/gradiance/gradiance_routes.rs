@@ -4,7 +4,7 @@ use leptos_router::*;
 use leptail::prelude::*;
 use leptos_meta::*;
 
-use crate::leptail_doc::themes::gradiance::pages::{drawer_doc::PageDrawer, switch_doc::PageSwitch};
+use crate::leptail_doc::themes::gradiance::pages::{drawer_doc::*, switch_doc::PageSwitch};
 
 #[derive(Debug, Copy, Clone)]
 pub enum GradianceRoutes { 
@@ -16,6 +16,7 @@ pub enum GradianceRoutes {
     // Skeleton,
     AppBar,
     Drawer,
+    DrawerResponive,
     // Tab,
     // Table,
     // Collapsible,
@@ -62,6 +63,7 @@ impl GradianceRoutes {
             // GradianceRoutes::Skeleton => "skeleton",
             GradianceRoutes::AppBar => "app-bar",
             GradianceRoutes::Drawer => "drawer",
+            GradianceRoutes::DrawerResponive => "drawer-responsive",
             // GradianceRoutes::Tab => "tabs",
             // GradianceRoutes::Table => "table",
             // GradianceRoutes::Collapsible => "collapsible",
@@ -127,6 +129,7 @@ where
         >  
             // <Route path=GradianceRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
             <Route path=GradianceRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
+            <Route path=GradianceRoutes::DrawerResponive view=|| { view! {  <PageResponsiveDrawer /> } } />
             <Route path=GradianceRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
         </Route>
     }
@@ -143,8 +146,8 @@ pub fn GradianceLayout() -> impl IntoView {
      
     view! { 
         <Body class=theme.body/>
-        <div class="mx-auto max-w-screen-xl" >
-            <div class="m-4" ><Outlet/></div>
+        <div class="mx-auto" >
+            <div class="" ><Outlet/></div>
         </div>
         
     }

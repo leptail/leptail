@@ -97,7 +97,8 @@ pub fn build_theme() -> AppTheme {
     let drawer_theme = DrawerTheme::default();
 
     let overlay_theme = OverlayTheme {
-        overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ", 
+        wrapper: "relative".to_string(),
+        inner: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ".to_string(), 
     }; 
 
     let base_switch_theme = SwitchVariant::variant(None, None);

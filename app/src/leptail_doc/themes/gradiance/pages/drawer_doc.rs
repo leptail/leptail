@@ -3,7 +3,8 @@ use std::borrow::Borrow;
 use leptail::prelude::*;
 use leptos::*;
 use leptos_meta::*;
-use leptail_theme_gradiance::{gradiance::{navigation::drawer_theme::DrawerVariant, Side}, *}; 
+use leptail_theme_gradiance::{gradiance::{navigation::drawer_theme::DrawerVariant, HorizontalSide, Side}, *}; 
+use crate::leptail_doc::themes::gradiance::{gradiance_routes::GradianceRoutes, pages::common_components::*};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 struct DrawerVariantState {
@@ -17,9 +18,9 @@ pub fn PageDrawer() -> impl IntoView {
 
     let side_variants = vec![
         DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Left", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Right", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Right, has_inset: false } },
+        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Right", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Right, has_inset: true } },
         DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Top", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Top, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Bottom", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Bottom, has_inset: false } }
+        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Bottom", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Bottom, has_inset: true } }
     ];
     let (side_variants, _set_side_variants) = create_signal::<Vec<DrawerVariantState>>(side_variants);
 
@@ -32,85 +33,156 @@ pub fn PageDrawer() -> impl IntoView {
     ];
     let (size_variants, _set_side_variants) = create_signal::<Vec<DrawerVariantState>>(size_variants);
     
+
     view! { 
         <Title text="Leptail: Gradiance Drawer and Variants"/>
 
-        <div class="flex flex-col gap-4" >
+        <div class="" >
+            <div>
+                <h3 class="text-xl" >"Drawer opening side"</h3>
+                <div class="flex flex-col lg:flex-row gap-4 relative overflow-hidden" >
+                    // buttons
+                    <For
+                        each=move || side_variants.get()
+                        key=|side_variant| side_variant.variant_btn_text
+                        let:dvs
+                    >
+                        <button 
+                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                            on:click=move |_| dvs.state.1.borrow()(true)
+                        >{dvs.variant_btn_text}</button>
+                    </For>
 
-            <h3 class="text-xl" >"Drawer opening side"</h3>
-            <div class="flex flex-col lg:flex-row gap-4" >
-                // buttons
-                <For
-                    each=move || side_variants.get()
-                    key=|side_variant| side_variant.variant_btn_text
-                    let:dvs
-                >
-                    <button 
-                        class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                        on:click=move |_| dvs.state.1.borrow()(true)
-                    >{dvs.variant_btn_text}</button>
-                </For>
-
-                // drawers 
-                <For
-                    each=move || side_variants.get()
-                    key=|side_variant| side_variant.variant_btn_text
-                    let:dvs
-                >
-                    <Drawer is_open=dvs.state.0 set_open=dvs.state.1 
-                        variant=DrawerVariant::variant(&dvs.variant) > 
-                        <div class="flex flex-row" >
-                            <h1 class="text-2xl font-semibold" >"Right side drawer"</h1>
-                            <button 
-                                class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                                on:click=move |_| dvs.state.1(false)
-                            >"X"</button>
-                        </div>
-                        <div class="mt-5" >
-                            "Drawer content here..."
-                        </div>
-                    </Drawer>
-                </For>        
-            </div>
-
-            <h3 class="text-xl" >"Drawer size"</h3>
-            <div class="flex flex-col lg:flex-row gap-4" >
-                // buttons
-                <For
-                    each=move || size_variants.get()
-                    key=|side_variant| side_variant.variant_btn_text
-                    let:dvs
-                >
-                    <button 
-                        class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                        on:click=move |_| dvs.state.1.borrow()(true)
-                    >{dvs.variant_btn_text}</button>
-                </For>
-
-                // drawers 
-                <For
-                    each=move || size_variants.get()
-                    key=|side_variant| side_variant.variant_btn_text
-                    let:dvs
-                >
-                    <Drawer is_open=dvs.state.0 set_open=dvs.state.1 
-                        variant=DrawerVariant::variant(&dvs.variant) > 
-                        <div class="flex flex-row" >
-                            <h1 class="text-2xl font-semibold" >"Right side drawer"</h1>
-                            <button 
-                                class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                                on:click=move |_| dvs.state.1(false)
-                            >"X"</button>
-                        </div>
-                        <div class="mt-5" >
-                            "Drawer content here..."
-                        </div>
-                    </Drawer>
-                </For> 
-
-                          
+                    // drawers 
+                    <For
+                        each=move || side_variants.get()
+                        key=|side_variant| side_variant.variant_btn_text
+                        let:dvs
+                    >
+                        <Drawer is_open=dvs.state.0 set_open=dvs.state.1 
+                            variant=DrawerVariant::variant(&dvs.variant) > 
+                            <div class="flex flex-row" >
+                                <h1 class="text-2xl font-semibold" >"Drawer Title"</h1>
+                                <button 
+                                    class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                                    on:click=move |_| dvs.state.1(false)
+                                >"X"</button>
+                            </div>
+                            <div class="mt-5" >
+                                "Drawer content here..."
+                            </div>
+                        </Drawer>
+                    </For>        
+                </div>
             </div>
             
+            <div>
+                <h3 class="text-xl" >"Drawer size"</h3>
+                <div class="flex flex-col lg:flex-row gap-4" >
+                    // buttons
+                    <For
+                        each=move || size_variants.get()
+                        key=|side_variant| side_variant.variant_btn_text
+                        let:dvs
+                    >
+                        <button 
+                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                            on:click=move |_| dvs.state.1.borrow()(true)
+                        >{dvs.variant_btn_text}</button>
+                    </For>
+
+                    // drawers 
+                    <For
+                        each=move || size_variants.get()
+                        key=|side_variant| side_variant.variant_btn_text
+                        let:dvs
+                    >
+                        <Drawer is_open=dvs.state.0 set_open=dvs.state.1 
+                            variant=DrawerVariant::variant(&dvs.variant) > 
+                            <div class="flex flex-row" >
+                                <h1 class="text-2xl font-semibold" >"Drawer Title"</h1>
+                                <button 
+                                    class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                                    on:click=move |_| dvs.state.1(false)
+                                >"X"</button>
+                            </div>
+                            <div class="mt-5" >
+                                "Drawer content here..."
+                            </div>
+                        </Drawer>
+                    </For>    
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl" >"Responsive Drawer"</h3>
+                <iframe class="w-full min-h-[25rem]" src=GradianceRoutes::DrawerResponive.as_href() frameborder="0" height="100%"></iframe>
+                
+            </div>
+            
+            
         </div>
+        
+    }
+}
+
+
+#[component]
+pub fn PageResponsiveDrawer() -> impl IntoView { 
+
+    
+    let (is_drawer_open, set_drawer_open) = create_signal(false);
+    
+
+    view! { 
+        <Title text="Leptail: Gradiance Responsive Drawer"/>
+
+        <div class="flex flex-col" >
+            <div class="flex flew-row bg-slate-400 dark:bg-slate-600" >
+                <div class="md:hidden" >
+                    <Show
+                        when=move || { !is_drawer_open() }
+                        fallback=|| {
+                            view! { <></> }
+                        }
+                    >
+                        <button
+                            type="button"
+                            class="mt-6 mx-4"
+                            aria-controls="mobile-menu"
+                            aria-expanded="false"
+                            on:click=move |_| {
+                                set_drawer_open(true);
+                            }
+                        >
+                            <span class="sr-only">"Open main menu"</span>
+                            <Icon icon=icondata::ChMenuHamburger/>
+                        </button>
+                    </Show>
+                </div>
+                <div>
+                    <div class="my-4 mx-2 text-2xl" >"Responsive Drawer"</div>
+                </div>
+            </div> 
+            <div class="flex flex-row" >
+                <Drawer is_open=is_drawer_open set_open=set_drawer_open 
+                    variant=DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left }) > 
+                    <div class="flex flex-row md:hidden" >
+                        <h1 class="text-2xl font-semibold" >"Drawer Title"</h1>
+                        <button 
+                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                            on:click=move |_| set_drawer_open(false)
+                        >"X"</button>
+                    </div>
+                    <div class="mt-5" >
+                        "Drawer content here..."
+                    </div>
+                </Drawer> 
+                <div>
+                    <LoremIpsumLong />
+                </div>         
+            </div>
+        </div>
+        
     }
 }

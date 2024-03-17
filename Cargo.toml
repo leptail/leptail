@@ -1,12 +1,27 @@
 [workspace]
 members = ["leptail", "tailwind-utils", "theme-moonlight", "theme-gradiance", "app", "frontend", "server"]
 
-# need to be applied only to wasm build
+# build 
+[build]
+rustflags = ["-Z", "threads=8"]
+
+# profiles
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
 [profile.release]
+# need to be applied only to wasm build
 codegen-units = 1
 lto = true
 opt-level = 'z'
 
+
+
+
+# dependencies
 [workspace.dependencies]
 leptos = { version = "0.6.9", features = ["nightly"] }
 leptos_meta = { version = "0.6.9", features = ["nightly"] }
@@ -35,8 +50,10 @@ web-sys = "0.3.64"
 shuttle-runtime = { version = "0.41.0", default-features = false }
 shuttle-axum = { version = "0.41.0" }
 
-# See https://github.com/akesson/cargo-leptos for documentation of all the parameters.
 
+
+# Leptos configurations
+# See https://github.com/akesson/cargo-leptos for documentation of all the parameters.
 # A leptos project defines which workspace members
 # that are used together frontend (lib) & server (bin)
 [[workspace.metadata.leptos]]

@@ -188,7 +188,8 @@ pub fn build_theme() -> AppTheme {
 
     let overlay_theme = OverlayTheme {
         // overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",
-        overlay: "z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop" 
+        wrapper: "relative".to_string(),
+        inner: "z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
     }; 
 
     let base_switch_theme = SwitchVariant::variant(None, None);

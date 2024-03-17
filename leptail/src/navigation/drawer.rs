@@ -4,10 +4,11 @@ use crate::prelude::*;
 
 #[derive(Debug, Clone, Default)]
 pub struct DrawerTheme {
-    pub base: String,
+    pub wrapper: String,
+    pub inner: String,
     pub minimized: String,
-    pub maximized: String,
-    pub has_overlay: bool,
+    pub maximized: String, 
+    pub overlay_theme: Option<OverlayTheme>,
 }
 
 
@@ -37,24 +38,24 @@ pub fn Drawer(
     
     let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().drawer);
     let dimension_class = move || if is_open() { theme.maximized.clone() } else { theme.minimized.clone() };
-    let show_overlay = move || is_open() && theme.has_overlay;
+    // let show_overlay = move || is_open() && theme.has_overlay;
 
     view! { 
-        <div>
-            <div
-                class=move || format!("{} {}", theme.base, dimension_class())
-                on:click=move |e| { e.stop_propagation() }
-            >
-                {children()}
+        <>
+            <div  class=move || format!("{} {}", theme.wrapper, dimension_class())
+                    on:click=move |e| { e.stop_propagation() } >
+                <div class=theme.inner >
+                    {children()}
+                </div>
             </div>
             <Show
-                when={show_overlay}
+                when={is_open}
                 fallback=move || { view! {  <></> } }
             >
                 <Overlay on_click=move || set_open.set(false) >
                     <div></div>
                 </Overlay>
             </Show> 
-        </div>
+        </>
     }
 }
