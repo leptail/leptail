@@ -6,7 +6,7 @@ use leptail_theme_gradiance::*;
 #[component]
 pub fn LoremIpsumLong() -> impl IntoView { 
     view! {
-        <div class="text-left" >
+        <div class="text-left m-5" >
             <p>
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 

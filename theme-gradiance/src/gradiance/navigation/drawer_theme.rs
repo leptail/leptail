@@ -7,28 +7,43 @@ use crate::gradiance::*;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DrawerVariant {
+    /// Temporary drawer, opens temporarily above all other content. 
+    /// The Drawer can be cancelled by clicking the overlay or pressing the Esc key. 
+    /// Ideally used for varity of purposes like custom built caputruing user controled inputs such as form, dialogs etc.  
     Temporary{size: Size, side: Side, has_inset: bool}, 
+    /// Responsive works as like temporary drawer in smaller screen(unitl a breakover_point).
+    /// On the larger screen, the drawer sits on the same surface elevation as the content. 
+    /// Usually used in custombuilt navigation bars!
     Responsive{side: HorizontalSide}, 
-    Persistent{breakover_point: Size, side: HorizontalSide}, 
-    PersistentMini{breakover_point: Size, side: HorizontalSide}, 
+    /// Staggered is an extension of reponsive drawer where on the larger screen, 
+    /// the drawer can be collapsed to give focus on the contnet instead of naviations menus  
+    Staggered{breakover_point: Size, side: HorizontalSide}, 
+    /// StaggeredMini is an extension of staggered drawer when the drawer is hidden 
+    /// it still stakes up a minimum space which is visible even when the drawer is closed on larger screens. 
+    /// The mini variant is recommended for apps sections that need quick selection access alongside content. 
+    StaggeredMini{breakover_point: Size, side: HorizontalSide}, 
 }
 
 
 impl DrawerVariant {
 
-    fn base_theme() -> DrawerTheme{
-
-        let bg_gradient = Gradient::Radial(None)
-            .make("bg".into(), 
-                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
-                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
-            );
-
+    fn background() -> String {
         // let bg_gradient = Gradient::Linear(Direction::Left)
         //     .make("bg".into(), 
         //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)), 
         //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
         //     );
+
+        Gradient::Radial(None)
+            .make("bg".into(), 
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
+                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
+            )
+    }
+
+    fn base_theme() -> DrawerTheme{
+
+        let bg_gradient = Self::background();
         
         let base_theme = DrawerTheme {
             wrapper: "z-[101] fixed overflow-x-hidden transition-all duration-500 ease-out".to_string(),
@@ -103,11 +118,7 @@ impl DrawerVariant {
     fn gen_responsive_drawer(side: &HorizontalSide) -> DrawerTheme {
         let width = "w-80";
 
-        let bg_gradient = Gradient::Radial(None)
-            .make("bg".into(), 
-                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
-                GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
-            );
+        let bg_gradient = Self::background();
 
         let base_theme = DrawerTheme {
             wrapper: "z-[101] md:z-1 fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-500 ease-out".to_string(),
@@ -136,7 +147,48 @@ impl DrawerVariant {
 
         let overlay_theme = OverlayTheme {
             wrapper: "relative md:hidden".to_string(),
-            inner: "z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
+            inner: "md:hidden z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
+        }; 
+
+        let mut theme = Self::merge(base_theme, side_modifier);
+        theme.overlay_theme = Some(overlay_theme);
+        theme
+    }
+
+    fn gen_staggered_drawer(side: &HorizontalSide, is_min: bool) -> DrawerTheme {
+        let minimized_width = "w-0";
+        let maximized_width: &str = "w-80";
+
+        let bg_gradient = Self::background();
+
+        let base_theme = DrawerTheme {
+            wrapper: "z-[101] md:z-1 fixed md:relative  transition-all duration-500 ease-out".to_string(),
+            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent"),
+            minimized: String::from(""),
+            maximized: String::from(""), 
+            overlay_theme: None,
+        };
+
+        let side_modifier = match side {
+            HorizontalSide::Left => DrawerTheme {
+                wrapper: format!("h-full top-0 left-0 md:top-auto md:left-auto"),
+                inner: format!("h-full {maximized_width}"),
+                minimized: format!("-translate-x-full {minimized_width} overflow-x-hidden"),
+                maximized: format!("translate-x-0 {maximized_width}  overflow-x-visible"), 
+                overlay_theme: None,
+            },
+            HorizontalSide::Right => DrawerTheme {
+                wrapper: format!("h-full top-0 right-0 md:top-auto md:left-auto"),
+                inner: format!("h-full {maximized_width}"),
+                minimized: format!("-translate-x-full {minimized_width}"),
+                maximized: format!("translate-x-0 {maximized_width}"), 
+                overlay_theme: None,
+            }, 
+        };
+
+        let overlay_theme = OverlayTheme {
+            wrapper: "relative md:hidden".to_string(),
+            inner: "md:hidden z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
         }; 
 
         let mut theme = Self::merge(base_theme, side_modifier);
@@ -170,8 +222,8 @@ impl DrawerVariant {
                 Self::merge(base, side_modified_theme)
             }
             DrawerVariant::Responsive { side } => Self::gen_responsive_drawer(side),
-            DrawerVariant::Persistent { breakover_point, side } => todo!(),
-            DrawerVariant::PersistentMini { breakover_point, side } => todo!(),
+            DrawerVariant::Staggered { breakover_point, side } => Self::gen_staggered_drawer(side, false),
+            DrawerVariant::StaggeredMini { breakover_point, side } => Self::gen_staggered_drawer(side, true),
         }
     }
 }

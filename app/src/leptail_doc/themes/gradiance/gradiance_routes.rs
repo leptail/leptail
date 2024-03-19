@@ -16,7 +16,8 @@ pub enum GradianceRoutes {
     // Skeleton,
     AppBar,
     Drawer,
-    DrawerResponive,
+    DrawerResponsive,
+    DrawerStaggered,
     // Tab,
     // Table,
     // Collapsible,
@@ -63,7 +64,8 @@ impl GradianceRoutes {
             // GradianceRoutes::Skeleton => "skeleton",
             GradianceRoutes::AppBar => "app-bar",
             GradianceRoutes::Drawer => "drawer",
-            GradianceRoutes::DrawerResponive => "drawer-responsive",
+            GradianceRoutes::DrawerResponsive => "drawer-responsive",
+            GradianceRoutes::DrawerStaggered => "drawer-staggered",
             // GradianceRoutes::Tab => "tabs",
             // GradianceRoutes::Table => "table",
             // GradianceRoutes::Collapsible => "collapsible",
@@ -129,7 +131,8 @@ where
         >  
             // <Route path=GradianceRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
             <Route path=GradianceRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
-            <Route path=GradianceRoutes::DrawerResponive view=|| { view! {  <PageResponsiveDrawer /> } } />
+            <Route path=GradianceRoutes::DrawerResponsive view=|| { view! {  <PageDrawerResponsive /> } } />
+            <Route path=GradianceRoutes::DrawerStaggered view=|| { view! {  <PageDrawerStaggered /> } } />
             <Route path=GradianceRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
         </Route>
     }

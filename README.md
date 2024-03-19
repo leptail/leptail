@@ -6,13 +6,10 @@ This project is started with [Leptos Axum Workspace](https://github.com/leptos-r
 
 
 ## Note
-This project is still in the experimental level. Only one component is written and complete tooling is still being worked out.
+The project is still in the experimental level. Complete tooling is still being worked out.
 
-## Credits
-Special thanks to [Leptonic](https://github.com/lpotthast/leptonic) project(a component library for Leptos) through which some of the code example is copied from.
 
 ## How to build
-
 Quick command to build and run
 
 ```bash
@@ -50,3 +47,5 @@ The demo app for leptail components.
 The server part which servces the demo app. 
 
 
+## Credits
+Special thanks to [Leptonic](https://github.com/lpotthast/leptonic) project(a component library for Leptos) through which some of the code example is copied from.
