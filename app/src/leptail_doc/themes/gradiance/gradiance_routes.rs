@@ -18,6 +18,7 @@ pub enum GradianceRoutes {
     Drawer,
     DrawerResponsive,
     DrawerStaggered,
+    DrawerStaggeredMini,
     // Tab,
     // Table,
     // Collapsible,
@@ -66,6 +67,7 @@ impl GradianceRoutes {
             GradianceRoutes::Drawer => "drawer",
             GradianceRoutes::DrawerResponsive => "drawer-responsive",
             GradianceRoutes::DrawerStaggered => "drawer-staggered",
+            GradianceRoutes::DrawerStaggeredMini => "drawer-staggered-mini",
             // GradianceRoutes::Tab => "tabs",
             // GradianceRoutes::Table => "table",
             // GradianceRoutes::Collapsible => "collapsible",
@@ -133,6 +135,7 @@ where
             <Route path=GradianceRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
             <Route path=GradianceRoutes::DrawerResponsive view=|| { view! {  <PageDrawerResponsive /> } } />
             <Route path=GradianceRoutes::DrawerStaggered view=|| { view! {  <PageDrawerStaggered /> } } />
+            <Route path=GradianceRoutes::DrawerStaggeredMini view=|| { view! {  <PageDrawerStaggeredMini /> } } />
             <Route path=GradianceRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
         </Route>
     }

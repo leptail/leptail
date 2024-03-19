@@ -1,7 +1,3 @@
-
-
-use leptail::overlay;
-
 use crate::gradiance::*;
 
 
@@ -121,8 +117,8 @@ impl DrawerVariant {
         let bg_gradient = Self::background();
 
         let base_theme = DrawerTheme {
-            wrapper: "z-[101] md:z-1 fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-500 ease-out".to_string(),
-            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent"),
+            wrapper: "z-[101] md:z-[1] fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-500 ease-out  h-full flex flex-col shrink-0".to_string(),
+            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent shrink-0"),
             minimized: String::from(""),
             maximized: String::from(""), 
             overlay_theme: None,
@@ -155,15 +151,17 @@ impl DrawerVariant {
         theme
     }
 
-    fn gen_staggered_drawer(side: &HorizontalSide, is_min: bool) -> DrawerTheme {
-        let minimized_width = "w-0";
-        let maximized_width: &str = "w-80";
+    fn gen_staggered_drawer(side: &HorizontalSide, mini_drawer: bool) -> DrawerTheme {
+        let minimized_width = if mini_drawer { "w-0 md:w-[48px]" } else { "w-0" };
+        let translate_x = if mini_drawer { "-translate-x-[320px] md:-translate-x-[0px] " } else { "-translate-x-[320px] "};
+        let maximized_width = "w-[320px]";
+        
 
         let bg_gradient = Self::background();
 
         let base_theme = DrawerTheme {
-            wrapper: "z-[101] md:z-1 fixed md:relative  transition-all duration-500 ease-out".to_string(),
-            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent"),
+            wrapper: "z-[101] md:z-[1] fixed md:relative transition-all duration-500 ease-out h-full flex flex-col shrink-0 overflow-x-hidden".to_string(),
+            inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent shrink-0"),
             minimized: String::from(""),
             maximized: String::from(""), 
             overlay_theme: None,
@@ -172,16 +170,16 @@ impl DrawerVariant {
         let side_modifier = match side {
             HorizontalSide::Left => DrawerTheme {
                 wrapper: format!("h-full top-0 left-0 md:top-auto md:left-auto"),
-                inner: format!("h-full {maximized_width}"),
-                minimized: format!("-translate-x-full {minimized_width} overflow-x-hidden"),
-                maximized: format!("translate-x-0 {maximized_width}  overflow-x-visible"), 
+                inner: format!("h-full w-full flex flex-col"),
+                minimized: format!("{translate_x} {minimized_width} overflow-x-visible"),
+                maximized: format!("translate-x-0 {maximized_width} overflow-x-visible"), 
                 overlay_theme: None,
             },
             HorizontalSide::Right => DrawerTheme {
                 wrapper: format!("h-full top-0 right-0 md:top-auto md:left-auto"),
                 inner: format!("h-full {maximized_width}"),
-                minimized: format!("-translate-x-full {minimized_width}"),
-                maximized: format!("translate-x-0 {maximized_width}"), 
+                minimized: format!("{translate_x} {minimized_width} overflow-x-visible"),
+                maximized: format!("translate-x-0 {maximized_width} overflow-x-visible"), 
                 overlay_theme: None,
             }, 
         };
@@ -214,6 +212,7 @@ impl DrawerVariant {
 
     // TODO: add variant: 
     pub fn variant(variant: &DrawerVariant) -> DrawerTheme{ 
+         
         match variant {
             DrawerVariant::Temporary { size, side, has_inset } => {
                 // TODO: simplify this 
@@ -222,6 +221,7 @@ impl DrawerVariant {
                 Self::merge(base, side_modified_theme)
             }
             DrawerVariant::Responsive { side } => Self::gen_responsive_drawer(side),
+            // TODO: check if breakover_point is needed!
             DrawerVariant::Staggered { breakover_point, side } => Self::gen_staggered_drawer(side, false),
             DrawerVariant::StaggeredMini { breakover_point, side } => Self::gen_staggered_drawer(side, true),
         }

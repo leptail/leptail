@@ -107,7 +107,7 @@ pub fn PageDrawer() -> impl IntoView {
                                 >"X"</button>
                             </div>
                             <div class="mt-5" >
-                                "Drawer content here..."
+                                <NavMenu is_open=dvs.state.0 />
                             </div>
                         </Drawer>
                     </For>    
@@ -122,6 +122,11 @@ pub fn PageDrawer() -> impl IntoView {
             <div class="my-16" >
                 <h3 class="text-xl text-left mb-5" >"Staggered Drawer"</h3>
                 <iframe class="w-full min-h-[25rem]" src=GradianceRoutes::DrawerStaggered.as_href() frameborder="0" height="100%"></iframe>  
+            </div>
+
+            <div class="my-16" >
+                <h3 class="text-xl text-left mb-5" >"Staggered Mini Drawer"</h3>
+                <iframe class="w-full min-h-[25rem]" src=GradianceRoutes::DrawerStaggeredMini.as_href() frameborder="0" height="100%"></iframe>  
             </div>
             
             
@@ -179,7 +184,7 @@ pub fn PageDrawerResponsive() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        "Drawer content here..."
+                        <NavMenu is_open=is_drawer_open />
                     </div>
                 </Drawer> 
                 <div>
@@ -240,7 +245,68 @@ pub fn PageDrawerStaggered() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        "Drawer content here..."
+                        <NavMenu is_open=is_drawer_open />
+                    </div>
+                </Drawer> 
+                <div>
+                    <LoremIpsumLong />
+                </div>         
+            </div>
+        </div>
+        
+    }
+}
+
+
+#[component]
+pub fn PageDrawerStaggeredMini() -> impl IntoView { 
+
+    
+    let (is_drawer_open, set_drawer_open) = create_signal(false);
+    
+
+    view! { 
+        <Title text="Leptail: Gradiance Responsive Drawer"/>
+
+        <div class="flex flex-col" >
+            <div class="flex flew-row bg-slate-400 dark:bg-slate-600" >
+                <div class="" >
+                    // <Show
+                    //     when=move || { !is_drawer_open() }
+                    //     fallback=|| {
+                    //         view! { <></> }
+                    //     }
+                    // >
+                    // </Show>
+                    <button
+                        type="button"
+                        class="mt-6 mx-4"
+                        aria-controls="mobile-menu"
+                        aria-expanded="false"
+                        on:click=move |_| {
+                            set_drawer_open(!is_drawer_open());
+                        }
+                    >
+                        <span class="sr-only">"Open main menu"</span>
+                        <Icon icon=icondata::ChMenuHamburger/>
+                    </button>
+                </div>
+                <div>
+                    <div class="my-4 mx-2 text-2xl" >"Staggered Mini Drawer"</div>
+                </div>
+            </div> 
+            <div class="flex flex-row" >
+                <Drawer is_open=is_drawer_open set_open=set_drawer_open 
+                    variant=DrawerVariant::variant(&DrawerVariant::StaggeredMini { breakover_point: Size::Large, side: HorizontalSide::Left }) > 
+                    <div class="flex flex-row md:hidden" >
+                        <h1 class="text-2xl font-semibold" >"Drawer Title"</h1>
+                        <button 
+                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
+                            on:click=move |_| set_drawer_open(false)
+                        >"X"</button>
+                    </div>
+                    <div class="mt-5" >
+                        <NavMenu is_open=is_drawer_open />
                     </div>
                 </Drawer> 
                 <div>
