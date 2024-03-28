@@ -92,11 +92,6 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     1. There should be a option to merge app's tailwind config with theme's tailwind config                 --  
 9. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --  
 10. Drawer implemenation                                                                                    -- 
-    1. should take the minDim and maxDim                                                                    --
-    2. What is the data type of dim? How should it get updated?                                             -- 
-    3. Is it possible to use tailwindcss animations instead of using RAF??                                  -- done
-        Ans: Yes
-    4. Remove the close button from drawer. Let the user decide if there need to be close button            -- done
     5. The app-bar can have drawer that can have intermidate (for like icon drawer, full menu drawer)       -- 
         1. The leptail app can have two appbars                                                             -- 
             1. One used by home page                                                                        -- 
@@ -105,9 +100,24 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
             2. One used by doc pages                                                                        --
                 1. Drawer variant: persistent drawer on desktop;                                            -- 
                 2. Layout brakeover: full width page                                                        --
-11. Check if we can use tailwind fuse library                                                               -- 
+11. Appbar Implementation                                                                                   -- 
+    1. https://mantine.dev/ Has nice concept as appshell. We are essentially creating appshell with appbar  -- 
+    2. Appbar will have 
+        1. User provided                                                                                    -- 
+            1. Toolbar                                                                                      -- done
+            2. Drawer Content                                                                               -- done
+            3. Main Content                                                                                 -- done
+            4. ??? What about Aside content and Footer Content                                              -- 
+        2. System Default                                                                                   -- 
+            1. Drawer implemenation; open, close etc.                                                       -- 
+            2. Drawer type can be customized by the theme provider                                          -- 
+        3. Theming/variant                                                                                  -- 
+            1. Sticky header or moving header                                                               -- 
+            2. Other layout customization                                                                   -- 
+            3. Appbar drop shadow                                                                           --           
+12. Check if we can use tailwind fuse library                                                               -- 
     1. https://github.com/gaucho-labs/tailwind-fuse
-11. Take a look at Taildwind Variants and NextUI                                                            -- 
+13. Take a look at Taildwind Variants and NextUI                                                            -- 
     0. It may help in designing themes...                                                                   -- 
     1. https://github.com/nextui-org/tailwind-variants
 

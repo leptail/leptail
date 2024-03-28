@@ -1,4 +1,6 @@
 use leptail::prelude::*;
+use leptail_theme_gradiance::gradiance::navigation::drawer_theme::DrawerVariant;
+use leptail_theme_gradiance::gradiance::HorizontalSide;
 use leptos_icons::*; 
 use leptos_meta::*;
 use leptos_router::*;
@@ -176,23 +178,24 @@ pub fn DocLayout() -> impl IntoView {
         <Body class=theme.body/>
         <Appbar
             hamburger_icon=icondata::ChMenuHamburger
-            close_icon=icondata::CgClose
-            logo=logo
-            main_menu=main_menu
-            right_menu=right_menu
-            mobile_menu=mobile_menu
-        />
-        <div class="mx-auto" >
-            <div class="flex gap-4 mx-4">
-                <div class="flex-none w-80 text-left hidden md:inline-block ">
-                    {links()}
+            close_icon=icondata::CgClose 
+            toolbar_content=main_menu
+            drawer_content=mobile_menu
+            drawer_variant=DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left })
+        >
+            <div class="mx-auto" >
+                <div class="flex gap-4 mx-4">
+                    <div class="flex-none w-80 text-left hidden md:inline-block ">
+                        // {links()}
+                    </div>
+                    <div class="flex-initial w-full">
+                        <Outlet/>
+                    </div> 
                 </div>
-                <div class="flex-initial w-full">
-                    <Outlet/>
-                </div> 
+                
             </div>
-            
-        </div>
+        </Appbar>
+       
         
     }
 }

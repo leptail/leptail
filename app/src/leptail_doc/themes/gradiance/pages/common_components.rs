@@ -44,7 +44,7 @@ pub fn LoremIpsumLong() -> impl IntoView {
 
 #[component]
 pub fn NavMenu(
-    is_open: ReadSignal<bool>,
+    #[prop(into)] is_open: MaybeSignal<bool>,
 ) -> impl IntoView {
     let nav_link_class = "px-4 py-2 text-left flex w-full items-start hover:bg-purple-100 hover:dark:bg-purple-900 no-underline hover:no-underline transition-colors duration-100 cursor-pointer";
     let icon_class = "-my-2 -ml-4 w-12 p-3";

@@ -42,7 +42,7 @@ impl DrawerVariant {
         let bg_gradient = Self::background();
         
         let base_theme = DrawerTheme {
-            wrapper: "z-[101] fixed overflow-x-hidden transition-all duration-500 ease-out".to_string(),
+            wrapper: "z-[101] fixed overflow-x-hidden transition-all duration-300 ease-out".to_string(),
             inner: format!("{bg_gradient}"),
             minimized: String::from(""),
             maximized: String::from(""), 
@@ -117,7 +117,7 @@ impl DrawerVariant {
         let bg_gradient = Self::background();
 
         let base_theme = DrawerTheme {
-            wrapper: "z-[101] md:z-[1] fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-500 ease-out  h-full flex flex-col shrink-0".to_string(),
+            wrapper: "z-[101] md:z-[1] fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-300 ease-out  h-full flex flex-col shrink-0".to_string(),
             inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent shrink-0"),
             minimized: String::from(""),
             maximized: String::from(""), 
@@ -143,7 +143,7 @@ impl DrawerVariant {
 
         let overlay_theme = OverlayTheme {
             wrapper: "relative md:hidden".to_string(),
-            inner: "md:hidden z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
+            inner: "md:hidden z-[100] transition duration-300 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
         }; 
 
         let mut theme = Self::merge(base_theme, side_modifier);
@@ -160,7 +160,7 @@ impl DrawerVariant {
         let bg_gradient = Self::background();
 
         let base_theme = DrawerTheme {
-            wrapper: "z-[101] md:z-[1] fixed md:relative transition-all duration-500 ease-out h-full flex flex-col shrink-0 overflow-x-hidden".to_string(),
+            wrapper: "z-[101] md:z-[1] fixed md:relative transition-all duration-300 ease-out h-full flex flex-col shrink-0 overflow-x-hidden".to_string(),
             inner: format!("{bg_gradient} md:bg-transparent dark:md:bg-transparent shrink-0"),
             minimized: String::from(""),
             maximized: String::from(""), 
@@ -186,7 +186,7 @@ impl DrawerVariant {
 
         let overlay_theme = OverlayTheme {
             wrapper: "relative md:hidden".to_string(),
-            inner: "md:hidden z-[100] transition duration-500 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
+            inner: "md:hidden z-[100] transition duration-300 fixed inset-0 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop".to_string() 
         }; 
 
         let mut theme = Self::merge(base_theme, side_modifier);

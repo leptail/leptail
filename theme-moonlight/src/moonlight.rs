@@ -82,16 +82,12 @@ impl Color {
 pub fn build_theme() -> AppTheme {
 
     let appbar_theme = AppbarTheme {
-        nav: "bg-slate-200 dark:bg-slate-950 text-blue-900 dark:text-blue-300".into(),
-        nav_inner: "mx-auto max-w-screen-xl sm:px-6 md:px-0",
-        lg_menu_container: "relative flex h-16 items-center justify-between",
-        sm_menu_container: "space-y-1 px-2 pb-3 pt-2",
-        hamburger_container: "left-0 flex items-center sm:hidden",
-        hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white",
-        left_side_container: "flex flex-1 items-stretch justify-start",
-        right_side_container: "absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0",
-        logo: "flex flex-shrink-0 items-center",
-        menu: "flex space-x-4",
+        layout: "bg-slate-200 dark:bg-slate-950 text-blue-900 dark:text-blue-300".into(),
+        appbar_container: "mx-auto max-w-screen-xl sm:px-6 md:px-0".to_string(),
+        appbar_inner: "relative flex h-16 items-center justify-between".to_string(), 
+        hamburger_container: "left-0 flex items-center sm:hidden".to_string(),
+        hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white".to_string(),
+        toolbar: "flex space-x-4".to_string(),
     };
 
     let drawer_theme = DrawerTheme::default();

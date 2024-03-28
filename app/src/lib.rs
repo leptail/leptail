@@ -1,3 +1,5 @@
+use leptail_theme_gradiance::gradiance::navigation::drawer_theme::DrawerVariant;
+use leptail_theme_gradiance::gradiance::HorizontalSide;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
@@ -64,15 +66,16 @@ fn AppLayout() -> impl IntoView {
         <Body class=theme.body/>
         <Appbar
             hamburger_icon=icondata::ChMenuHamburger
-            close_icon=icondata::CgClose
-            logo=logo
-            main_menu=main_menu
-            right_menu=right_menu
-            mobile_menu=mobile_menu
-        />
+            close_icon=icondata::CgClose 
+            toolbar_content=main_menu 
+            drawer_content=mobile_menu
+            drawer_variant=DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left })
+        >
         <div>
             <Outlet/>
         </div>
+        </Appbar>
+        
     }
 }
 

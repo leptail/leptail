@@ -14,17 +14,15 @@ pub struct DrawerTheme {
 
 // Drawer Variants and Funtions
 // -----------------------------
-// 1. Drawer Sides -- Theme 
-// 2. Inset drawers -- Theme (Not attached to screen like MUI(joy) drawers variants)
-// 3. Resposive drawers -- Theme (Closed on mobile and open on large screen; seen on on MUI drawer)
-// 4. Persistent Drawers (Body shifts when drawer opens; seen on on MUI drawer)
-// 5. Drawer size -- Theme (xs, sm, md, lg, xl, 2xl, full etc)
+// 1. Drawer Sides -- Theme -- done
+// 2. Inset drawers -- Theme -- done
+// 3. Resposive drawers -- Theme -- done
+// 4. Persistent Drawers -- Theme -- done
+// 5. Drawer size -- Theme -- partial; fix size
 // 6. Focus on specific element -- Prop (Seen on chakra UI)
 // 7. Disable click on the backdrop to close -- Prop  
-// 8. Close on escape key press -- Prop 
-// 9. Half minimized drawer, which can also be persistent -- (MUI largescreen )
-
-
+// 8. Close on escape key press -- Prop --  
+// 9. Half minimized drawer -- Theme -- done
 #[component]
 pub fn Drawer( 
     /// state to control if the drawer is open or not

@@ -184,7 +184,7 @@ pub fn PageDrawerResponsive() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        <NavMenu is_open=is_drawer_open />
+                        <NavMenu is_open={true} />
                     </div>
                 </Drawer> 
                 <div>
