@@ -1611,8 +1611,10 @@ dependencies = [
 name = "leptail-theme-moonlight"
 version = "0.1.0"
 dependencies = [
+ "icondata",
  "leptail",
  "leptail-tailwind-utils",
+ "leptos_icons",
 ]
 
 [[package]]

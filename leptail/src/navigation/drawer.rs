@@ -41,7 +41,7 @@ pub fn Drawer(
 
     view! { 
         <>
-            <div  class=move || format!("{} {}", theme.wrapper, dimension_class())
+            <div class=move || format!("{} {}", theme.wrapper, dimension_class())
                     on:click=move |e| { e.stop_propagation() } >
                 <div class=theme.inner >
                     {children()}

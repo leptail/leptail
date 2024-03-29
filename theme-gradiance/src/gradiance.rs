@@ -175,9 +175,16 @@ pub fn build_theme() -> AppTheme {
         layout: format!("{} text-blue-900 dark:text-blue-300", bg_gradient),
         appbar_container: "mx-auto max-w-screen-2xl sm:px-6 md:px-0".to_string(),
         appbar_inner: "relative flex h-16 items-center justify-between".to_string(),
+        hamburger_icon: icondata::ChMenuHamburger,
+        close_icon: icondata::CgClose,  
         hamburger_container: "left-0 flex items-center sm:hidden".to_string(),
         hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white".to_string(),
         toolbar: "flex space-x-4".to_string(),
+        drawer_title_wrapper: "".to_string(),
+        drawer_title: "".to_string(),
+        drawer_container: "".to_string(),
+        main_content: "".to_string(),
+        drawer_variant: DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left })
     };
 
     let drawer_theme = DrawerVariant::default();

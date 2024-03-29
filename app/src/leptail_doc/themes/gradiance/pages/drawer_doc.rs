@@ -107,7 +107,7 @@ pub fn PageDrawer() -> impl IntoView {
                                 >"X"</button>
                             </div>
                             <div class="mt-5" >
-                                <NavMenu is_open=dvs.state.0 />
+                                <NavMenuExample is_open=dvs.state.0 />
                             </div>
                         </Drawer>
                     </For>    
@@ -184,7 +184,7 @@ pub fn PageDrawerResponsive() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        <NavMenu is_open={true} />
+                        <NavMenuExample is_open={true} />
                     </div>
                 </Drawer> 
                 <div>
@@ -245,7 +245,7 @@ pub fn PageDrawerStaggered() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        <NavMenu is_open=is_drawer_open />
+                        <NavMenuExample is_open=is_drawer_open />
                     </div>
                 </Drawer> 
                 <div>
@@ -306,7 +306,7 @@ pub fn PageDrawerStaggeredMini() -> impl IntoView {
                         >"X"</button>
                     </div>
                     <div class="mt-5" >
-                        <NavMenu is_open=is_drawer_open />
+                        <NavMenuExample is_open=is_drawer_open />
                     </div>
                 </Drawer> 
                 <div>

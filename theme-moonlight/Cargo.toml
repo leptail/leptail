@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 leptail = { path = "../leptail" }
 leptail-tailwind-utils = { path = "../tailwind-utils" }
+leptos_icons = { workspace = true }
+icondata = { workspace = true }

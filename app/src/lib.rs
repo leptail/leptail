@@ -61,15 +61,16 @@ fn AppLayout() -> impl IntoView {
     let logo = || view! {  <div ><A href="" class="text-bold text-xl" >"Leptail"</A></div> };
     let main_menu = || view! {  <div>" Main Menu "</div> };
     let right_menu = || view! {  <div>" Right Menu "</div> };
+    let (is_drawer_open, set_drawer_open) = create_signal(false);
 
     view! { 
         <Body class=theme.body/>
         <Appbar
-            hamburger_icon=icondata::ChMenuHamburger
-            close_icon=icondata::CgClose 
+            is_open=is_drawer_open
+            set_open=set_drawer_open
             toolbar_content=main_menu 
+            drawer_title=|| view! { <div></div> }
             drawer_content=mobile_menu
-            drawer_variant=DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left })
         >
         <div>
             <Outlet/>
