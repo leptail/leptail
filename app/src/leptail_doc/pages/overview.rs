@@ -3,9 +3,9 @@ use leptos_meta::*;
 
 #[component]
 pub fn PageOverview() -> impl IntoView {
-    view! { 
+    view! {
         <Title text="Leptail: Overview"/>
-        <h1 class="text-2xl" >"Overview"</h1>
+        <h1 class="text-2xl">"Overview"</h1>
     }
 }
 

@@ -42,15 +42,23 @@ thiserror = "1.0.58"
 tokio = { version = "1.36.0", features = ["full"] }
 tower = { version = "0.4.13", features = ["full"] }
 tower-http = { version = "0.5", features = ["full"] }
-wasm-bindgen = "=0.2.87"
+wasm-bindgen = "=0.2.92"
 web-sys = "0.3.64"
 
 # sutttle related
 # shuttle deploment is not working properly; 
 # follow the reference here https://github.com/leptos-community/deployment-ssr-shuttle
-shuttle-runtime = { version = "0.41.0", default-features = false }
-shuttle-axum = { version = "0.41.0" }
+shuttle-runtime = { version = "0.43.0", default-features = false }
+shuttle-axum = { version = "0.43.0" }
 
+
+# Optimizing build for wasm bundle size; 
+# See https://book.leptos.dev/deployment/binary_size.html for more details
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
 
 
 # Leptos configurations
@@ -137,6 +145,10 @@ lib-features = []
 #
 # Optional. Defaults to false.
 lib-default-features = false
+
+# Optimizing for wasm bundle size. 
+# See https://book.leptos.dev/deployment/binary_size.html for more details
+lib-profile-release = "wasm-release"
 
 # [[workspace.metadata.leptos.styles]]
 # # Main style file. If scss or sass then it will be compiled to css.

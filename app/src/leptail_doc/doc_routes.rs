@@ -130,18 +130,39 @@ pub fn DocRoutes<P>(path: P) -> impl IntoView
 where
     P: std::fmt::Display,
 {
-    view! { 
+    view! {
         <Route
             path=path
             view=|| {
-                view! {  <DocLayout/> }
+                view! { <DocLayout/> }
             }
         >
-            <Route path="" view=|| view! {  <Redirect path=DocRoutes::Overview/> }/>
-            <Route path=DocRoutes::Overview view=|| { view! {  <PageOverview/> } } />
-            <Route path=DocRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
-            <Route path=DocRoutes::Drawer view=|| { view! {  <PageDrawer/> } } />
-            <Route path=DocRoutes::Switch view=|| { view! {  <PageSwitch/> } } /> 
+
+            <Route path="" view=|| view! { <Redirect path=DocRoutes::Overview/> }/>
+            <Route
+                path=DocRoutes::Overview
+                view=|| {
+                    view! { <PageOverview/> }
+                }
+            />
+            <Route
+                path=DocRoutes::AppBar
+                view=|| {
+                    view! { <PageAppbar/> }
+                }
+            />
+            <Route
+                path=DocRoutes::Drawer
+                view=|| {
+                    view! { <PageDrawer/> }
+                }
+            />
+            <Route
+                path=DocRoutes::Switch
+                view=|| {
+                    view! { <PageSwitch/> }
+                }
+            />
         </Route>
     }
 }
@@ -156,48 +177,55 @@ pub fn DocLayout() -> impl IntoView {
     let theme = use_context::<AppTheme>().unwrap_or_default();
 
     let links = move || view! {
-        <ul class="space-y-4" >
-                <li><A href=DocRoutes::Overview >"Overview"</A></li>
-                <li><A href=DocRoutes::AppBar >"Appbar"</A></li>
-                <li><A href=DocRoutes::Drawer >"Drawer"</A></li>
-                <li><A href=DocRoutes::Switch >"Switch"</A></li>
+        <ul class="space-y-4">
+            <li>
+                <A href=DocRoutes::Overview>"Overview"</A>
+            </li>
+            <li>
+                <A href=DocRoutes::AppBar>"Appbar"</A>
+            </li>
+            <li>
+                <A href=DocRoutes::Drawer>"Drawer"</A>
+            </li>
+            <li>
+                <A href=DocRoutes::Switch>"Switch"</A>
+            </li>
         </ul>
     };
 
-    let mobile_menu = move || view! {  
-        <div class="flex gap-4">
-            {links()}
+    let mobile_menu = move || view! { <div class="flex gap-4">{links()}</div> };
+    // let mobile_menu = || view! {  <div>"Mobile Menu " </div> };
+    let logo = || view! {
+        <div>
+            <A href=DocRoutes::Overview class="text-bold text-xl">
+                "Leptail"
+            </A>
         </div>
     };
-    // let mobile_menu = || view! {  <div>"Mobile Menu " </div> };
-    let logo = || view! {  <div ><A href=DocRoutes::Overview class="text-bold text-xl" >"Leptail"</A></div> };
-    let main_menu = || view! {  <div>" Main Menu "</div> };
-    let right_menu = || view! {  <div>" Right Menu "</div> };
+    let main_menu = || view! { <div>" Main Menu "</div> };
+    let right_menu = || view! { <div>" Right Menu "</div> };
 
     let (is_drawer_open, set_drawer_open) = create_signal(false);
      
-    view! { 
+    view! {
         <Body class=theme.body/>
-        <Appbar 
+        <Appbar
             is_open=is_drawer_open
             set_open=set_drawer_open
             toolbar_content=main_menu
             drawer_title=|| view! { <div></div> }
-            drawer_content=mobile_menu 
+            drawer_content=mobile_menu
         >
-            <div class="mx-auto" >
+            <div class="mx-auto">
                 <div class="flex gap-4 mx-4">
-                    <div class="flex-none w-80 text-left hidden md:inline-block ">
-                        // {links()}
+                    <div class="flex-none w-80 text-left hidden md:inline-block ">// {links()}
                     </div>
                     <div class="flex-initial w-full">
                         <Outlet/>
-                    </div> 
+                    </div>
                 </div>
-                
+
             </div>
         </Appbar>
-       
-        
     }
 }

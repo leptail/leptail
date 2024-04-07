@@ -17,19 +17,34 @@ pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc. 
     provide_meta_context();
 
-    view! { 
-        <Stylesheet id="leptos" href="/pkg/start-axum-workspace.css"/>  
-        
+    view! {
+        <Stylesheet id="leptos" href="/pkg/start-axum-workspace.css"/>
+
         <Router>
             <main>
                 <Routes>
-                    <Route path="" view=|| { view! {  <EmptyLayout/> } } >
-                        <Route path="" view=|| { view! {  <AppLayout/> } } >
-                            <Route path="" view=|| { view! {  <HomePage/> } } />
+                    <Route
+                        path=""
+                        view=|| {
+                            view! { <EmptyLayout/> }
+                        }
+                    >
+                        <Route
+                            path=""
+                            view=|| {
+                                view! { <AppLayout/> }
+                            }
+                        >
+                            <Route
+                                path=""
+                                view=|| {
+                                    view! { <HomePage/> }
+                                }
+                            />
                         </Route>
                         <DocRoutes path="doc"/>
-                        <GradianceRoutes path="theme/gradiance" />
-                        <MoonlightRoutes path="theme/moonlight" />
+                        <GradianceRoutes path="theme/gradiance"/>
+                        <MoonlightRoutes path="theme/moonlight"/>
                     </Route>
                 </Routes>
             </main>
@@ -40,7 +55,7 @@ pub fn App() -> impl IntoView {
 #[component]
 fn EmptyLayout() -> impl IntoView {
 
-    view! { 
+    view! {
         <div>
             <Outlet/>
         </div>
@@ -56,27 +71,32 @@ fn AppLayout() -> impl IntoView {
     let theme = use_context::<AppTheme>().unwrap_or_default();
     
 
-    let mobile_menu = move || view! {  <div>"Mobile Menu "</div> };
+    let mobile_menu = move || view! { <div>"Mobile Menu "</div> };
     // let mobile_menu = || view! {  <div>"Mobile Menu " </div> };
-    let logo = || view! {  <div ><A href="" class="text-bold text-xl" >"Leptail"</A></div> };
-    let main_menu = || view! {  <div>" Main Menu "</div> };
-    let right_menu = || view! {  <div>" Right Menu "</div> };
+    let logo = || view! {
+        <div>
+            <A href="" class="text-bold text-xl">
+                "Leptail"
+            </A>
+        </div>
+    };
+    let main_menu = || view! { <div>" Main Menu "</div> };
+    let right_menu = || view! { <div>" Right Menu "</div> };
     let (is_drawer_open, set_drawer_open) = create_signal(false);
 
-    view! { 
+    view! {
         <Body class=theme.body/>
         <Appbar
             is_open=is_drawer_open
             set_open=set_drawer_open
-            toolbar_content=main_menu 
+            toolbar_content=main_menu
             drawer_title=|| view! { <div></div> }
             drawer_content=mobile_menu
         >
-        <div>
-            <Outlet/>
-        </div>
+            <div>
+                <Outlet/>
+            </div>
         </Appbar>
-        
     }
 }
 
@@ -85,7 +105,7 @@ fn AppLayout() -> impl IntoView {
 #[component]
 fn HomePage() -> impl IntoView {
 
-    view! { 
+    view! {
         <Title text="Leptail: Headless with default styled component library for Leptos"/>
         <div class="flex flex-col content-center gap-5 my-10">
             <h1>"Welcome to Leptail!"</h1>

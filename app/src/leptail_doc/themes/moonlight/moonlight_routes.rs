@@ -118,16 +118,27 @@ pub fn MoonlightRoutes<P>(path: P) -> impl IntoView
 where
     P: std::fmt::Display,
 {
-    view! { 
+    view! {
         <Route
             path=path
             view=|| {
-                view! {  <MoonlightLayout/> }
+                view! { <MoonlightLayout/> }
             }
-        >  
+        >
+
             // <Route path=MoonlightRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
-            <Route path=MoonlightRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
-            <Route path=MoonlightRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
+            <Route
+                path=MoonlightRoutes::Drawer
+                view=|| {
+                    view! { <PageDrawer/> }
+                }
+            />
+            <Route
+                path=MoonlightRoutes::Switch
+                view=|| {
+                    view! { <PageSwitch/> }
+                }
+            />
         </Route>
     }
 }
@@ -141,11 +152,12 @@ pub fn MoonlightLayout() -> impl IntoView {
     // provide_context(leptail_theme_moonlight::build_theme());
     let theme = use_context::<AppTheme>().unwrap_or_default();
      
-    view! { 
+    view! {
         <Body class=theme.body/>
-        <div class="mx-auto max-w-screen-xl" >
-            <div class="m-4" ><Outlet/></div>
+        <div class="mx-auto max-w-screen-xl">
+            <div class="m-4">
+                <Outlet/>
+            </div>
         </div>
-        
     }
 }

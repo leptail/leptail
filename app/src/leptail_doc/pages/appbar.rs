@@ -3,8 +3,8 @@ use leptos_meta::*;
 
 #[component]
 pub fn PageAppbar() -> impl IntoView {
-    view! { 
+    view! {
         <Title text="Leptail: Drawer"/>
-        <h1 class="text-2xl" >"Appbar"</h1>
+        <h1 class="text-2xl">"Appbar"</h1>
     }
 }

@@ -39,25 +39,24 @@ pub fn Drawer(
     // let show_overlay = move || is_open() && theme.has_overlay;
     // let overlay_variant = theme.overlay_theme;
 
-    view! { 
+    view! {
         <>
-            <div class=move || format!("{} {}", theme.wrapper, dimension_class())
-                    on:click=move |e| { e.stop_propagation() } >
-                <div class=theme.inner >
-                    {children()}
-                </div>
+            <div
+                class=move || format!("{} {}", theme.wrapper, dimension_class())
+                on:click=move |e| { e.stop_propagation() }
+            >
+                <div class=theme.inner>{children()}</div>
             </div>
             <Show
-                when={is_open}
-                fallback=move || { view! {  <></> } }
+                when=is_open
+                fallback=move || {
+                    view! { <></> }
+                }
             >
-                <Overlay 
-                    on_click=move || set_open.set(false) 
-                    variant={theme.overlay_theme.clone()}
-                >
+                <Overlay on_click=move || set_open.set(false) variant=theme.overlay_theme.clone()>
                     <div></div>
                 </Overlay>
-            </Show> 
+            </Show>
         </>
     }
 }

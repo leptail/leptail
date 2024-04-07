@@ -124,19 +124,45 @@ pub fn GradianceRoutes<P>(path: P) -> impl IntoView
 where
     P: std::fmt::Display,
 {
-    view! { 
+    view! {
         <Route
             path=path
             view=|| {
-                view! {  <GradianceLayout/> }
+                view! { <GradianceLayout/> }
             }
-        >  
+        >
+
             // <Route path=GradianceRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
-            <Route path=GradianceRoutes::Drawer view=|| { view! {  <PageDrawer /> } } />
-            <Route path=GradianceRoutes::DrawerResponsive view=|| { view! {  <PageDrawerResponsive /> } } />
-            <Route path=GradianceRoutes::DrawerStaggered view=|| { view! {  <PageDrawerStaggered /> } } />
-            <Route path=GradianceRoutes::DrawerStaggeredMini view=|| { view! {  <PageDrawerStaggeredMini /> } } />
-            <Route path=GradianceRoutes::Switch view=|| { view! {  <PageSwitch /> } } /> 
+            <Route
+                path=GradianceRoutes::Drawer
+                view=|| {
+                    view! { <PageDrawer/> }
+                }
+            />
+            <Route
+                path=GradianceRoutes::DrawerResponsive
+                view=|| {
+                    view! { <PageDrawerResponsive/> }
+                }
+            />
+            <Route
+                path=GradianceRoutes::DrawerStaggered
+                view=|| {
+                    view! { <PageDrawerStaggered/> }
+                }
+            />
+            <Route
+                path=GradianceRoutes::DrawerStaggeredMini
+                view=|| {
+                    view! { <PageDrawerStaggeredMini/> }
+                }
+            />
+            <Route
+                path=GradianceRoutes::Switch
+                view=|| {
+                    view! { <PageSwitch/> }
+                }
+            />
         </Route>
     }
 }
@@ -150,11 +176,12 @@ pub fn GradianceLayout() -> impl IntoView {
     // provide_context(leptail_theme_moonlight::build_theme());
     let theme = use_context::<AppTheme>().unwrap_or_default();
      
-    view! { 
+    view! {
         <Body class=theme.body/>
-        <div class="mx-auto" >
-            <div class="" ><Outlet/></div>
+        <div class="mx-auto">
+            <div class="">
+                <Outlet/>
+            </div>
         </div>
-        
     }
 }

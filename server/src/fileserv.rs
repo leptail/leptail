@@ -16,6 +16,8 @@ pub async fn file_and_error_handler(
     State(options): State<LeptosOptions>,
     req: Request<Body>,
 ) -> AxumResponse {
+    // TODO: Implement the logic to serve compressed files in production build  
+    // Take a look at the https://github.com/leptos-rs/cargo-leptos/pull/165
     let root = options.site_root.clone();
     let res = get_static_file(uri.clone(), &root).await.unwrap();
 

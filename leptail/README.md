@@ -116,10 +116,12 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
             2. Other layout customization                                                                   -- 
             3. Appbar drop shadow                                                                           --           
 12. Check if we can use tailwind fuse library                                                               -- 
-    1. https://github.com/gaucho-labs/tailwind-fuse
+    1. https://github.com/gaucho-labs/tailwind-fuse                                                         -- 
 13. Take a look at Taildwind Variants and NextUI                                                            -- 
     0. It may help in designing themes...                                                                   -- 
-    1. https://github.com/nextui-org/tailwind-variants
+    1. https://github.com/nextui-org/tailwind-variants                                                      -- 
+14. Implement compressed static file serving for leptail demo project                                       -- 
+    1. Read more here. https://github.com/leptos-rs/cargo-leptos/pull/165                                   --
 
 ## Design Decisions
 1. Arguments about component variants should be provided by theme! 

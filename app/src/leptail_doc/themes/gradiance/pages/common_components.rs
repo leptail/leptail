@@ -6,7 +6,7 @@ use leptos_meta::*;
 #[component]
 pub fn LoremIpsumLong() -> impl IntoView {
     view! {
-        <div class="text-left m-5" >
+        <div class="text-left m-5">
             <p>
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -23,7 +23,7 @@ pub fn LoremIpsumLong() -> impl IntoView {
                 Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
                 Consequat mauris nunc congue nisi vitae suscipit."
             </p>
-            <p class="mt-2" >
+            <p class="mt-2">
                 "Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam.
                 Pulvinar elementum integer enim neque volutpat ac tincidunt. 
                 Ornare suspendisse sed nisi lacus sed viverra tellus. 
@@ -53,35 +53,51 @@ pub fn NavMenuExample(
         <ul class="list-reset">
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::ChMail /></div>
+                    <div class=icon_class>
+                        <Icon icon=icondata::ChMail/>
+                    </div>
                     <span class=nav_text_class>"Inbox"</span>
                 </a>
             </li>
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::ChStar /></div>
+                    <div class=icon_class>
+                        <Icon icon=icondata::ChStar/>
+                    </div>
                     <span class=nav_text_class>"Starred"</span>
                 </a>
             </li>
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::BsPencilSquare /></div>
-                    <span class=nav_text_class>"Draft"</span> </a>
+                    <div class=icon_class>
+                        <Icon icon=icondata::BsPencilSquare/>
+                    </div>
+                    <span class=nav_text_class>"Draft"</span>
+                </a>
             </li>
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::BsSend /></div>
-                    <span class=nav_text_class>"Sent"</span> </a>
+                    <div class=icon_class>
+                        <Icon icon=icondata::BsSend/>
+                    </div>
+                    <span class=nav_text_class>"Sent"</span>
+                </a>
             </li>
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::BsTrash /></div>
-                    <span class=nav_text_class>"Trash"</span> </a>
+                    <div class=icon_class>
+                        <Icon icon=icondata::BsTrash/>
+                    </div>
+                    <span class=nav_text_class>"Trash"</span>
+                </a>
             </li>
             <li>
                 <a href="#" class=nav_link_class>
-                    <div class=icon_class ><Icon icon=icondata::BsExclamation /></div>
-                    <span class=nav_text_class>"Spam"</span> </a>
+                    <div class=icon_class>
+                        <Icon icon=icondata::BsExclamation/>
+                    </div>
+                    <span class=nav_text_class>"Spam"</span>
+                </a>
             </li>
         </ul>
     }

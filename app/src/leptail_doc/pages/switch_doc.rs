@@ -9,13 +9,13 @@ use crate::leptail_doc::themes::gradiance::gradiance_routes::GradianceRoutes;
 pub fn PageSwitch() -> impl IntoView { 
  
 
-    view! { 
+    view! {
         <Title text="Leptail: Switch Component"/>
-        <h1 class="text-2xl" >"Switch"</h1>
+        <h1 class="text-2xl">"Switch"</h1>
 
-        <div class="flex flex-col gap-4" >
-            <ThemeExampleFrame  src=GradianceRoutes::Switch.as_href() heading="Gradiance Examples" />
-            <ThemeExampleFrame  src=MoonlightRoutes::Switch.as_href() heading="Moonlight Examples" />
+        <div class="flex flex-col gap-4">
+            <ThemeExampleFrame src=GradianceRoutes::Switch.as_href() heading="Gradiance Examples"/>
+            <ThemeExampleFrame src=MoonlightRoutes::Switch.as_href() heading="Moonlight Examples"/>
         </div>
     }
 }

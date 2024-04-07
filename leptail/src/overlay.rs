@@ -27,12 +27,9 @@ where
     // let theme = use_context::<AppTheme>().unwrap_or_default().overlay;
     // let theme = theme.overlay;
 
-    view! { 
+    view! {
         <div class=theme.wrapper>
-            <div
-                class=theme.inner
-                on:click=move |_| (on_click)()
-            >
+            <div class=theme.inner on:click=move |_| (on_click)()>
                 {children()}
             </div>
         </div>

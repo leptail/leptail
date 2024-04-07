@@ -65,9 +65,7 @@ where
     DC: Fn() -> IV + 'static, 
     IV: IntoView,
 {
-    // let theme = use_context::<AppTheme>().unwrap_or_default().appbar;
     let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().appbar);
-    // let theme = theme.appbar;
     
     // TODO: checkout https://leptos-rs.github.io/leptos/interlude_projecting_children.html see if it helps
     
@@ -78,7 +76,7 @@ where
     let hamburger_btn = view! {
         <button
             type="button"
-            // TODO: check why is it being moved if this is uncommeneted here
+            // TODO: add modifier class when the drawer state is changed.
             class=hamburger_btn_class
             aria-controls="mobile-menu"
             aria-expanded="false"
@@ -86,7 +84,8 @@ where
                 set_open.set(true);
             }
         >
-            <span class="sr-only" >"Open main menu"</span>
+
+            <span class="sr-only">"Open main menu"</span>
             <Icon icon=theme.hamburger_icon/>
         </button>
     };
@@ -101,38 +100,31 @@ where
                 set_open.set(false);
             }
         >
-            <span class="sr-only" >"Close main menu"</span>
+
+            <span class="sr-only">"Close main menu"</span>
             <Icon icon=theme.close_icon/>
         </button>
     };
 
-    view! { 
+    view! {
         <div class=theme.layout>
             <div class=theme.appbar_container>
                 <div class=theme.appbar_inner>
-                    <div class=theme.hamburger_container>
-                        {hamburger_btn.clone()}
-                    </div>
-                    <div class=theme.toolbar>
-                        {toolbar_content()}
-                    </div>
+                    <div class=theme.hamburger_container>{hamburger_btn.clone()}</div>
+                    <div class=theme.toolbar>{toolbar_content()}</div>
                 </div>
-            </div> 
-            <div class=theme.drawer_container >
-                <Drawer is_open=is_open set_open=set_open variant=theme.drawer_variant >
-                    <div class=theme.drawer_title_wrapper >
-                        <div class=theme.drawer_title >
-                            {drawer_title()}
-                        </div>
+            </div>
+            <div class=theme.drawer_container>
+                <Drawer is_open=is_open set_open=set_open variant=theme.drawer_variant>
+                    <div class=theme.drawer_title_wrapper>
+                        <div class=theme.drawer_title>{drawer_title()}</div>
                         {close_btn}
                     </div>
                     {drawer_content()}
                 </Drawer>
-                <div class=theme.main_content >
-                    {children()}
-                </div>
+                <div class=theme.main_content>{children()}</div>
             </div>
-            
+
         </div>
     }
 }

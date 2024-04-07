@@ -107,25 +107,27 @@ pub fn Switch(
 
     let tab_index_str = move || tab_index.or(0)().to_string();
 
-    view! { 
-        <div role="switch" 
-            aria-checked=move ||  if is_on(){ "true" } else { "false" } 
+    view! {
+        <div
+            role="switch"
+            aria-checked=move || if is_on() { "true" } else { "false" }
             tabindex=tab_index_str
-            //TODO: try this if it works ex: class=("button-20", move || count() % 2 == 1)
-            class=switch_modifier 
-            on:click=move |_| toggle_state() 
-            on:keyup=on_key_up            
-            >
+            // TODO: try this if it works ex: class=("button-20", move || count() % 2 == 1)
+            class=switch_modifier
+            on:click=move |_| toggle_state()
+            on:keyup=on_key_up
+        >
             <div class=icon_modifier>
                 <Show
                     when=is_on
                     fallback=move || {
-                        view! {  <Icon icon=off_icon/> }
+                        view! { <Icon icon=off_icon/> }
                     }
                 >
+
                     <Icon icon=on_icon/>
                 </Show>
             </div>
-        </div> 
+        </div>
     }
 }

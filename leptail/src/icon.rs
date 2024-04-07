@@ -22,10 +22,9 @@ pub fn Icon(
 
     // let ico: View = icon.into();
 
-    view! { 
+    view! {
         <>
-            <leptos_icons::Icon icon=icon  />
-            // { ico }
+            <leptos_icons::Icon icon=icon></leptos_icons::Icon>
         </>
     }
 }
