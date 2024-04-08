@@ -96,6 +96,8 @@ impl SwitchVariant {
     pub fn default() -> SwitchTheme {
         Self::variant(None, None)
     }
+
+    // TODO: user builder pattern to build switch theme 
     pub fn variant(color: Option<Color>, size: Option<Size>) -> SwitchTheme{
         
         let mut theme = Self::base_theme().clone();

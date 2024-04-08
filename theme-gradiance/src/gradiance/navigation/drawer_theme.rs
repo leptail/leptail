@@ -210,7 +210,7 @@ impl DrawerVariant {
         Self::variant(&dv)
     }
 
-    // TODO: add variant: 
+    // TODO: refactor this use use builder pattern
     pub fn variant(variant: &DrawerVariant) -> DrawerTheme{ 
          
         match variant {

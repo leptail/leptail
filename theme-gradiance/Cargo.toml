@@ -10,6 +10,7 @@ leptail = { path = "../leptail" }
 leptail-tailwind-utils = { path = "../tailwind-utils" }
 leptos_icons = { workspace = true }
 icondata = { workspace = true }
+tailwind_fuse = { workspace = true }
 
 # leptos.workspace = true
 # leptos_meta.workspace = true

@@ -204,11 +204,7 @@ pub fn PageDrawerResponsive() -> impl IntoView {
                 <Drawer
                     is_open=is_drawer_open
                     set_open=set_drawer_open
-                    variant=DrawerVariant::variant(
-                        &DrawerVariant::Responsive {
-                            side: HorizontalSide::Left,
-                        },
-                    )
+                    variant=DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left, })
                 >
                     <div class="flex flex-row md:hidden">
                         <h1 class="text-2xl font-semibold">"Drawer Title"</h1>

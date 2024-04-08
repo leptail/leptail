@@ -9,11 +9,11 @@ pub struct AppbarTheme {
     pub layout: String,
     pub appbar_container:  String,
     pub appbar_inner:  String, 
+    pub toolbar: String,
     pub hamburger_icon: icondata::Icon, 
     pub close_icon: icondata::Icon,  
     pub hamburger_container:  String,
     pub hamburger_button: String, // TODO: once the button theme is defined, refactor to use the button theme instead.  
-    pub toolbar: String,
     pub drawer_title_wrapper: String,
     pub drawer_title: String,
     pub drawer_container: String, 

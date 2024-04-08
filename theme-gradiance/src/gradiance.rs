@@ -2,10 +2,11 @@ use leptail::prelude::*;
 use leptail_tailwind_utils::*;
 use crate::SwitchVariant;
 
-use self::navigation::drawer_theme::DrawerVariant;
+use self::{navigation::drawer_theme::DrawerVariant, surfaces::appbar_theme::AppbarVariant};
 
 pub mod input; 
 pub mod navigation;
+pub mod surfaces;
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Default)]
 pub enum Size{
@@ -171,21 +172,14 @@ pub fn build_theme() -> AppTheme {
             GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
         );
 
-    let appbar_theme = AppbarTheme {
-        layout: format!("{} text-blue-900 dark:text-blue-300", bg_gradient),
-        appbar_container: "mx-auto max-w-screen-2xl sm:px-6 md:px-0".to_string(),
-        appbar_inner: "relative flex h-16 items-center justify-between".to_string(),
-        hamburger_icon: icondata::ChMenuHamburger,
-        close_icon: icondata::CgClose,  
-        hamburger_container: "left-0 flex items-center sm:hidden".to_string(),
-        hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white".to_string(),
-        toolbar: "flex space-x-4".to_string(),
-        drawer_title_wrapper: "".to_string(),
-        drawer_title: "".to_string(),
-        drawer_container: "".to_string(),
-        main_content: "".to_string(),
-        drawer_variant: DrawerVariant::variant(&DrawerVariant::Responsive { side: HorizontalSide::Left })
-    };
+    let appbar_theme = AppbarVariant::default();
+    let appbar_theme = AppbarVariant::builder()
+        .sticky(true)
+        .shadow(Size::Large)
+        .bg_color(Color::Primary)
+        .max_width(Size::Large)
+        .drawer_variant(DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false })
+        .build();
 
     let drawer_theme = DrawerVariant::default();
 
