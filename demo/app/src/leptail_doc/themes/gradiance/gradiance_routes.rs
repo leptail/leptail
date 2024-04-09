@@ -4,7 +4,7 @@ use leptos_router::*;
 use leptail::prelude::*;
 use leptos_meta::*;
 
-use crate::leptail_doc::themes::gradiance::pages::{drawer_doc::*, switch_doc::PageSwitch};
+use crate::leptail_doc::themes::gradiance::pages::{drawer_doc::*, switch_doc::PageSwitch, appbar_doc::PageAppbar};
 
 #[derive(Debug, Copy, Clone)]
 pub enum GradianceRoutes { 
@@ -14,7 +14,7 @@ pub enum GradianceRoutes {
     // Grid,
     // Separator,
     // Skeleton,
-    AppBar,
+    Appbar,
     Drawer,
     DrawerResponsive,
     DrawerStaggered,
@@ -63,7 +63,7 @@ impl GradianceRoutes {
             // GradianceRoutes::Grid => "grid",
             // GradianceRoutes::Separator => "separator",
             // GradianceRoutes::Skeleton => "skeleton",
-            GradianceRoutes::AppBar => "app-bar",
+            GradianceRoutes::Appbar => "app-bar",
             GradianceRoutes::Drawer => "drawer",
             GradianceRoutes::DrawerResponsive => "drawer-responsive",
             GradianceRoutes::DrawerStaggered => "drawer-staggered",
@@ -132,7 +132,7 @@ where
             }
         >
 
-            // <Route path=GradianceRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
+            <Route path=GradianceRoutes::Appbar view=|| { view! {  <PageAppbar/> } } />
             <Route
                 path=GradianceRoutes::Drawer
                 view=|| {

@@ -177,7 +177,7 @@ pub fn build_theme() -> AppTheme {
         .sticky(true)
         .shadow(Size::Large)
         .bg_color(Color::Primary)
-        .max_width(Size::Large)
+        .max_width(Size::XLarge)
         .drawer_variant(DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false })
         .build();
 

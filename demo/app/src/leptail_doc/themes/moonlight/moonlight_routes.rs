@@ -14,7 +14,7 @@ pub enum MoonlightRoutes {
     // Grid,
     // Separator,
     // Skeleton,
-    AppBar,
+    Appbar,
     Drawer,
     // Tab,
     // Table,
@@ -60,7 +60,7 @@ impl MoonlightRoutes {
             // MoonlightRoutes::Grid => "grid",
             // MoonlightRoutes::Separator => "separator",
             // MoonlightRoutes::Skeleton => "skeleton",
-            MoonlightRoutes::AppBar => "app-bar",
+            MoonlightRoutes::Appbar => "app-bar",
             MoonlightRoutes::Drawer => "drawer",
             // MoonlightRoutes::Tab => "tabs",
             // MoonlightRoutes::Table => "table",
@@ -126,7 +126,7 @@ where
             }
         >
 
-            // <Route path=MoonlightRoutes::AppBar view=|| { view! {  <PageAppbar/> } } />
+            // <Route path=MoonlightRoutes::Appbar view=|| { view! {  <PageAppbar/> } } />
             <Route
                 path=MoonlightRoutes::Drawer
                 view=|| {

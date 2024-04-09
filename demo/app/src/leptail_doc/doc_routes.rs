@@ -225,16 +225,16 @@ pub fn DocLayout() -> impl IntoView {
                 .build()
             }
         >
-            <div class="mx-auto">
-                <div class="flex gap-4 mx-4">
-                    <div class="flex-none w-80 text-left hidden md:inline-block ">// {links()}
-                    </div>
-                    <div class="flex-initial w-full">
-                        <Outlet/>
-                    </div>
-                </div>
+            // <div class="mx-auto">
+            //     <div class="flex gap-4 mx-4">
+                     
+            //         <div class="flex-initial w-full">
+                        
+            //         </div>
+            //     </div>
 
-            </div>
+            // </div>
+            <Outlet/>
         </Appbar>
     }
 }

@@ -1,4 +1,4 @@
-use tailwind_fuse::tw_merge;
+use tailwind_fuse::{merge::tw_merge, tw_merge};
 
 use crate::gradiance::*;
 
@@ -64,10 +64,11 @@ impl AppbarVariant {
         //     );
 
         let bg_gradient = "";
-        let layout = tw_merge!("");
+        let layout = tw_merge!("relative");
         let appbar_container = tw_merge!(
             "px-1 py-1 md:px-0",
-            if self.is_sticky { "sticky" } else { "" },
+            "border-b border-purple-50 dark:border-purple-950",
+            if self.is_sticky { "sticky top-0 z-[1] md:z-[102]" } else { "" },
             match self.shadow {
                 Some(shadow) => match shadow {
                     Size::XSmall => "drop-shadow-sm",
@@ -78,9 +79,10 @@ impl AppbarVariant {
                 },
                 None => "",
             },
+            // TODO: add colour  
             match self.bg_color  {
-                Some(color) => "",
-                None => "bg-transparent backdrop-blur-sm border-b",
+                Some(color) => tw_merge!(color.make_shade("bg", Palette::S100), color.make_shade("dark:bg", Palette::S900)),
+                None => "bg-transparent backdrop-blur-sm".to_string(),
             }, 
         );
 
@@ -94,6 +96,22 @@ impl AppbarVariant {
                     Size::Large => "max-w-screen-lg",
                     Size::XLarge => "max-w-screen-xl",
                 },
+                // TODO: add fullwidth case. 
+                None => "",
+            }
+        );
+
+        let drawer_container = tw_merge!(
+            "flex flex-row", 
+            match self.max_width {
+                Some(width) => match width {
+                    Size::XSmall => "mx-auto max-w-screen-sm",
+                    Size::Small => "mx-auto max-w-screen-sm",
+                    Size::Medium => "mx-auto max-w-screen-md",
+                    Size::Large => "mx-auto max-w-screen-lg",
+                    Size::XLarge => "mx-auto max-w-screen-xl",
+                },
+                // TODO: add fullwidth case. 
                 None => "",
             }
         );
@@ -111,8 +129,8 @@ impl AppbarVariant {
             hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white".to_string(),
             drawer_title_wrapper: "flex flex-row md:hidden".to_string(),
             drawer_title: "".to_string(),
-            drawer_container: "".to_string(),
-            main_content: "".to_string(),
+            drawer_container: drawer_container,
+            main_content: "w-full".to_string(),
             drawer_variant: DrawerVariant::variant(&self.drawer_variant.unwrap_or(default_drawer_variant))
         };
 

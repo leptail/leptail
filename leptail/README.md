@@ -11,10 +11,11 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Rating
     [] Select
     [] Slider
-    [X] Switch
+    [x] Switch
     [] Text Field
     [] Transfer List
     [] Toggle Button
+
 ## Data display
     [] Avatar
     [] Badge
@@ -26,6 +27,7 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Table
     [] Tooltip
     [] Typography
+
 ## Feedback
     [] Alert
     [] Backdrop
@@ -33,11 +35,13 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Progress
     [] Skeleton
     [] Snackbar
+
 ## Surfaces
     [] Accordion
     [] App Bar
     [] Card
     [] Paper
+
 ## Navigation
     [] Bottom Navigation
     [] Breadcrumbs
@@ -48,6 +52,7 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Speed Dial
     [] Stepper
     [] Tabs
+
 ## Layout
     [] Box
     [] Container 
@@ -57,6 +62,7 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Stack
     [] Image List
     [] Hidden
+
 ## Utils
     [] Click-Away Listener
     [] CSS Baseline
@@ -68,41 +74,30 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     [] Textarea Autosize
     [] Transitions
     [] useMediaQuery
+
 ## MUI X
     [] Data Grid
     [] Date & Time Pickers
+
 ## Lab
     [] Masonry
     [] Timeline
     [] Tree View
 
 ## TODO: 
-1. Create a backdrop/overlay component                                                                      -- 
-2. Create Drawer component (which uses backdrop) and use it to make appbar                                  -- 
-5. Animation: Can you use already existing animations                                                       -- 
-    1. Add animiation for drawer                                                                            --  
-6. Keyboard integration and accessability                                                                   -- 
+1. Complete the theming for existing components and test it                                                 -- 
+    1. Variant may need to be passed as reactive signal                                                     -- 
+    2. Allow user to dynamically change the variant in documentation                                        --
+2. Keyboard integration and accessability                                                                   -- 
     1. Use leptos use whereever possible                                                                    -- 
-7. Benchmark and get inspired from the following libraries                                                  --  
-    1. https://zagjs.com/components/react/switch                                                            -- 
-    2. https://www.radix-ui.com/primitives/docs/components/switch                                           --  
-    3. https://ariakit.org/components                                                                       --  
-    4. https://kobalte.dev/docs/core/components/switch                                                      --  
-8. Leptail library and theme installation should be easy to do                                              -- 
+3. Leptail library and theme installation should be easy to do                                              -- 
     1. There should be a option to merge app's tailwind config with theme's tailwind config                 --  
-9. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --  
-10. Drawer implemenation                                                                                    -- 
-    5. The app-bar can have drawer that can have intermidate (for like icon drawer, full menu drawer)       -- 
-        1. The leptail app can have two appbars                                                             -- 
-            1. One used by home page                                                                        -- 
-                1. Drawer variant: more web landing page looking app;                                       -- 
-                2. Layout brakeover: 2xl or xl customizazble; 
-            2. One used by doc pages                                                                        --
-                1. Drawer variant: persistent drawer on desktop;                                            -- 
-                2. Layout brakeover: full width page                                                        --
-11. Appbar Implementation                                                                                   -- 
+4. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --  
+5. Drawer implemenation                                                                                     -- 
+    1. Improve the theme                                                                                    -- 
+6. Appbar Implementation                                                                                    -- 
     1. https://mantine.dev/ Has nice concept as appshell. We are essentially creating appshell with appbar  -- 
-    2. Appbar will have 
+    2. Appbar will have                                                                                     -- 
         1. User provided                                                                                    -- 
             1. Toolbar                                                                                      -- done
             2. Drawer Content                                                                               -- done
@@ -111,31 +106,25 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
         2. System Default                                                                                   -- 
             1. Drawer implemenation; open, close etc.                                                       -- 
             2. Drawer type can be customized by the theme provider                                          -- 
-        3. Theming/variant                                                                                  -- 
+        3. Theming/variant                                                                                  -- partial
             1. Sticky header or moving header                                                               -- 
             2. Other layout customization                                                                   -- 
-            3. Appbar drop shadow                                                                           --           
-12. Check if we can use tailwind fuse library                                                               -- 
-    1. https://github.com/gaucho-labs/tailwind-fuse                                                         -- 
-13. Take a look at Taildwind Variants and NextUI                                                            -- 
-    0. It may help in designing themes...                                                                   -- 
-    1. https://github.com/nextui-org/tailwind-variants                                                      -- 
-14. Implement compressed static file serving for leptail demo project                                       -- 
-    1. Read more here. https://github.com/leptos-rs/cargo-leptos/pull/165                                   --
+            3. Appbar drop shadow                                                                           -- 
+7. Review the theme generation code.                                                                        --           
+8. Check if we can use tailwind fuse library                                                                -- done 
+9. Path towards publishing the library                                                                      -- 
+    1. Refactor the project structure                                                                       -- done
+    2. Tailwind css file generation: Figureout a way to do this                                             --  
+    2. Implement compressed static file serving for leptail demo project                                    -- 
+        a. Read more here. https://github.com/leptos-rs/cargo-leptos/pull/165                               -- 
 
 ## Design Decisions
 1. Arguments about component variants should be provided by theme! 
-    1. For: 
-        1. Thirdparty theme provider will have more flexibility, thus increasing the innovation 
-        2. Variants are not really part of reactivity; thus it's not part of core component lib
-        3. Switching theme may need to change code especially if provided by thirdparty
-        4. Performance: 
-        5. Bundle Size: 
-    2. Against: 
-        1. Being part of core libarary will improve consistency; 
-        2. switching theme will not change change force users to change the code 
-        3. Performance: 
-        4. Bundle Size: 
+    1. Thirdparty theme provider will have more flexibility, thus increasing the innovation 
+    2. Variants are not really part of reactivity; thus it's not part of core component lib
+    3. Switching theme may need to change code especially if provided by thirdparty
+    4. Performance: 
+    5. Bundle Size:  
 2. Component Ergonomics 
     1. How should state be passed? 
         -- Follow how leptonic is doing
@@ -154,8 +143,8 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
         -- Icons should be provided by theme; but optional 
         -- Icons can also be provided by the library users. 
 3. How should the Documentaion work? Especially with themes? 
-    1. There should be basic doumentation for the component usage. That doesn't specifies the theme variants but only the API 
-    2. Theme should provide it's own documentation with variants etc. 
+    1. There should be basic doumentation for the component usage. 
+    2. Theme should provide it's own documentation with variants and variant builder API example. 
     3. Questions:
         1. Will there be change of theme or switch theme in the main documentation section?  
 
@@ -163,7 +152,6 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
 ## Performance and Bundle Size: 
 1. Can tree shaking be possible? or is there a way to selectively choose the components? 
 2. CSS bundle size of 2MB for gradiance theme. How can it be optimized? Does leptos allow css to be gziped?
-
 
 
 

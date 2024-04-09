@@ -6,7 +6,8 @@ The project is still in the experimental level. Complete tooling is still being 
 
 
 ## How to build
-TBD
+TBD for core library,
+Head over to demo for running examples.  
 
 ## Project Organisation 
 The project is divided into sub projects
@@ -30,3 +31,15 @@ The demo app for leptail components.
 
 ## Credits
 Special thanks to [Leptonic](https://github.com/lpotthast/leptonic) project(a component library for Leptos) through which some of the code example is copied from.
+
+Many components ergonomics also inspired by numerous libraries such as 
+[Chakra UI](https://github.com/chakra-ui/chakra-ui),
+[Headless UI](https://github.com/tailwindlabs/headlessui),
+[Kobalte](https://github.com/kobaltedev/kobalte),
+[Mantine](https://github.com/mantinedev/mantine), 
+[Material UI & Joy UI](https://github.com/mui/material-ui),
+[Preline](https://github.com/htmlstreamofficial/preline),
+[Radix UI](https://github.com/radix-ui/primitives),
+[shadcn/ui](https://github.com/shadcn-ui/ui),
+[Zag](https://github.com/chakra-ui/zag),
+and many more
