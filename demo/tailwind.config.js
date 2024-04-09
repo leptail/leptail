@@ -3,10 +3,10 @@ module.exports = {
   content: [
     "./app/src/**/*.{html,js,rs}",
     "./frontend/src/**/*.{html,js,rs}",
-    "./leptail/src/**/*.{html,js,rs}",
-    "./tailwind-utils/src/**/*.{html,js,rs}",
-    "./theme-gradiance/src/**/*.{html,js,rs}",
-    "./theme-moonlight/src/**/*.{html,js,rs}",
+    "../leptail/src/**/*.{html,js,rs}",
+    "../tailwind-utils/src/**/*.{html,js,rs}",
+    "../theme-gradiance/src/**/*.{html,js,rs}",
+    "../theme-moonlight/src/**/*.{html,js,rs}",
   ],
   theme: {
     extend: {
