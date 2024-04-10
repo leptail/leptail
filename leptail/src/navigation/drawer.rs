@@ -1,5 +1,7 @@
+use std::borrow::Borrow;
+
 use leptos::*;
-use crate::prelude::*;
+use crate::{prelude::*, theme};
 
 
 #[derive(Debug, Clone, Default)]
@@ -30,30 +32,52 @@ pub fn Drawer(
     /// state to control if when backdrop is clicked on the drawer
     #[prop(into)] set_open: Out<bool>, 
     /// optional drawer theme variant
-    #[prop(into, optional)] variant: Option<DrawerTheme>,
+    #[prop(into, optional)] variant: OptionalMaybeSignal<DrawerTheme>,
     children: Children,
 ) -> impl IntoView{
     
-    let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().drawer);
-    let dimension_class = move || if is_open() { theme.maximized.clone() } else { theme.minimized.clone() };
-    // let show_overlay = move || is_open() && theme.has_overlay;
-    // let overlay_variant = theme.overlay_theme;
+    let theme = variant.or_else( || use_context::<AppTheme>().unwrap_or_default().drawer);
 
+    // TODO: check is there away to get away from not cloning the 
+    let drawer_wrapper = {
+        let cloned = theme.clone();
+        move || with!(|is_open, cloned| {
+            let dim = if *is_open { cloned.maximized.clone() } else { cloned.minimized.clone() };
+            format!("{} {}", cloned.wrapper.clone(), dim)
+        })
+    };
+
+    let drawer_inner = {
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.inner.clone())
+        // move || theme.clone().with(|x| x.inner.clone())
+    };
+
+    let overlay_variant = {
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.overlay_theme.clone().unwrap_or_else(|| use_context::<AppTheme>().unwrap_or_default().overlay))
+    };
+    let overlay_variant = Signal::derive(overlay_variant);
+
+    
     view! {
         <>
             <div
-                class=move || format!("{} {}", theme.wrapper, dimension_class())
+                class=drawer_wrapper 
                 on:click=move |e| { e.stop_propagation() }
             >
-                <div class=theme.inner>{children()}</div>
+                <div class=drawer_inner>{children()}</div>
             </div>
             <Show
                 when=is_open
                 fallback=move || {
                     view! { <></> }
                 }
-            >
-                <Overlay on_click=move || set_open.set(false) variant=theme.overlay_theme.clone()>
+            > 
+                <Overlay 
+                    on_click=move || set_open.set(false) 
+                    variant={overlay_variant} 
+                >
                     <div></div>
                 </Overlay>
             </Show>

@@ -15,21 +15,52 @@ pub fn Overlay<S>(
     on_click: S,
     /// optional drawer theme variant
     // #[prop(into, optional)]
-    variant: Option<OverlayTheme>,
+    #[prop(into, optional)]  
+    variant: OptionalMaybeSignal<OverlayTheme>,
     children: Children,
 ) -> impl IntoView
 where
     S: Fn() + 'static,
 {
     
-    let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().overlay);
-    // let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().overlay);
-    // let theme = use_context::<AppTheme>().unwrap_or_default().overlay;
-    // let theme = theme.overlay;
+    let theme = variant.or_else( || use_context::<AppTheme>().unwrap_or_default().overlay);
+    
+    
+    // let wrapper_class =  move || theme.with(|x| x.wrapper.clone());
+    // let inner_class = move || theme.with(|x| x.inner.clone());
+     
+    // let wrapper_class =  move || with!(|theme| theme.wrapper.clone());
+    // let inner_class = move || with!(|theme| theme.inner.clone());
+
+    // let wrapper_class =  move || theme.clone().with(|x| x.wrapper.clone());
+    // let inner_class = move || theme.clone().with(|x| x.inner.clone());
+
+    // let wrapper_class =  move || theme().wrapper.clone();
+    // let inner_class = move || theme().inner.clone();
+
+
+    // TODO: This may is wrong; cloning signals creates a new signal
+    let wrapper_class  = {
+        let cloned = theme.clone();
+        move || cloned.with(|x| x.wrapper.clone()) 
+    };
+
+    let inner_class  =  {
+        let cloned = theme.clone();
+        move || cloned.with(|x| x.inner.clone())
+    };
+
+    // let wrapper_class = "";
+    // let inner_class = "";
+
+
 
     view! {
-        <div class=theme.wrapper>
-            <div class=theme.inner on:click=move |_| (on_click)()>
+        <div class=wrapper_class>
+            <div 
+                class=inner_class 
+                on:click=move |_| (on_click)()
+            >
                 {children()}
             </div>
         </div>
