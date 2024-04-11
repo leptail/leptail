@@ -25,21 +25,6 @@ where
     
     let theme = variant.or_else( || use_context::<AppTheme>().unwrap_or_default().overlay);
     
-    
-    // let wrapper_class =  move || theme.with(|x| x.wrapper.clone());
-    // let inner_class = move || theme.with(|x| x.inner.clone());
-     
-    // let wrapper_class =  move || with!(|theme| theme.wrapper.clone());
-    // let inner_class = move || with!(|theme| theme.inner.clone());
-
-    // let wrapper_class =  move || theme.clone().with(|x| x.wrapper.clone());
-    // let inner_class = move || theme.clone().with(|x| x.inner.clone());
-
-    // let wrapper_class =  move || theme().wrapper.clone();
-    // let inner_class = move || theme().inner.clone();
-
-
-    // TODO: This may is wrong; cloning signals creates a new signal
     let wrapper_class  = {
         let cloned = theme.clone();
         move || cloned.with(|x| x.wrapper.clone()) 
@@ -49,11 +34,6 @@ where
         let cloned = theme.clone();
         move || cloned.with(|x| x.inner.clone())
     };
-
-    // let wrapper_class = "";
-    // let inner_class = "";
-
-
 
     view! {
         <div class=wrapper_class>

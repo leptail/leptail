@@ -16,15 +16,10 @@ pub struct DrawerTheme {
 
 // Drawer Variants and Funtions
 // -----------------------------
-// 1. Drawer Sides -- Theme -- done
-// 2. Inset drawers -- Theme -- done
-// 3. Resposive drawers -- Theme -- done
-// 4. Persistent Drawers -- Theme -- done
-// 5. Drawer size -- Theme -- partial; fix size
+// TODO: 
 // 6. Focus on specific element -- Prop (Seen on chakra UI)
 // 7. Disable click on the backdrop to close -- Prop  
 // 8. Close on escape key press -- Prop --  
-// 9. Half minimized drawer -- Theme -- done
 #[component]
 pub fn Drawer( 
     /// state to control if the drawer is open or not
@@ -38,7 +33,7 @@ pub fn Drawer(
     
     let theme = variant.or_else( || use_context::<AppTheme>().unwrap_or_default().drawer);
 
-    // TODO: check is there away to get away from not cloning the 
+    // TODO: check is there away to get away from cloning the signal. Does cloning signals creates a new signal?
     let drawer_wrapper = {
         let cloned = theme.clone();
         move || with!(|is_open, cloned| {
@@ -47,10 +42,9 @@ pub fn Drawer(
         })
     };
 
-    let drawer_inner = {
+    let drawer_inner = { 
         let cloned = theme.clone();
         move || with!(|cloned| cloned.inner.clone())
-        // move || theme.clone().with(|x| x.inner.clone())
     };
 
     let overlay_variant = {

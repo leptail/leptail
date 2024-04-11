@@ -16,115 +16,116 @@ struct DrawerVariantState {
 #[component]
 pub fn PageDrawer() -> impl IntoView { 
 
-    let side_variants = vec![
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Left", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Right", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Right, has_inset: true } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Top", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Top, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Bottom", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Bottom, has_inset: true } }
-    ];
-    let (side_variants, _set_side_variants) = create_signal::<Vec<DrawerVariantState>>(side_variants);
+    let (drawer_size, set_drawer_size) = create_signal(Size::Medium);
+    let (drawer_side, set_drawer_side) = create_signal(Side::Left);
+    let (has_inset, set_has_inset) = create_signal(false);
 
-    let size_variants = vec![
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open XSmall", variant: DrawerVariant::Temporary {  size: Size::XSmall, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Small", variant: DrawerVariant::Temporary {  size: Size::Small, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Medium", variant: DrawerVariant::Temporary {  size: Size::Medium, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open Large", variant: DrawerVariant::Temporary {  size: Size::Large, side: Side::Left, has_inset: false } },
-        DrawerVariantState{ state: create_signal(false), variant_btn_text: "Open XLarge", variant: DrawerVariant::Temporary {  size: Size::XLarge, side: Side::Left, has_inset: false } }
-    ];
-    let (size_variants, _set_side_variants) = create_signal::<Vec<DrawerVariantState>>(size_variants);
-    
+    let drawer_variant = Signal::derive(move || with!(|drawer_size, drawer_side, has_inset| {
+        DrawerVariant::variant(&DrawerVariant::Temporary{size: *drawer_size, side: *drawer_side, has_inset: *has_inset } )
+    }));
+
+    let (is_drawer_open, set_drawer_open) = create_signal(false);
+
+    let all_sizes = vec![ Size::XSmall,  Size::Small,  Size::Medium,  Size::Large,  Size::XLarge ];
+    let size_text = |size: &Size| match size {
+        Size::XSmall => "Extra Small",
+        Size::Small => "Small",
+        Size::Medium => "Medium",
+        Size::Large => "Large",
+        Size::XLarge => "Extra Large",
+    };
+    let size_buttons = all_sizes
+        .into_iter()
+        .map(|size| view! { 
+            <div class="mr-5" >
+                <input type="radio" name="size_radio" 
+                    checked=move || size == drawer_size()
+                    on:click=move |_| set_drawer_size(size)
+                />
+                <span class="ml-2" >
+                    {size_text(&size)}
+                </span>
+            </div>
+        })
+        .collect_view();
+
+    let all_sides = vec![ Side::Left, Side::Right, Side::Top, Side::Bottom, ];
+    let side_text = |side: &Side| match side {
+        Side::Left => "Left",
+        Side::Right => "Right",
+        Side::Top => "Top",
+        Side::Bottom => "Bottom",
+    };
+    let side_buttons = all_sides
+        .into_iter()
+        .map(|side| view! { 
+            <div class="mr-5" >
+                <input type="radio" name="side_radio" 
+                    checked=move || side == drawer_side()
+                    on:click=move |_| set_drawer_side(side)
+                />
+                <span class="ml-2" >
+                    {side_text(&side)}
+                </span>
+            </div>
+        })
+        .collect_view();
+
 
     view! {
         <Title text="Leptail: Gradiance Drawer and Variants"/>
 
         <div class="">
             <div class="my-16">
-                <h3 class="text-xl text-left mb-5">"Drawer opening side"</h3>
-                <div class="flex flex-col lg:flex-row gap-4 relative overflow-hidden">
-                    // buttons
-                    <For
-                        each=move || side_variants.get()
-                        key=|side_variant| side_variant.variant_btn_text
-                        let:dvs
-                    >
+                <h3 class="text-xl text-left mb-5">"Temporary Drawer"</h3>
+                <div class="w-full flex flex-col space-y-2 mx-5" >
+                    <div class="flex flex-row" >
+                        <div class="mr-2 opacity-75" >Side: </div>
+                        {side_buttons}
+                    </div>
+                    <div class="flex flex-row" >
+                        <div class="mr-2 opacity-75" >Size: </div>
+                        {size_buttons}
+                    </div>
+                    <div class="flex flex-row" >
+                        <input type="checkbox" 
+                            checked=move || has_inset() == true
+                            on:click=move |_| set_has_inset.update(|b| *b = !*b ) />
+                        <span class="ml-2" >"Has Inset"</span>
+                    </div>
+                    <div class="flex flex-row" >
+                        <button
+                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4 mt-5"
+                            on:click=move |_| set_drawer_open(true)
+                        >
+                            "Open Drawer "
+                        </button>
+                    </div>
+                </div>
+                
+                <Drawer
+                    is_open=is_drawer_open
+                    set_open=set_drawer_open
+                    variant={drawer_variant}
+                >
+                    <div class="flex flex-row">
+                        <h1 class="text-2xl font-semibold">"Drawer Title"</h1>
                         <button
                             class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                            on:click=move |_| dvs.state.1.borrow()(true)
+                            on:click=move |_| set_drawer_open(false)
                         >
-                            {dvs.variant_btn_text}
+                            "X"
                         </button>
-                    </For>
+                    </div>
+                    <div class="mt-5">
+                        // TODO: if has_inset show from inside the drawer else show nav menu
 
-                    // drawers
-                    <For
-                        each=move || side_variants.get()
-                        key=|side_variant| side_variant.variant_btn_text
-                        let:dvs
-                    >
-                        <Drawer
-                            is_open=dvs.state.0
-                            set_open=dvs.state.1
-                            variant=DrawerVariant::variant(&dvs.variant)
-                        >
-                            <div class="flex flex-row">
-                                <h1 class="text-2xl font-semibold">"Drawer Title"</h1>
-                                <button
-                                    class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                                    on:click=move |_| dvs.state.1(false)
-                                >
-                                    "X"
-                                </button>
-                            </div>
-                            <div class="mt-5">"Drawer content here..."</div>
-                        </Drawer>
-                    </For>
-                </div>
+                        <NavMenuExample is_open=is_drawer_open/>
+                    </div>
+                </Drawer>
             </div>
 
-            <div class="my-16">
-                <h3 class="text-xl text-left mb-5">"Drawer size"</h3>
-                <div class="flex flex-col lg:flex-row gap-4">
-                    // buttons
-                    <For
-                        each=move || size_variants.get()
-                        key=|side_variant| side_variant.variant_btn_text
-                        let:dvs
-                    >
-                        <button
-                            class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                            on:click=move |_| dvs.state.1.borrow()(true)
-                        >
-                            {dvs.variant_btn_text}
-                        </button>
-                    </For>
-
-                    // drawers
-                    <For
-                        each=move || size_variants.get()
-                        key=|side_variant| side_variant.variant_btn_text
-                        let:dvs
-                    >
-                        <Drawer
-                            is_open=dvs.state.0
-                            set_open=dvs.state.1
-                            variant=DrawerVariant::variant(&dvs.variant)
-                        >
-                            <div class="flex flex-row">
-                                <h1 class="text-2xl font-semibold">"Drawer Title"</h1>
-                                <button
-                                    class="bg-slate-400 dark:bg-slate-700 border border-slate-500 rounded-lg p-4"
-                                    on:click=move |_| dvs.state.1(false)
-                                >
-                                    "X"
-                                </button>
-                            </div>
-                            <div class="mt-5">
-                                <NavMenuExample is_open=dvs.state.0/>
-                            </div>
-                        </Drawer>
-                    </For>
-                </div>
-            </div>
+             
 
             <div class="my-16">
                 <h3 class="text-xl text-left mb-5">"Responsive Drawer"</h3>
