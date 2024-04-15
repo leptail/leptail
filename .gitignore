@@ -21,6 +21,7 @@ demo/pnpm-lock.yaml
 
 # IDE
 .vscode
+demo/.vscode
 
 # others
 demo/.env

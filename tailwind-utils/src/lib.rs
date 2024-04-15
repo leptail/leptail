@@ -99,7 +99,7 @@ pub struct TWColorPalette {
 impl TWColorPalette {
     
     pub fn from(color: TWColor, palette: Palette) -> Self {
-        TWColorPalette { color: color, palette: palette }
+        TWColorPalette { color, palette }
     }
 
     pub fn tw_string(&self) -> String {

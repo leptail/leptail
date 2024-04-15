@@ -1,4 +1,4 @@
-use tailwind_fuse::{merge::tw_merge, tw_merge};
+use tailwind_fuse::tw_merge;
 
 use crate::gradiance::*;
 
@@ -50,8 +50,7 @@ impl AppbarVariant {
     } 
 
 
-
-    pub fn default() -> AppbarTheme {
+    pub fn default_variant() -> AppbarTheme {
         AppbarVariant::builder().build()
     }
 
@@ -62,8 +61,8 @@ impl AppbarVariant {
         //         GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S50), TWColorPalette::from(TWColor::Blue, Palette::S50).into(), TWColorPalette::from(TWColor::Violet, Palette::S50)), 
         //         GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
         //     );
+        // let bg_gradient = "";
 
-        let bg_gradient = "";
         let layout = tw_merge!("relative");
         let appbar_container = tw_merge!(
             "px-1 py-1 md:px-0",
@@ -118,10 +117,12 @@ impl AppbarVariant {
 
         let default_drawer_variant = DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false };
             
-        let appbar_theme = AppbarTheme {
-            layout: layout,
-            appbar_container: appbar_container,
-            appbar_inner: appbar_inner,
+        
+
+        AppbarTheme {
+            layout,
+            appbar_container,
+            appbar_inner,
             toolbar: "flex space-x-4".to_string(),
             hamburger_icon: icondata::ChMenuHamburger,
             close_icon: icondata::CgClose,  
@@ -129,12 +130,10 @@ impl AppbarVariant {
             hamburger_button: "relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white".to_string(),
             drawer_title_wrapper: "flex flex-row md:hidden".to_string(),
             drawer_title: "".to_string(),
-            drawer_container: drawer_container,
+            drawer_container,
             main_content: "w-full".to_string(),
             drawer_variant: DrawerVariant::variant(&self.drawer_variant.unwrap_or(default_drawer_variant))
-        };
-
-        appbar_theme
+        }
     }
 
 }

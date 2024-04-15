@@ -55,38 +55,40 @@ pub fn Switch(
     /// optional off icon
     #[prop(into, optional)] off_icon: OptionalMaybeSignal<icondata::Icon>,
     /// optional swith theme variant
-    #[prop(into, optional)] variant: Option<SwitchTheme>,
+    #[prop(into, optional)] variant: OptionalMaybeSignal<SwitchTheme>,
 ) -> impl IntoView 
 {
 
     
-    let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().switch);
-    let on_icon = on_icon.or_else(move || theme.on_icon.unwrap_or(icondata::BsCircleFill));
-    let off_icon = off_icon.or_else(move || theme.off_icon.unwrap_or(icondata::BsCircle));
+    let theme = variant.or_else(move || use_context::<AppTheme>().unwrap_or_default().switch);
+    let on_icon = on_icon.or_else({
+        let cloned = theme.clone();
+        move || cloned.with(|cloned| cloned.on_icon.unwrap_or(icondata::BsCircleFill))
+    });
+    let off_icon = off_icon.or_else({
+        let cloned = theme.clone();
+        move || cloned.with(|cloned| cloned.off_icon.unwrap_or(icondata::BsCircle))
+    });
     
     let is_disabled = disabled.or(false);
     
-    //TODO: these are derived signals; use memo to do it; refer: leptos documentation 
-    //TOOD: also one can use with! macros; refer: https://leptos-rs.github.io/leptos/reactivity/working_with_signals.html
-    let switch_modifier = move || with!(|is_on, is_disabled| format!("{} {} {}", 
-        theme.base.switch, 
-        if *is_on { theme.on_modifier.switch.clone()} else {theme.off_modifier.switch.clone()},
-        if *is_disabled { theme.disabled_modifier.switch.clone() } else { theme.enabled_modifier.switch.clone() }
-    ));
+    let switch_modifier = {
+        let cloned = theme.clone();
+        move || with!(|is_on, is_disabled, cloned| format!("{} {} {}", 
+            cloned.base.switch, 
+            if *is_on { cloned.on_modifier.switch.clone()} else {cloned.off_modifier.switch.clone()},
+            if *is_disabled { cloned.disabled_modifier.switch.clone() } else { cloned.enabled_modifier.switch.clone() }
+        ))
+    };
 
-    // let switch_toggle_class = move || if is_on() { theme.on_modifier.switch.clone() } else { theme.off_modifier.switch.clone() };
-    // let switch_disabled_class = move || if is_disabled() { theme.disabled_modifier.switch.clone() } else { theme.enabled_modifier.switch.clone() };
-    // let switch_modifier = move || format!("{} {} {}", theme.base.switch, switch_toggle_class(), switch_disabled_class());
-    
-    let icon_modifier = move || with!(|is_on, is_disabled| format!("{} {} {}", 
-        theme.base.icon_container, 
-        if *is_on { theme.on_modifier.icon_container.clone() } else { theme.off_modifier.icon_container.clone() },
-        if *is_disabled { theme.disabled_modifier.icon_container.clone() } else { theme.enabled_modifier.icon_container.clone() }
-    ));
-
-    // let icon_toggle_class = move || if is_on() { theme.on_modifier.icon_container.clone() } else { theme.off_modifier.icon_container.clone() };
-    // let icon_disabled_class = move || if is_on() { theme.disabled_modifier.icon_container.clone() } else { theme.enabled_modifier.icon_container.clone() };
-    // let icon_modifier = move || format!("{} {} {}", theme.base.icon_container, icon_toggle_class(), icon_disabled_class());
+    let icon_modifier = {
+        let cloned = theme.clone();
+        move || with!(|is_on, is_disabled, cloned| format!("{} {} {}", 
+            cloned.base.icon_container, 
+            if *is_on { cloned.on_modifier.icon_container.clone() } else { cloned.off_modifier.icon_container.clone() },
+            if *is_disabled { cloned.disabled_modifier.icon_container.clone()} else { cloned.enabled_modifier.icon_container.clone() }
+        ))
+    };
 
     let  toggle_state = move || { 
         let is_disabled = disabled.or(false)();
@@ -105,7 +107,7 @@ pub fn Switch(
         }
     };
 
-    let tab_index_str = move || tab_index.or(0)().to_string();
+    let tab_index_str = move || tab_index.map(|v| v.to_string()).or("")();
 
     view! {
         <div

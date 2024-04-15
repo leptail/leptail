@@ -93,7 +93,7 @@ impl SwitchVariant {
         theme.base.icon_container = format!("{} {}", theme.base.icon_container, Self::icon_size(&size));
     } 
 
-    pub fn default() -> SwitchTheme {
+    pub fn default_variant() -> SwitchTheme {
         Self::variant(None, None)
     }
 

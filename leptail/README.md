@@ -2,87 +2,88 @@
 Component Library that aims to be headless, themeable using tailwindcss. While being flexible to how developer/designer willing to theme, the library aims to provide off the shelf themes so that one can get started quickly. It also provides(or exposes) `struct` for theme to provide a(some) kind of design system for designer to maintain the consistency across their app.  
 
 ## Inputs
-    [] Autocomplete
-    [] Button
-    [] Button Group
-    [] Checkbox
-    [] Floating Action Button
-    [] Radio Group
-    [] Rating
-    [] Select
-    [] Slider
-    [x] Switch
-    [] Text Field
-    [] Transfer List
-    [] Toggle Button
+- [ ] Autocomplete
+- [ ] Button
+- [ ] Button Group
+- [ ] Checkbox
+- [ ] Floating Action Button
+- [ ] Radio Group
+- [ ] Rating
+- [ ] Select
+- [ ] Slider
+- [x] Switch
+- [ ] Text Field
+- [ ] Transfer List
+- [ ] Toggle Button
 
 ## Data display
-    [] Avatar
-    [] Badge
-    [] Chip
-    [] Divider
-    [] Icons
-    [] Material Icons
-    [] List
-    [] Table
-    [] Tooltip
-    [] Typography
+- [ ] Avatar
+- [ ] Badge
+- [ ] Chip
+- [ ] Divider
+- [ ] Icons 
+- [ ] List
+- [ ] Table
+- [ ] Tooltip
+- [ ] Typography
 
 ## Feedback
-    [] Alert
-    [] Backdrop
-    [] Dialog
-    [] Progress
-    [] Skeleton
-    [] Snackbar
+- [ ] Alert
+- [ ] Backdrop
+- [ ] Dialog
+- [ ] Progress
+- [ ] Skeleton
+- [ ] Snackbar
 
 ## Surfaces
-    [] Accordion
-    [] App Bar
-    [] Card
-    [] Paper
+- [ ] Accordion
+- [x] App Bar
+- [ ] Card
+- [ ] Paper
 
 ## Navigation
-    [] Bottom Navigation
-    [] Breadcrumbs
-    [] Drawer
-    [] Link
-    [] Menu
-    [] Pagination
-    [] Speed Dial
-    [] Stepper
-    [] Tabs
+- [ ] Bottom Navigation
+- [ ] Breadcrumbs
+- [x] Drawer
+- [ ] Link
+- [ ] Menu
+- [ ] Pagination
+- [ ] Speed Dial
+- [ ] Stepper
+- [ ] Tabs
 
 ## Layout
-    [] Box
-    [] Container 
-    [] Grid v2
-    [] Flex
-    [] New
-    [] Stack
-    [] Image List
-    [] Hidden
+- [ ] Box
+- [ ] Container 
+- [ ] Grid v2
+- [ ] Flex
+- [ ] New
+- [ ] Stack
+- [ ] Image List
+- [ ] Hidden
 
 ## Utils
-    [] Click-Away Listener
-    [] CSS Baseline
-    [] Modal
-    [] No SSR
-    [] Popover
-    [] Popper
-    [] Portal
-    [] Textarea Autosize
-    [] Transitions
-    [] useMediaQuery
+- [ ] Click-Away Listener
+- [ ] CSS Baseline
+- [ ] Modal
+- [ ] No SSR
+- [ ] Popover
+- [ ] Popper
+- [ ] Portal
+- [ ] Textarea Autosize
+- [ ] Transitions
+- [ ] useMediaQuery
 
 ## MUI X
-    [] Data Grid
-    [] Date & Time Pickers
+- [ ] Data Grid
+- [ ] Date & Time Pickers
 
 ## Lab
-    [] Masonry
-    [] Timeline
-    [] Tree View
+- [ ] Masonry
+- [ ] Timeline
+- [ ] Tree View
+
+
 
 ## TODO: 
 1. Complete the theming for existing components and test it                                                 -- 

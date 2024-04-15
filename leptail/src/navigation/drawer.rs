@@ -1,7 +1,5 @@
-use std::borrow::Borrow;
-
 use leptos::*;
-use crate::{prelude::*, theme};
+use crate::prelude::*;
 
 
 #[derive(Debug, Clone, Default)]

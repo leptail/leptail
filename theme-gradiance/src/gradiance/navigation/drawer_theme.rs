@@ -41,15 +41,15 @@ impl DrawerVariant {
 
         let bg_gradient = Self::background();
         
-        let base_theme = DrawerTheme {
+        
+
+        DrawerTheme {
             wrapper: "z-[101] fixed overflow-x-hidden transition-all duration-300 ease-out".to_string(),
-            inner: format!("{bg_gradient}"),
+            inner: format!("{bg_gradient} "),
             minimized: String::from(""),
             maximized: String::from(""), 
             overlay_theme: None,
-        };
-
-        base_theme
+        }
     }
 
     fn drawer_width(size: &Size) -> String {
@@ -73,8 +73,8 @@ impl DrawerVariant {
     }
 
     fn gen_temprovary_drawer(side: &Side, size: &Size, has_inset: bool) -> DrawerTheme {
-        let height = Self::drawer_height(&size);
-        let width = Self::drawer_width(&size);
+        let height = Self::drawer_height(size);
+        let width = Self::drawer_width(size);
         let inset_class = if has_inset { "p-0 md:p-5" } else {""};
         let inset_inner_class = if has_inset { "p-2 md:p-3 md:rounded-lg" } else {""};
 
@@ -205,7 +205,7 @@ impl DrawerVariant {
         }
     }
 
-    pub fn default() -> DrawerTheme {
+    pub fn default_variant() -> DrawerTheme {
         let dv = DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false };
         Self::variant(&dv)
     }
@@ -222,8 +222,8 @@ impl DrawerVariant {
             }
             DrawerVariant::Responsive { side } => Self::gen_responsive_drawer(side),
             // TODO: check if breakover_point is needed!
-            DrawerVariant::Staggered { breakover_point, side } => Self::gen_staggered_drawer(side, false),
-            DrawerVariant::StaggeredMini { breakover_point, side } => Self::gen_staggered_drawer(side, true),
+            DrawerVariant::Staggered { breakover_point: _, side } => Self::gen_staggered_drawer(side, false),
+            DrawerVariant::StaggeredMini { breakover_point: _, side } => Self::gen_staggered_drawer(side, true),
         }
     }
 }

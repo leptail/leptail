@@ -172,7 +172,6 @@ pub fn build_theme() -> AppTheme {
             GradientColors::from(TWColorPalette::from(TWColor::Indigo, Palette::S950), TWColorPalette::from(TWColor::Blue, Palette::S950).into(), TWColorPalette::from(TWColor::Violet, Palette::S950))
         );
 
-    let appbar_theme = AppbarVariant::default();
     let appbar_theme = AppbarVariant::builder()
         .sticky(true)
         .shadow(Size::Large)
@@ -181,7 +180,7 @@ pub fn build_theme() -> AppTheme {
         .drawer_variant(DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false })
         .build();
 
-    let drawer_theme = DrawerVariant::default();
+    let drawer_theme = DrawerVariant::default_variant();
 
     let overlay_theme = OverlayTheme {
         // overlay: "fixed inset-0 z-100 h-full w-full backdrop-blur-xs bg-gray-900 bg-opacity-50 dark:bg-opacity-80 ",

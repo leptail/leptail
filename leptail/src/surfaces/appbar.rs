@@ -1,5 +1,3 @@
-use std::default;
-
 use leptos::*;
 use crate::prelude::*;
 
@@ -68,7 +66,7 @@ where
     let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().appbar);
     
     // TODO: checkout https://leptos-rs.github.io/leptos/interlude_projecting_children.html see if it helps
-    
+    // test
     
     let hamburger_btn_class =  theme.hamburger_button.clone();
     let close_btn_class = theme.hamburger_button.clone();
