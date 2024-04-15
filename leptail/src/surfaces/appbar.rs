@@ -46,6 +46,8 @@ pub fn Appbar<TC, DT, DC, IV>(
     #[prop(into)] is_open: MaybeSignal<bool>,
     /// state to control if when backdrop is clicked on the drawer
     #[prop(into)] set_open: Out<bool>, 
+    /// optional appbar theme variant
+    #[prop(into, optional)] variant: OptionalMaybeSignal<AppbarTheme>, 
     /// Toolbar view
     toolbar_content: TC, 
     /// Drawer title view 
@@ -54,8 +56,6 @@ pub fn Appbar<TC, DT, DC, IV>(
     drawer_content: DC,
     /// Main content
     children: Children,
-    /// optional appbar theme variant
-    #[prop(into, optional)] variant: Option<AppbarTheme>, 
 ) -> impl IntoView
 where 
     TC: Fn() -> IV + 'static,
@@ -63,13 +63,29 @@ where
     DC: Fn() -> IV + 'static, 
     IV: IntoView,
 {
-    let theme = variant.unwrap_or_else(move || use_context::<AppTheme>().unwrap_or_default().appbar);
+    let theme = variant.or_else(move || use_context::<AppTheme>().unwrap_or_default().appbar);
     
     // TODO: checkout https://leptos-rs.github.io/leptos/interlude_projecting_children.html see if it helps
     // test
     
-    let hamburger_btn_class =  theme.hamburger_button.clone();
-    let close_btn_class = theme.hamburger_button.clone();
+    let hamburger_btn_class =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.hamburger_button.clone())
+    };
+    let close_btn_class = { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.hamburger_button.clone())
+    };
+
+    let hamburger_icon = Signal::derive({ 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.hamburger_icon)
+    });
+
+    let close_icon = Signal::derive({ 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.close_icon)
+    });
 
     let hamburger_btn = view! {
         <button
@@ -84,7 +100,7 @@ where
         >
 
             <span class="sr-only">"Open main menu"</span>
-            <Icon icon=theme.hamburger_icon/>
+            <Icon icon=hamburger_icon/>
         </button>
     };
 
@@ -100,27 +116,69 @@ where
         >
 
             <span class="sr-only">"Close main menu"</span>
-            <Icon icon=theme.close_icon/>
+            <Icon icon=close_icon/>
         </button>
     };
 
+    let layout =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.layout.clone())
+    };
+    let appbar_container =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.appbar_container.clone())
+    };
+    let appbar_inner =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.appbar_inner.clone())
+    };
+    let hamburger_container =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.hamburger_container.clone())
+    };
+    let toolbar =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.toolbar.clone())
+    };
+
+    let drawer_container =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.drawer_container.clone())
+    };
+    let drawer_variant =  Signal::derive({ 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.drawer_variant.clone())
+    });
+    let drawer_title_wrapper =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.drawer_title_wrapper.clone())
+    };
+    let drawer_title_class =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.drawer_title.clone())
+    };
+    let main_content =  { 
+        let cloned = theme.clone();
+        move || with!(|cloned| cloned.main_content.clone())
+    };
+
     view! {
-        <div class=theme.layout>
-            <div class=theme.appbar_container>
-                <div class=theme.appbar_inner>
-                    <div class=theme.hamburger_container>{hamburger_btn.clone()}</div>
-                    <div class=theme.toolbar>{toolbar_content()}</div>
+        <div class=layout>
+            <div class=appbar_container>
+                <div class=appbar_inner>
+                    <div class=hamburger_container>{hamburger_btn.clone()}</div>
+                    <div class=toolbar>{toolbar_content()}</div>
                 </div>
             </div>
-            <div class=theme.drawer_container>
-                <Drawer is_open=is_open set_open=set_open variant=theme.drawer_variant>
-                    <div class=theme.drawer_title_wrapper>
-                        <div class=theme.drawer_title>{drawer_title()}</div>
+            <div class=drawer_container>
+                <Drawer is_open=is_open set_open=set_open variant=drawer_variant>
+                    <div class=drawer_title_wrapper>
+                        <div class=drawer_title_class>{drawer_title()}</div>
                         {close_btn}
                     </div>
                     {drawer_content()}
                 </Drawer>
-                <div class=theme.main_content>{children()}</div>
+                <div class=main_content>{children()}</div>
             </div>
 
         </div>

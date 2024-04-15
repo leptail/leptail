@@ -29,18 +29,18 @@ impl AppbarVariant {
         self
     } 
 
-    pub fn shadow(mut self, size: Size) -> AppbarVariant{
-        self.shadow = Some(size);
+    pub fn shadow(mut self, size: Option<Size>) -> AppbarVariant{
+        self.shadow = size;
         self
     }
 
-    pub fn bg_color(mut self, color: Color) -> AppbarVariant{
-        self.bg_color = Some(color);
+    pub fn bg_color(mut self, color: Option<Color>) -> AppbarVariant{
+        self.bg_color = color;
         self
     } 
 
-    pub fn max_width(mut self, size: Size) -> AppbarVariant{
-        self.max_width = Some(size);
+    pub fn max_width(mut self, size: Option<Size>) -> AppbarVariant{
+        self.max_width = size;
         self
     }
 

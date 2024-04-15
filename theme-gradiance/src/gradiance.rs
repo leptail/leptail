@@ -174,9 +174,9 @@ pub fn build_theme() -> AppTheme {
 
     let appbar_theme = AppbarVariant::builder()
         .sticky(true)
-        .shadow(Size::Large)
-        .bg_color(Color::Primary)
-        .max_width(Size::XLarge)
+        .shadow(Size::Large.into())
+        .bg_color(Color::Primary.into())
+        .max_width(Size::XLarge.into())
         .drawer_variant(DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false })
         .build();
 

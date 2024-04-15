@@ -102,3 +102,75 @@ pub fn NavMenuExample(
         </ul>
     }
 }
+
+#[component]
+pub fn OptionalSizeButtons(
+    #[prop(into)] size: MaybeSignal<Option<Size>>,
+    #[prop(into)] set_size: Out<Option<Size>>,
+    #[prop(into)] group_name: &'static str,
+) -> impl IntoView {
+    let all_sizes = vec![ Size::XSmall,  Size::Small,  Size::Medium,  Size::Large,  Size::XLarge ];
+    let size_text = |size: &Size| match size {
+        Size::XSmall => "Extra Small",
+        Size::Small => "Small",
+        Size::Medium => "Medium",
+        Size::Large => "Large",
+        Size::XLarge => "Extra Large",
+    };
+    let size_buttons = all_sizes
+        .into_iter()
+        .map(|curr_size| view! { 
+            <div class="mr-5" >
+                <input type="radio" name="size_radio" 
+                    checked=move || match size() {
+                        Some(s) => s == curr_size,
+                        None => false,
+                    }
+                    on:click=move |_| set_size.set(Some(curr_size))
+                />
+                <span class="ml-2" >
+                    {size_text(&curr_size)}
+                </span>
+            </div>
+        })
+        .collect_view();
+
+    size_buttons
+}
+
+#[component]
+pub fn OptionalColorButtons(
+    #[prop(into)] color: MaybeSignal<Option<Color>>,
+    #[prop(into)] set_color: Out<Option<Color>>,
+    #[prop(into)] group_name: &'static str,
+) -> impl IntoView {
+    let all_colors = vec![ Color::Default, Color::Primary, Color::Secondary, Color::Info, Color::Success, Color::Warning, Color::Danger ];
+    let color_text = |color: &Color| match color {
+        Color::Default => "Default",
+        Color::Primary => "Primary",
+        Color::Secondary => "Secondary",
+        Color::Info => "Info",
+        Color::Success => "Success",
+        Color::Warning => "Warning",
+        Color::Danger => "Danger",
+    };
+    let color_buttons = all_colors
+        .into_iter()
+        .map(|curr_color| view! { 
+            <div class="mr-5" >
+                <input type="radio" name=group_name 
+                    checked=move || match color() {
+                        Some(s) => s == curr_color,
+                        None => false,
+                    }
+                    on:click=move |_| set_color.set(Some(curr_color))
+                />
+                <span class="ml-2" >
+                    {color_text(&curr_color)}
+                </span>
+            </div>
+        })
+        .collect_view();
+
+    color_buttons
+}

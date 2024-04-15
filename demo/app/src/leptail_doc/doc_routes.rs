@@ -218,9 +218,9 @@ pub fn DocLayout() -> impl IntoView {
             drawer_content=drawer_content
             variant={AppbarVariant::builder()
                 .sticky(true)
-                .shadow(Size::Medium)
-                // .bg_color(Color::Primary)
-                // .max_width(Size::Large)
+                .shadow(Size::Medium.into())
+                // .bg_color(Color::Primary.into())
+                // .max_width(Size::Large.into()) 
                 .drawer_variant(DrawerVariant::Responsive { side: HorizontalSide::Left })
                 .build()
             }
