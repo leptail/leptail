@@ -88,8 +88,8 @@ dependencies = [
  "http 1.1.0",
  "icondata",
  "leptail",
- "leptail-theme-gradiance",
- "leptail-theme-moonlight",
+ "leptail_theme_gradiance",
+ "leptail_theme_moonlight",
  "leptos",
  "leptos_axum",
  "leptos_icons",
@@ -1489,7 +1489,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "leptail-theme-gradiance"
+name = "leptail_theme_gradiance"
 version = "0.1.0"
 dependencies = [
  "icondata",
@@ -1500,7 +1500,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "leptail-theme-moonlight"
+name = "leptail_theme_moonlight"
 version = "0.1.0"
 dependencies = [
  "icondata",

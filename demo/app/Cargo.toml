@@ -19,8 +19,8 @@ cfg-if.workspace = true
 thiserror.workspace = true
 
 leptail = { workspace = true }
-leptail-theme-moonlight = { workspace = true }
-leptail-theme-gradiance = { workspace = true }
+leptail_theme_moonlight = { workspace = true }
+leptail_theme_gradiance = { workspace = true }
 
 [features]
 default = []

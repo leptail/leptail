@@ -1055,7 +1055,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "leptail-theme-gradiance"
+name = "leptail_theme_gradiance"
 version = "0.1.0"
 dependencies = [
  "icondata",
@@ -1066,7 +1066,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "leptail-theme-moonlight"
+name = "leptail_theme_moonlight"
 version = "0.1.0"
 dependencies = [
  "icondata",
