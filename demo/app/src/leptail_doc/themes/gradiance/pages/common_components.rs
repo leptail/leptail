@@ -120,8 +120,9 @@ pub fn OptionalSizeButtons(
     let size_buttons = all_sizes
         .into_iter()
         .map(|curr_size| view! { 
+            //TODO: convert this into button group instead of radio buttons
             <div class="mr-5" >
-                <input type="radio" name="size_radio" 
+                <input type="radio" name=group_name 
                     checked=move || match size() {
                         Some(s) => s == curr_size,
                         None => false,
@@ -144,6 +145,7 @@ pub fn OptionalColorButtons(
     #[prop(into)] set_color: Out<Option<Color>>,
     #[prop(into)] group_name: &'static str,
 ) -> impl IntoView {
+    
     let all_colors = vec![ Color::Default, Color::Primary, Color::Secondary, Color::Info, Color::Success, Color::Warning, Color::Danger ];
     let color_text = |color: &Color| match color {
         Color::Default => "Default",
@@ -157,6 +159,7 @@ pub fn OptionalColorButtons(
     let color_buttons = all_colors
         .into_iter()
         .map(|curr_color| view! { 
+            //TODO: convert this into button group instead of radio buttons
             <div class="mr-5" >
                 <input type="radio" name=group_name 
                     checked=move || match color() {

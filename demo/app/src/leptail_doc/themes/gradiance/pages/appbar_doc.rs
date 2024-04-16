@@ -52,8 +52,12 @@ pub fn PageAppbar() -> impl IntoView {
                 <OptionalSizeButtons size=max_width set_size=set_max_width group_name="max_width" />
             </div>
             <div class="flex flex-row" >
-                <div class="mr-2 opacity-75" >Max Width: </div>
+                <div class="mr-2 opacity-75" >Background: </div>
                 <OptionalColorButtons color=bg_color set_color=set_bg_color group_name="bg_color" />
+            </div>
+            <div class="flex flex-row" >
+                <div class="mr-2 opacity-75" >Drawer variant type: </div>
+                <div>"TODO: add here..."</div>
             </div>
             <div class="flex flex-row" >
                 <input type="checkbox" 

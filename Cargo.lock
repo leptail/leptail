@@ -2027,9 +2027,9 @@ checksum = "2047c6ded9c721764247e62cd3b03c09ffc529b2ba5b10ec482ae507a4a70160"
 
 [[package]]
 name = "tailwind_fuse"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d540816d3bd4e690d75d0cfcad47c8129487f0f730fc32ffa913aeef0b7634a8"
+checksum = "fc6ff93981e812585b0cb150d413fcf744a528548cb185666629520b61b7d5bb"
 dependencies = [
  "nom",
 ]

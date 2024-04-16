@@ -9,7 +9,12 @@ leptos_router = { version = "0.6.9", features = ["nightly"] }
 leptos_axum = { version = "0.6.9" }
 leptos_icons = { version = "0.3.0", features = [] }
 icondata = "0.3.0"
-tailwind_fuse = { version = "0.2.0" }
+tailwind_fuse = { version = "0.3.0" }
+
+leptail = { path = "./leptail" }
+leptail_theme_gradiance = { path = "./theme-gradiance" }
+leptail_theme_moonlight = { path = "./theme-moonlight" }
+
 
 # TODO: Clean up the dependencies: clean build once and verify; 
 # axum = "0.7"
