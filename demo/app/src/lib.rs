@@ -1,5 +1,3 @@
-use leptail_theme_gradiance::gradiance::navigation::drawer_theme::DrawerVariant;
-use leptail_theme_gradiance::gradiance::HorizontalSide;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
