@@ -3,10 +3,8 @@ module.exports = {
   content: [
     "./app/src/**/*.{html,js,rs}",
     "./frontend/src/**/*.{html,js,rs}",
-    "../leptail/src/**/*.{html,js,rs}",
-    "../tailwind-utils/src/**/*.{html,js,rs}",
-    "../theme-gradiance/src/**/*.{html,js,rs}",
-    "../theme-moonlight/src/**/*.{html,js,rs}",
+    // TODO: there are some classes hardcoded in the leptail core library. Need to make it completely headless 
+    "./target/leptail/**/*.{html,js,rs}",
   ],
   theme: {
     extend: {
@@ -27,7 +25,7 @@ module.exports = {
       }
     },
   },
-  safelist: [ 
+  safelist: [
     {
       pattern: /(bg|from|to|via|ring)-(slate|cyan|fuchsia|violet|sky|indigo|blue|emerald|amber|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
       variants: ['dark', 'hover', 'dark:hover'],
@@ -35,7 +33,7 @@ module.exports = {
     {
       pattern: /(bg|text)-gradient-to-(t|tr|r|br|b|bl|l|tl)/,
       variants: ['dark', 'hover', 'dark:hover'],
-    },  
+    },
     // {
     //   pattern: /bg-(slate|cyan|fuchsia|sky|emerald|amber|rose)-(100|200|300|600|700)/,
     //   variants: ['dark'],

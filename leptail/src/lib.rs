@@ -8,20 +8,43 @@ pub mod overlay;
 pub mod surfaces;
 pub mod theme;
 
-
 pub use input::Switch;
 pub use input::SwitchBaseTheme;
 pub use input::SwitchTheme;
 pub use navigation::Drawer;
 pub use navigation::DrawerTheme;
-pub use overlay::Overlay; 
-pub use overlay::OverlayTheme; 
+pub use overlay::Overlay;
+pub use overlay::OverlayTheme;
+use prelude::Consumer;
 pub use surfaces::Appbar;
 pub use surfaces::AppbarTheme;
 pub use theme::AppTheme;
-use prelude::Consumer;
 // pub use theme::ThemeVariant;
 
+pub mod prelude {
+    // pub use super::theme::ThemeVariant;
+    pub use super::callback::consumer;
+    pub use super::callback::producer;
+    pub use super::callback::Consumer;
+    pub use super::callback::Producer;
+    pub use super::callback::ViewCallback;
+    pub use super::callback::ViewProducer;
+    pub use super::icon::Icon;
+    pub use super::input::Switch;
+    pub use super::input::SwitchBaseTheme;
+    pub use super::input::SwitchTheme;
+    pub use super::navigation::Drawer;
+    pub use super::navigation::DrawerTheme;
+    pub use super::overlay::Overlay;
+    pub use super::overlay::OverlayTheme;
+    pub use super::surfaces::Appbar;
+    pub use super::surfaces::AppbarTheme;
+    pub use super::theme::AppTheme;
+    pub use super::theme::HasThemeVariant;
+    pub use super::OptionalMaybeSignal;
+    pub use super::OptionalSignal;
+    pub use super::Out;
+}
 
 #[derive(Debug, Clone)]
 pub struct OptionalSignal<T: 'static>(Option<Signal<T>>);
@@ -160,33 +183,6 @@ impl<T: Clone + 'static> MaybeSignalExt<T> for MaybeSignal<T> {
     }
 }
 
-pub mod prelude {
-    // pub use super::theme::ThemeVariant;
-    pub use super::callback::consumer;
-    pub use super::callback::Consumer;
-    pub use super::callback::producer;
-    pub use super::callback::Producer;
-    pub use super::callback::ViewCallback;
-    pub use super::callback::ViewProducer;
-    pub use super::icon::Icon;
-    pub use super::input::Switch;
-    pub use super::input::SwitchBaseTheme;
-    pub use super::input::SwitchTheme;
-    pub use super::navigation::Drawer;
-    pub use super::navigation::DrawerTheme;
-    pub use super::OptionalMaybeSignal; 
-    pub use super::OptionalSignal; 
-    pub use super::Out;
-    pub use super::overlay::Overlay;
-    pub use super::overlay::OverlayTheme;
-    pub use super::surfaces::Appbar;
-    pub use super::surfaces::AppbarTheme;
-    pub use super::theme::AppTheme;
-    pub use super::theme::HasThemeVariant;
-}
-
-
-
 pub enum Out<O: 'static> {
     Consumer(Consumer<O>),
     Callback(Callback<O, ()>),
@@ -234,6 +230,3 @@ impl<O: 'static> From<WriteSignal<O>> for Out<O> {
         Out::WriteSignal(write_signal)
     }
 }
-
-
-

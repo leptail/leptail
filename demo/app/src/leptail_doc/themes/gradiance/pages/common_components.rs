@@ -43,12 +43,10 @@ pub fn LoremIpsumLong() -> impl IntoView {
 }
 
 #[component]
-pub fn NavMenuExample(
-    #[prop(into)] is_open: MaybeSignal<bool>,
-) -> impl IntoView {
+pub fn NavMenuExample(#[prop(into)] is_open: MaybeSignal<bool>) -> impl IntoView {
     let nav_link_class = "px-4 py-2 text-left flex w-full items-start hover:bg-purple-100 hover:dark:bg-purple-900 no-underline hover:no-underline transition-colors duration-100 cursor-pointer";
     let icon_class = "-my-2 -ml-4 w-12 p-3";
-    let nav_text_class = move || if is_open() {"flex-1"} else { "hidden"};
+    let nav_text_class = move || if is_open() { "flex-1" } else { "hidden" };
     view! {
         <ul class="list-reset">
             <li>
@@ -109,7 +107,13 @@ pub fn OptionalSizeButtons(
     #[prop(into)] set_size: Out<Option<Size>>,
     #[prop(into)] group_name: &'static str,
 ) -> impl IntoView {
-    let all_sizes = vec![ Size::XSmall,  Size::Small,  Size::Medium,  Size::Large,  Size::XLarge ];
+    let all_sizes = vec![
+        Size::XSmall,
+        Size::Small,
+        Size::Medium,
+        Size::Large,
+        Size::XLarge,
+    ];
     let size_text = |size: &Size| match size {
         Size::XSmall => "Extra Small",
         Size::Small => "Small",
@@ -119,20 +123,22 @@ pub fn OptionalSizeButtons(
     };
     let size_buttons = all_sizes
         .into_iter()
-        .map(|curr_size| view! { 
-            //TODO: convert this into button group instead of radio buttons
-            <div class="mr-5" >
-                <input type="radio" name=group_name 
-                    checked=move || match size() {
-                        Some(s) => s == curr_size,
-                        None => false,
-                    }
-                    on:click=move |_| set_size.set(Some(curr_size))
-                />
-                <span class="ml-2" >
-                    {size_text(&curr_size)}
-                </span>
-            </div>
+        .map(|curr_size| {
+            view! {
+                <div class="mr-5">
+                    <input
+                        type="radio"
+                        name=group_name
+                        checked=move || match size() {
+                            Some(s) => s == curr_size,
+                            None => false,
+                        }
+
+                        on:click=move |_| set_size.set(Some(curr_size))
+                    />
+                    <span class="ml-2">{size_text(&curr_size)}</span>
+                </div>
+            }
         })
         .collect_view();
 
@@ -145,8 +151,15 @@ pub fn OptionalColorButtons(
     #[prop(into)] set_color: Out<Option<Color>>,
     #[prop(into)] group_name: &'static str,
 ) -> impl IntoView {
-    
-    let all_colors = vec![ Color::Default, Color::Primary, Color::Secondary, Color::Info, Color::Success, Color::Warning, Color::Danger ];
+    let all_colors = vec![
+        Color::Default,
+        Color::Primary,
+        Color::Secondary,
+        Color::Info,
+        Color::Success,
+        Color::Warning,
+        Color::Danger,
+    ];
     let color_text = |color: &Color| match color {
         Color::Default => "Default",
         Color::Primary => "Primary",
@@ -158,20 +171,22 @@ pub fn OptionalColorButtons(
     };
     let color_buttons = all_colors
         .into_iter()
-        .map(|curr_color| view! { 
-            //TODO: convert this into button group instead of radio buttons
-            <div class="mr-5" >
-                <input type="radio" name=group_name 
-                    checked=move || match color() {
-                        Some(s) => s == curr_color,
-                        None => false,
-                    }
-                    on:click=move |_| set_color.set(Some(curr_color))
-                />
-                <span class="ml-2" >
-                    {color_text(&curr_color)}
-                </span>
-            </div>
+        .map(|curr_color| {
+            view! {
+                <div class="mr-5">
+                    <input
+                        type="radio"
+                        name=group_name
+                        checked=move || match color() {
+                            Some(s) => s == curr_color,
+                            None => false,
+                        }
+
+                        on:click=move |_| set_color.set(Some(curr_color))
+                    />
+                    <span class="ml-2">{color_text(&curr_color)}</span>
+                </div>
+            }
         })
         .collect_view();
 

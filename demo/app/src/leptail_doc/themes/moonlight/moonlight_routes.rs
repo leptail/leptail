@@ -1,14 +1,15 @@
-use std::fmt::Display;
-use leptos::*;
-use leptos_router::*;
 use leptail::prelude::*;
+use leptos::*;
 use leptos_meta::*;
+use leptos_router::*;
+use std::fmt::Display;
 
-use crate::leptail_doc::themes::moonlight::pages::{drawer_doc::PageDrawer, switch_doc::PageSwitch};
+use crate::leptail_doc::themes::moonlight::pages::{
+    drawer_doc::PageDrawer, switch_doc::PageSwitch,
+};
 
 #[derive(Debug, Copy, Clone)]
-pub enum MoonlightRoutes { 
-
+pub enum MoonlightRoutes {
     // Layout
     // Stack,
     // Grid,
@@ -22,7 +23,7 @@ pub enum MoonlightRoutes {
 
     // Input
     // Button,
-    // Input, 
+    // Input,
     // DateTime,
     // Slider,
     // Select,
@@ -54,8 +55,7 @@ pub enum MoonlightRoutes {
 
 impl MoonlightRoutes {
     pub fn route(self) -> &'static str {
-        match self { 
-
+        match self {
             // MoonlightRoutes::Stack => "stack",
             // MoonlightRoutes::Grid => "grid",
             // MoonlightRoutes::Separator => "separator",
@@ -97,7 +97,6 @@ impl MoonlightRoutes {
     pub fn as_href(&self) -> String {
         format!("/{}/{}", "theme/moonlight", self.route())
     }
-
 }
 
 impl Display for MoonlightRoutes {
@@ -110,7 +109,7 @@ impl Display for MoonlightRoutes {
 impl ToHref for MoonlightRoutes {
     fn to_href(&self) -> Box<dyn Fn() -> String + '_> {
         Box::new(move || format!("/{}/{}", "theme/moonlight", self.route()))
-    }   
+    }
 }
 
 #[component(transparent)]
@@ -119,39 +118,23 @@ where
     P: std::fmt::Display,
 {
     view! {
-        <Route
-            path=path
-            view=|| {
-                view! { <MoonlightLayout/> }
-            }
-        >
+        <Route path=path view=|| view! { <MoonlightLayout/> }>
 
             // <Route path=MoonlightRoutes::Appbar view=|| { view! {  <PageAppbar/> } } />
-            <Route
-                path=MoonlightRoutes::Drawer
-                view=|| {
-                    view! { <PageDrawer/> }
-                }
-            />
-            <Route
-                path=MoonlightRoutes::Switch
-                view=|| {
-                    view! { <PageSwitch/> }
-                }
-            />
+            <Route path=MoonlightRoutes::Drawer view=|| view! { <PageDrawer/> }/>
+
+            <Route path=MoonlightRoutes::Switch view=|| view! { <PageSwitch/> }/>
+
         </Route>
     }
 }
 
-
-
 #[component]
 pub fn MoonlightLayout() -> impl IntoView {
-
     provide_context(leptail_theme_moonlight::build_theme());
     // provide_context(leptail_theme_moonlight::build_theme());
     let theme = use_context::<AppTheme>().unwrap_or_default();
-     
+
     view! {
         <Body class=theme.body/>
         <div class="mx-auto max-w-screen-xl">

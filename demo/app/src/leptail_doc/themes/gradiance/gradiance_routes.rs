@@ -1,14 +1,15 @@
-use std::fmt::Display;
-use leptos::*;
-use leptos_router::*;
 use leptail::prelude::*;
+use leptos::*;
 use leptos_meta::*;
+use leptos_router::*;
+use std::fmt::Display;
 
-use crate::leptail_doc::themes::gradiance::pages::{drawer_doc::*, switch_doc::PageSwitch, appbar_doc::PageAppbar};
+use crate::leptail_doc::themes::gradiance::pages::{
+    appbar_doc::PageAppbar, drawer_doc::*, switch_doc::PageSwitch,
+};
 
 #[derive(Debug, Copy, Clone)]
-pub enum GradianceRoutes { 
-
+pub enum GradianceRoutes {
     // Layout
     // Stack,
     // Grid,
@@ -25,7 +26,7 @@ pub enum GradianceRoutes {
 
     // Input
     // Button,
-    // Input, 
+    // Input,
     // DateTime,
     // Slider,
     // Select,
@@ -57,8 +58,7 @@ pub enum GradianceRoutes {
 
 impl GradianceRoutes {
     pub fn route(self) -> &'static str {
-        match self { 
-
+        match self {
             // GradianceRoutes::Stack => "stack",
             // GradianceRoutes::Grid => "grid",
             // GradianceRoutes::Separator => "separator",
@@ -103,7 +103,6 @@ impl GradianceRoutes {
     pub fn as_href(&self) -> String {
         format!("/{}/{}", "theme/gradiance", self.route())
     }
-
 }
 
 impl Display for GradianceRoutes {
@@ -116,7 +115,7 @@ impl Display for GradianceRoutes {
 impl ToHref for GradianceRoutes {
     fn to_href(&self) -> Box<dyn Fn() -> String + '_> {
         Box::new(move || format!("/{}/{}", "theme/gradiance", self.route()))
-    }   
+    }
 }
 
 #[component(transparent)]
@@ -125,57 +124,27 @@ where
     P: std::fmt::Display,
 {
     view! {
-        <Route
-            path=path
-            view=|| {
-                view! { <GradianceLayout/> }
-            }
-        >
+        <Route path=path view=|| view! { <GradianceLayout/> }>
 
-            <Route path=GradianceRoutes::Appbar view=|| { view! {  <PageAppbar/> } } />
-            <Route
-                path=GradianceRoutes::Drawer
-                view=|| {
-                    view! { <PageDrawer/> }
-                }
-            />
-            <Route
-                path=GradianceRoutes::DrawerResponsive
-                view=|| {
-                    view! { <PageDrawerResponsive/> }
-                }
-            />
-            <Route
-                path=GradianceRoutes::DrawerStaggered
-                view=|| {
-                    view! { <PageDrawerStaggered/> }
-                }
-            />
-            <Route
-                path=GradianceRoutes::DrawerStaggeredMini
-                view=|| {
-                    view! { <PageDrawerStaggeredMini/> }
-                }
-            />
-            <Route
-                path=GradianceRoutes::Switch
-                view=|| {
-                    view! { <PageSwitch/> }
-                }
-            />
+            <Route path=GradianceRoutes::Appbar view=|| view! { <PageAppbar/> }/>
+
+            <Route path=GradianceRoutes::Drawer view=|| view! { <PageDrawer/> }/>
+            <Route path=GradianceRoutes::DrawerResponsive view=|| view! { <PageDrawerResponsive/> }/>
+            <Route path=GradianceRoutes::DrawerStaggered view=|| view! { <PageDrawerStaggered/> }/>
+            <Route path=GradianceRoutes::DrawerStaggeredMini view=|| view! { <PageDrawerStaggeredMini/> }/>
+
+            <Route path=GradianceRoutes::Switch view=|| view! { <PageSwitch/> }/>
+
         </Route>
     }
 }
 
-
-
 #[component]
 pub fn GradianceLayout() -> impl IntoView {
-
     provide_context(leptail_theme_gradiance::build_theme());
     // provide_context(leptail_theme_moonlight::build_theme());
     let theme = use_context::<AppTheme>().unwrap_or_default();
-     
+
     view! {
         <Body class=theme.body/>
         <div class="mx-auto">
