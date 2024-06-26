@@ -141,12 +141,13 @@ where
 
 #[component]
 pub fn GradianceLayout() -> impl IntoView {
-    provide_context(leptail_theme_gradiance::build_theme());
+    provide_context(leptail_theme_gradiance::OverlayVariant::default_variant());
+    // provide_context(leptail_theme_gradiance::build_theme());
     // provide_context(leptail_theme_moonlight::build_theme());
-    let theme = use_context::<AppTheme>().unwrap_or_default();
+    // let theme = use_context::<AppTheme>().unwrap_or_default();
 
     view! {
-        <Body class=theme.body/>
+        <Body class=leptail_theme_gradiance::BodyTheme::default_variant().get_body().to_string()/>
         <div class="mx-auto">
             <div class="">
                 <Outlet/>

@@ -86,38 +86,40 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
 
 
 ## TODO: 
-1. Complete the theming for existing components and test it                                                 -- 
-    1. Variant may need to be passed as reactive signal                                                     -- 
-    2. Allow user to dynamically change the variant in documentation                                        --
-2. Keyboard integration and accessability                                                                   -- 
-    1. Use leptos use whereever possible                                                                    -- 
-3. Leptail library and theme installation should be easy to do                                              -- 
-    1. There should be a option to merge app's tailwind config with theme's tailwind config                 --  
-4. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --  
-5. Drawer implemenation                                                                                     -- 
-    1. Improve the theme                                                                                    -- 
-6. Appbar Implementation                                                                                    -- 
-    1. https://mantine.dev/ Has nice concept as appshell. We are essentially creating appshell with appbar  -- 
-    2. Appbar will have                                                                                     -- 
-        1. User provided                                                                                    -- 
-            1. Toolbar                                                                                      -- done
-            2. Drawer Content                                                                               -- done
-            3. Main Content                                                                                 -- done
-            4. ??? What about Aside content and Footer Content                                              -- 
-        2. System Default                                                                                   -- 
-            1. Drawer implemenation; open, close etc.                                                       -- 
-            2. Drawer type can be customized by the theme provider                                          -- 
-        3. Theming/variant                                                                                  -- partial
-            1. Sticky header or moving header                                                               -- 
-            2. Other layout customization                                                                   -- 
-            3. Appbar drop shadow                                                                           -- 
-7. Review the theme generation code.                                                                        --           
-8. Check if we can use tailwind fuse library                                                                -- done 
-9. Path towards publishing the library                                                                      -- 
-    1. Refactor the project structure                                                                       -- done
-    2. Tailwind css file generation: Figureout a way to do this                                             --  
-    2. Implement compressed static file serving for leptail demo project                                    -- 
-        a. Read more here. https://github.com/leptos-rs/cargo-leptos/pull/165                               -- 
+0. Core system:                                                                                                 -- 
+    1. Separate the component from the leptail design system.                                                   -- 
+    2. Define rules to create leptail component.                                                                -- 
+    3. That means anyone can create leptail component, and publish.                                             -- 
+    4. AppTheme will be deprectated and every component will get the theme on their own.                        -- done
+    5. Provide a helper method to provide the system default theme...                                           -- 
+    6. Should there be a marker trait called as leptail theme??? How does it solve any problem?                 -- 
+1. Components                                                                                                   --
+    1. Core                                                                                                     --
+        1. Variant need to be passed as reactive signal                                                         -- done
+        2. Keyboard integration and accessability (use leptos_use)                                              --
+    2. Appbar                                                                                                   --
+        1. Add footer and aside                                                                                 --
+2. Themes                                                                                                       --
+    0. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --
+    1. Complete the theming for existing components and test it                                                 --
+    2. Review and refactor the theme generation code.                                                           --           
+    3. Gradiance and Moonlight theme should be equivalent                                                       --
+    4. Appbar                                                                                                   --
+        1. Provide system default                                                                               --
+    5. Drawer: improve the theme                                                                                --
+3. Build Tool                                                                                                   --
+    1. Leptail library and theme installation should be easy to do                                              -- 
+    2. There should be a option to merge app's tailwind config with theme's tailwind config                     --  
+    3. Reduce the CSS bundle size. It's very high                                                               --
+        0. Safelist pattern in tailwind config is increasing the bundle size; Find a ways to avoid it           --  
+        1. The moonlight theme takes: 6.5M(uncompressed), 430k(gzip), 160k(bz)                                  --
+        2. The gradiance theme takes: 172k(uncompressed), 24k(gzip), 11k(bz)                                    --
+4. Demo/Documentaiton                                                                                           -- 
+    1. Allow user to dynamically change the variants in documentation                                           --
+    2. Add installation(or getting started) instructions                                                        --
+    3. Serve the optimized static files (https://github.com/leptos-rs/cargo-leptos/pull/165)                    --
+
+
 
 ## Design Decisions
 1. Arguments about component variants should be provided by theme! 
@@ -149,10 +151,6 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     3. Questions:
         1. Will there be change of theme or switch theme in the main documentation section?  
 
-
-## Performance and Bundle Size: 
-1. Can tree shaking be possible? or is there a way to selectively choose the components? 
-2. CSS bundle size of 2MB for gradiance theme. How can it be optimized? Does leptos allow css to be gziped?
 
 
 

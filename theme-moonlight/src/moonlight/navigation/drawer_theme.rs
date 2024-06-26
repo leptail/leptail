@@ -1,4 +1,4 @@
-use crate::gradiance::*;
+use crate::moonlight::*;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DrawerVariant {
@@ -31,25 +31,7 @@ pub enum DrawerVariant {
 
 impl DrawerVariant {
     fn background() -> String {
-        // let bg_gradient = Gradient::Linear(Direction::Left)
-        //     .make("bg".into(),
-        //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S50), TWColorPalette::from(TWColor::Indigo, Palette::S50).into(), TWColorPalette::from(TWColor::Cyan, Palette::S50)),
-        //         GradientColors::from(TWColorPalette::from(TWColor::Blue, Palette::S950), TWColorPalette::from(TWColor::Indigo, Palette::S950).into(), TWColorPalette::from(TWColor::Cyan, Palette::S950))
-        //     );
-
-        Gradient::Radial(None).make(
-            "bg".into(),
-            GradientColors::from(
-                TWColorPalette::from(TWColor::Indigo, Palette::S50),
-                TWColorPalette::from(TWColor::Blue, Palette::S50).into(),
-                TWColorPalette::from(TWColor::Violet, Palette::S50),
-            ),
-            GradientColors::from(
-                TWColorPalette::from(TWColor::Indigo, Palette::S950),
-                TWColorPalette::from(TWColor::Blue, Palette::S950).into(),
-                TWColorPalette::from(TWColor::Violet, Palette::S950),
-            ),
-        )
+        String::from("bg-slate-50 dark:bg-slate-900 text-slate-950 dark:text-slate-50")
     }
 
     fn base_theme() -> DrawerTheme {

@@ -6,7 +6,6 @@ pub mod input;
 pub mod navigation;
 pub mod overlay;
 pub mod surfaces;
-pub mod theme;
 
 pub use input::Switch;
 pub use input::SwitchBaseTheme;
@@ -18,11 +17,8 @@ pub use overlay::OverlayTheme;
 use prelude::Consumer;
 pub use surfaces::Appbar;
 pub use surfaces::AppbarTheme;
-pub use theme::AppTheme;
-// pub use theme::ThemeVariant;
 
 pub mod prelude {
-    // pub use super::theme::ThemeVariant;
     pub use super::callback::consumer;
     pub use super::callback::producer;
     pub use super::callback::Consumer;
@@ -39,8 +35,6 @@ pub mod prelude {
     pub use super::overlay::OverlayTheme;
     pub use super::surfaces::Appbar;
     pub use super::surfaces::AppbarTheme;
-    pub use super::theme::AppTheme;
-    pub use super::theme::HasThemeVariant;
     pub use super::OptionalMaybeSignal;
     pub use super::OptionalSignal;
     pub use super::Out;

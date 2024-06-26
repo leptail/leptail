@@ -131,12 +131,14 @@ where
 
 #[component]
 pub fn MoonlightLayout() -> impl IntoView {
-    provide_context(leptail_theme_moonlight::build_theme());
+    provide_context(leptail_theme_moonlight::OverlayVariant::default_variant());
+    provide_context(leptail_theme_moonlight::DrawerVariant::default_variant());
     // provide_context(leptail_theme_moonlight::build_theme());
-    let theme = use_context::<AppTheme>().unwrap_or_default();
+    // provide_context(leptail_theme_moonlight::build_theme());
+    // let theme = use_context::<AppTheme>().unwrap_or_default();
 
     view! {
-        <Body class=theme.body/>
+        <Body class=leptail_theme_moonlight::BodyTheme::default_variant().get_body().to_string()/>
         <div class="mx-auto max-w-screen-xl">
             <div class="m-4">
                 <Outlet/>

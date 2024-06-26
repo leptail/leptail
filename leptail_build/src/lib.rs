@@ -116,11 +116,6 @@ fn get_package_id(workspace: &Workspace, dep_name: &str) -> Option<PackageId> {
 
     for package_id in resolve.iter() {
         let package_name = package_id.name().as_str();
-        // debug!("package name: {}", package_name);
-        // let package = workspace
-        //     .load_package(package_id)
-        //     .expect("Failed to load package");
-        // package_id.stable_hash(workspace)
 
         if package_name == dep_name {
             return Some(package_id);

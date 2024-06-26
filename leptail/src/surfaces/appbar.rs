@@ -65,7 +65,7 @@ where
     DC: Fn() -> IV + 'static,
     IV: IntoView,
 {
-    let theme = variant.or_else(move || use_context::<AppTheme>().unwrap_or_default().appbar);
+    let theme = variant.or_else(move || use_context::<AppbarTheme>().unwrap_or_default());
 
     // TODO: checkout https://leptos-rs.github.io/leptos/interlude_projecting_children.html see if it helps
     // test
