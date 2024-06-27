@@ -16,7 +16,7 @@ pub struct AppbarVariant {
 
 impl AppbarVariant {
 
-    pub fn builder() -> AppbarVariant {
+    pub fn builder() -> Self {
         AppbarVariant{
             is_sticky: false,
             shadow: None,
@@ -26,27 +26,27 @@ impl AppbarVariant {
         }
     }    
 
-    pub fn sticky(mut self, is_sticky: bool) -> AppbarVariant{
+    pub fn sticky(mut self, is_sticky: bool) -> Self{
         self.is_sticky = is_sticky;
         self
     } 
 
-    pub fn shadow(mut self, size: Option<Size>) -> AppbarVariant{
+    pub fn shadow(mut self, size: Option<Size>) -> Self{
         self.shadow = size;
         self
     }
 
-    pub fn bg_color(mut self, color: Option<Color>) -> AppbarVariant{
+    pub fn bg_color(mut self, color: Option<Color>) -> Self{
         self.bg_color = color;
         self
     } 
 
-    pub fn max_width(mut self, size: Option<Size>) -> AppbarVariant{
+    pub fn max_width(mut self, size: Option<Size>) -> Self{
         self.max_width = size;
         self
     }
 
-    pub fn drawer_variant(mut self, variant: DrawerVariant) -> AppbarVariant{
+    pub fn drawer_variant(mut self, variant: DrawerVariant) -> Self{
         self.drawer_variant = Some(variant);
         self
     } 

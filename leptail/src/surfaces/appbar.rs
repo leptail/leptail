@@ -96,11 +96,8 @@ where
             class=hamburger_btn_class
             aria-controls="mobile-menu"
             aria-expanded="false"
-            on:click=move |_| {
-                set_open.set(true);
-            }
+            on:click=move |_| set_open.set(true)
         >
-
             <span class="sr-only">"Open main menu"</span>
             <Icon icon=hamburger_icon/>
         </button>
@@ -112,11 +109,8 @@ where
             class=close_btn_class
             aria-controls="mobile-menu-close"
             aria-expanded="false"
-            on:click=move |_| {
-                set_open.set(false);
-            }
+            on:click=move |_| set_open.set(false)
         >
-
             <span class="sr-only">"Close main menu"</span>
             <Icon icon=close_icon/>
         </button>

@@ -99,6 +99,22 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
         2. Keyboard integration and accessability (use leptos_use)                                              --
     2. Appbar                                                                                                   --
         1. Add footer and aside                                                                                 --
+        2. Make screen reader content as component property (optional)                                          -- 
+        3. Aria properties for hamburger and close buttons                                                      -- 
+        4. What are the aria best practices for appbar??                                                        -- 
+    2. Drawer                                                                                                   -- 
+        0. Do the code review and optimize                                                                      -- 
+        1. Add finegrained animation                                                                            -- 
+        2. What are the aria best practices for drawer??                                                        -- 
+    3. Switch Component                                                                                         -- 
+        0. Do the code review and optimize                                                                      -- 
+        1. Use attr spreding for tabindex, etc                                                                  -- 
+        2. How should the underlying input element (i.e form element) should be handled?                        --
+        3. What are the aria best practices for switch??                                                        -- 
+        4. on_icon and off_icon may not be needed since it is part of the theme, and variant can provide it     -- 
+    4. Overlay                                                                                                  -- 
+        1. Do the code review and optimize                                                                      -- 
+        2. Move it and make it part of the core(primitive) leptail component                                    --
 2. Themes                                                                                                       --
     0. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --
     1. Complete the theming for existing components and test it                                                 --
@@ -106,15 +122,20 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     3. Gradiance and Moonlight theme should be equivalent                                                       --
     4. Appbar                                                                                                   --
         1. Provide system default                                                                               --
+        2. Setter method for optional values, follow switch theme pattern                                       -- 
     5. Drawer: improve the theme                                                                                --
+        1. Use builder pattern                                                                                  --
+    3. Switch Component                                                                                         --
+        1. Use builder pattern                                                                                  --  
 3. Build Tool                                                                                                   --
     1. Leptail library and theme installation should be easy to do                                              -- 
     2. There should be a option to merge app's tailwind config with theme's tailwind config                     --  
     3. Reduce the CSS bundle size. It's very high                                                               --
         0. Safelist pattern in tailwind config is increasing the bundle size; Find a ways to avoid it           --  
-        1. The moonlight theme takes: 6.5M(uncompressed), 430k(gzip), 160k(bz)                                  --
-        2. The gradiance theme takes: 172k(uncompressed), 24k(gzip), 11k(bz)                                    --
+        1. The moonlight theme takes: 6.5M(uncompressed), 430k(gzip), 160k(br)                                  --
+        2. The gradiance theme takes: 172k(uncompressed), 24k(gzip), 11k(br)                                    --
 4. Demo/Documentaiton                                                                                           -- 
+    0. Show the demo of component for each theme in tab instead of one after the one.                           --
     1. Allow user to dynamically change the variants in documentation                                           --
     2. Add installation(or getting started) instructions                                                        --
     3. Serve the optimized static files (https://github.com/leptos-rs/cargo-leptos/pull/165)                    --

@@ -1,60 +1,126 @@
+use tailwind_fuse::tw_merge;
+
 use crate::moonlight::*;
 
-pub struct SwitchVariant {}
+pub struct SwitchVariant {
+    color: Option<Color>,
+    size: Option<Size>,
+    on_icon: Option<icondata::Icon>,
+    off_icon: Option<icondata::Icon>,
+}
 
 impl SwitchVariant {
-    pub fn base_theme() -> SwitchTheme {
-        let base = SwitchBaseTheme {
-            switch: String::from("relative rounded-full hover:outline-none "),
-            icon_container: String::from("absolute transition-all duration-150"),
-        };
-        let on_modifier: SwitchBaseTheme = SwitchBaseTheme {
-            switch: String::from(""),
-            icon_container: String::from("left-[50%]"),
-        };
-        let off_modifier = SwitchBaseTheme {
-            switch: String::from(""),
-            icon_container: String::from("left-0"),
-        };
-        let disabled_modifier = SwitchBaseTheme {
-            switch: String::from("cursor-not-allowed opacity-50"),
-            icon_container: String::from(""),
-        };
-        let enabled_modifier = SwitchBaseTheme {
-            switch: String::from("cursor-pointer hover:ring-4"),
-            icon_container: String::from(""),
-        };
-        SwitchTheme {
-            base,
-            on_modifier,
-            off_modifier,
-            disabled_modifier,
-            enabled_modifier,
+    pub fn builder() -> Self {
+        SwitchVariant {
+            color: None,
+            size: None,
             on_icon: None,
             off_icon: None,
         }
     }
 
-    // This doesn't work since it dynamically gnerated and tailwind compiler doesn't know at the compile time
-    fn switch_base_color(color: Color) -> String {
-        format!(
-            "{} {}",
+    pub fn color(mut self, color: Color) -> Self {
+        self.color = Some(color);
+        self
+    }
+
+    pub fn set_color(mut self, color: Option<Color>) -> Self {
+        self.color = color;
+        self
+    }
+
+    pub fn size(mut self, size: Size) -> Self {
+        self.size = Some(size);
+        self
+    }
+
+    pub fn set_size(mut self, size: Option<Size>) -> Self {
+        self.size = size;
+        self
+    }
+
+    pub fn on_icon(mut self, on_icon: icondata::Icon) -> Self {
+        self.on_icon = Some(on_icon);
+        self
+    }
+
+    pub fn off_icon(mut self, off_icon: icondata::Icon) -> Self {
+        self.off_icon = Some(off_icon);
+        self
+    }
+
+    pub fn default_variant() -> SwitchTheme {
+        Self::builder().build()
+    }
+
+    pub fn build(self) -> SwitchTheme {
+        let base_theme = SwitchBaseTheme {
+            switch: tw_merge!(
+                "relative rounded-full hover:outline-none",
+                Self::switch_base_color(&self.color.unwrap_or_default()),
+                // match self.color {
+                //     Some(color) => Self::switch_color(&color),
+                //     None => Self::switch_color(&Color::default()),
+                // },
+                Self::switch_size(&self.size.unwrap_or_default())
+            ),
+            icon_container: tw_merge!(
+                "absolute transition-all duration-150",
+                Self::icon_size(&self.size.unwrap_or_default())
+            ),
+        };
+
+        let on_modifier = SwitchBaseTheme {
+            switch: tw_merge!("", Self::switch_on_color(&self.color.unwrap_or_default()),),
+            icon_container: tw_merge!("left-[50%]"),
+        };
+
+        let off_modifier = SwitchBaseTheme {
+            switch: tw_merge!("", Self::switch_off_color(),),
+            icon_container: tw_merge!("left-0"),
+        };
+
+        let disabled_modifier = SwitchBaseTheme {
+            switch: tw_merge!("cursor-not-allowed opacity-50"),
+            icon_container: tw_merge!(""),
+        };
+
+        let enabled_modifier = SwitchBaseTheme {
+            switch: tw_merge!("cursor-pointer hover:ring-4"),
+            icon_container: tw_merge!(""),
+        };
+
+        let on_icon = Some(self.on_icon.unwrap_or(icondata::BsCircleFill));
+        let off_icon = Some(self.off_icon.unwrap_or(icondata::BsCircle));
+
+        SwitchTheme {
+            base: base_theme,
+            on_modifier,
+            off_modifier,
+            disabled_modifier,
+            enabled_modifier,
+            on_icon,
+            off_icon,
+        }
+    }
+
+    // Following are helper functions
+    fn switch_base_color(color: &Color) -> String {
+        tw_merge!(
             color.make_shade("hover:ring", Palette::S200),
             color.make_shade("dark:hover:ring", Palette::S800)
         )
     }
 
     fn switch_off_color() -> String {
-        format!(
-            "{} {}",
+        tw_merge!(
             Color::Default.make_shade("bg", Palette::S200),
             Color::Default.make_shade("dark:bg", Palette::S600)
         )
     }
 
-    fn switch_on_color(color: Color) -> String {
-        format!(
-            "{} {}",
+    fn switch_on_color(color: &Color) -> String {
+        tw_merge!(
             color.make_shade("bg", Palette::S300),
             color.make_shade("dark:bg", Palette::S700)
         )
@@ -78,39 +144,5 @@ impl SwitchVariant {
             Size::Large => String::from("text-[2rem]"),
             Size::XLarge => String::from("text-[2.5rem]"),
         }
-    }
-
-    fn apply_color(theme: &mut SwitchTheme, color: Color) {
-        theme.base.switch = format!(
-            "{} {}",
-            theme.base.switch,
-            Self::switch_base_color(color.clone())
-        );
-        theme.off_modifier.switch =
-            format!("{} {}", theme.off_modifier.switch, Self::switch_off_color());
-        theme.on_modifier.switch = format!(
-            "{} {}",
-            theme.on_modifier.switch,
-            Self::switch_on_color(color.clone())
-        );
-    }
-
-    fn apply_size(theme: &mut SwitchTheme, size: Size) {
-        theme.base.switch = format!("{} {}", theme.base.switch, Self::switch_size(&size));
-        theme.base.icon_container =
-            format!("{} {}", theme.base.icon_container, Self::icon_size(&size));
-    }
-
-    pub fn default_variant() -> SwitchTheme {
-        Self::variant(None, None)
-    }
-
-    pub fn variant(color: Option<Color>, size: Option<Size>) -> SwitchTheme {
-        let mut theme = Self::base_theme().clone();
-
-        Self::apply_color(&mut theme, color.unwrap_or_default());
-        Self::apply_size(&mut theme, size.unwrap_or_default());
-
-        theme
     }
 }
