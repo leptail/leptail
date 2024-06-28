@@ -31,17 +31,32 @@ impl AppbarVariant {
         self
     } 
 
-    pub fn shadow(mut self, size: Option<Size>) -> Self{
+    pub fn shadow(mut self, size: Size) -> Self{
+        self.shadow = Some(size);
+        self
+    }
+
+    pub fn set_shadow(mut self, size: Option<Size>) -> Self{
         self.shadow = size;
         self
     }
 
-    pub fn bg_color(mut self, color: Option<Color>) -> Self{
+    pub fn color(mut self, color: Color) -> Self{
+        self.bg_color = Some(color);
+        self
+    }
+
+    pub fn set_color(mut self, color: Option<Color>) -> Self{
         self.bg_color = color;
         self
     } 
 
-    pub fn max_width(mut self, size: Option<Size>) -> Self{
+    pub fn max_width(mut self, size: Size) -> Self{
+        self.max_width = Some(size);
+        self
+    }
+
+    pub fn set_max_width(mut self, size: Option<Size>) -> Self{
         self.max_width = size;
         self
     }
@@ -55,10 +70,10 @@ impl AppbarVariant {
     pub fn default_variant() -> AppbarTheme {
         AppbarVariant::builder()
             .sticky(true)
-            .shadow(Size::Large.into())
-            .bg_color(Color::Primary.into())
-            .max_width(Size::XLarge.into())
-            .drawer_variant(DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false })
+            .shadow(Size::Large)
+            .color(Color::Primary)
+            .max_width(Size::XLarge)
+            .drawer_variant(DrawerVariant::temporary().as_drawer_variant())
             .build()
         // AppbarVariant::builder().build()
     }
@@ -124,7 +139,7 @@ impl AppbarVariant {
             }
         );
 
-        let default_drawer_variant = DrawerVariant::Temporary { size: Size::Medium, side: Side::Left, has_inset: false };
+        let default_drawer_variant = DrawerVariant::temporary().as_drawer_variant();
             
         
 
@@ -141,7 +156,7 @@ impl AppbarVariant {
             drawer_title: "".to_string(),
             drawer_container,
             main_content: "w-full".to_string(),
-            drawer_variant: DrawerVariant::variant(&self.drawer_variant.unwrap_or(default_drawer_variant))
+            drawer_variant: self.drawer_variant.unwrap_or(default_drawer_variant).build()
         }
     }
 

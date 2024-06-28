@@ -18,18 +18,19 @@ pub fn PageAppbar() -> impl IntoView {
     let (shadow, set_shadow) = create_signal::<Option<Size>>(Some(Size::Medium));
     let (bg_color, set_bg_color) = create_signal::<Option<Color>>(Some(Color::Primary));
     let (max_width, set_max_width) = create_signal::<Option<Size>>(Some(Size::Large));
-    let (drawer_variant, set_drawer_variant) = create_signal(DrawerVariant::Staggered {
-        breakover_point: Size::Large,
-        side: HorizontalSide::Left,
-    });
+    let (drawer_variant, set_drawer_variant) = create_signal(
+        DrawerVariant::staggered()
+            .breakover_point(Size::Large)
+            .as_drawer_variant(),
+    );
 
     let appbar_variant = Signal::derive(move || {
         with!(|is_sticky, shadow, bg_color, max_width, drawer_variant| {
             AppbarVariant::builder()
                 .sticky(*is_sticky)
-                .shadow(*shadow)
-                .bg_color(*bg_color)
-                .max_width(*max_width)
+                .set_shadow(*shadow)
+                .set_color(*bg_color)
+                .set_max_width(*max_width)
                 .drawer_variant(*drawer_variant)
                 .build()
         })

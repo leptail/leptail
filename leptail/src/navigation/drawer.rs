@@ -2,11 +2,16 @@ use crate::prelude::*;
 use leptos::*;
 
 #[derive(Debug, Clone, Default)]
-pub struct DrawerTheme {
+pub struct DrawerBaseTheme {
     pub wrapper: String,
     pub inner: String,
-    pub minimized: String,
-    pub maximized: String,
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct DrawerTheme {
+    pub base: DrawerBaseTheme,
+    pub minimized_modifier: DrawerBaseTheme,
+    pub maximized_modifier: DrawerBaseTheme,
     pub overlay_theme: Option<OverlayTheme>,
 }
 
@@ -37,18 +42,27 @@ pub fn Drawer(
         move || {
             with!(|is_open, cloned| {
                 let dim = if *is_open {
-                    cloned.maximized.clone()
+                    cloned.maximized_modifier.wrapper.clone()
                 } else {
-                    cloned.minimized.clone()
+                    cloned.minimized_modifier.wrapper.clone()
                 };
-                format!("{} {}", cloned.wrapper.clone(), dim)
+                format!("{} {}", cloned.base.wrapper.clone(), dim)
             })
         }
     };
 
     let drawer_inner = {
         let cloned = theme.clone();
-        move || with!(|cloned| cloned.inner.clone())
+        move || {
+            with!(|is_open, cloned| {
+                let dim = if *is_open {
+                    cloned.maximized_modifier.inner.clone()
+                } else {
+                    cloned.minimized_modifier.inner.clone()
+                };
+                format!("{} {}", cloned.base.inner.clone(), dim)
+            })
+        }
     };
 
     let overlay_variant = {

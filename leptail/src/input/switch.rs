@@ -2,13 +2,13 @@ use crate::prelude::*;
 use leptos::*;
 use web_sys::KeyboardEvent;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct SwitchBaseTheme {
     pub switch: String,
     pub icon_container: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct SwitchTheme {
     pub base: SwitchBaseTheme,
     pub on_modifier: SwitchBaseTheme,
@@ -17,24 +17,6 @@ pub struct SwitchTheme {
     pub enabled_modifier: SwitchBaseTheme,
     pub on_icon: Option<icondata::Icon>,
     pub off_icon: Option<icondata::Icon>,
-}
-
-impl Default for SwitchTheme {
-    fn default() -> Self {
-        let base = SwitchBaseTheme {
-            switch: String::from(""),
-            icon_container: String::from(""),
-        };
-        Self {
-            base: base.clone(),
-            on_modifier: base.clone(),
-            off_modifier: base.clone(),
-            disabled_modifier: base.clone(),
-            enabled_modifier: base.clone(),
-            on_icon: None,
-            off_icon: None,
-        }
-    }
 }
 
 #[component]

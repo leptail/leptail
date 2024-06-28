@@ -11,6 +11,7 @@ pub use input::Switch;
 pub use input::SwitchBaseTheme;
 pub use input::SwitchTheme;
 pub use navigation::Drawer;
+// pub use navigation::DrawerBaseTheme;
 pub use navigation::DrawerTheme;
 pub use overlay::Overlay;
 pub use overlay::OverlayTheme;
@@ -30,6 +31,7 @@ pub mod prelude {
     pub use super::input::SwitchBaseTheme;
     pub use super::input::SwitchTheme;
     pub use super::navigation::Drawer;
+    // pub use super::navigation::DrawerBaseTheme;
     pub use super::navigation::DrawerTheme;
     pub use super::overlay::Overlay;
     pub use super::overlay::OverlayTheme;

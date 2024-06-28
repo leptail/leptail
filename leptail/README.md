@@ -97,15 +97,19 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     1. Core                                                                                                     --
         1. Variant need to be passed as reactive signal                                                         -- done
         2. Keyboard integration and accessability (use leptos_use)                                              --
+        3. All the component theme class should have modifiers for each state                                   -- 
     2. Appbar                                                                                                   --
         1. Add footer and aside                                                                                 --
         2. Make screen reader content as component property (optional)                                          -- 
         3. Aria properties for hamburger and close buttons                                                      -- 
         4. What are the aria best practices for appbar??                                                        -- 
+        5. Move sr-only class as part of the theme; Currently it's not headless                                 -- 
+        6. All the component theme class should have modifiers for each state                                   -- 
     2. Drawer                                                                                                   -- 
         0. Do the code review and optimize                                                                      -- 
         1. Add finegrained animation                                                                            -- 
         2. What are the aria best practices for drawer??                                                        -- 
+        3. All the component theme class should have modifiers for each state                                   -- 
     3. Switch Component                                                                                         -- 
         0. Do the code review and optimize                                                                      -- 
         1. Use attr spreding for tabindex, etc                                                                  -- 
@@ -122,11 +126,14 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
     3. Gradiance and Moonlight theme should be equivalent                                                       --
     4. Appbar                                                                                                   --
         1. Provide system default                                                                               --
-        2. Setter method for optional values, follow switch theme pattern                                       -- 
+        2. Setter method for optional values, follow switch theme pattern                                       -- done
+        3. Improve the theme                                                                                    -- 
     5. Drawer: improve the theme                                                                                --
-        1. Use builder pattern                                                                                  --
+        1. Use builder pattern                                                                                  -- done
+        2. Improve the theme                                                                                    --
     3. Switch Component                                                                                         --
-        1. Use builder pattern                                                                                  --  
+        1. Use builder pattern                                                                                  -- done 
+        2. Improve the theme                                                                                    -- 
 3. Build Tool                                                                                                   --
     1. Leptail library and theme installation should be easy to do                                              -- 
     2. There should be a option to merge app's tailwind config with theme's tailwind config                     --  
@@ -136,6 +143,10 @@ Component Library that aims to be headless, themeable using tailwindcss. While b
         2. The gradiance theme takes: 172k(uncompressed), 24k(gzip), 11k(br)                                    --
 4. Demo/Documentaiton                                                                                           -- 
     0. Show the demo of component for each theme in tab instead of one after the one.                           --
+        1. Switch Doc                                                                                           -- 
+        2. Drawer Doc                                                                                           -- 
+        3. Appbar Doc                                                                                           -- 
+        4. Overlay Doc                                                                                          -- 
     1. Allow user to dynamically change the variants in documentation                                           --
     2. Add installation(or getting started) instructions                                                        --
     3. Serve the optimized static files (https://github.com/leptos-rs/cargo-leptos/pull/165)                    --

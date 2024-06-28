@@ -2,6 +2,7 @@ use tailwind_fuse::tw_merge;
 
 use crate::gradiance::*;
 
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct SwitchVariant {
     color: Option<Color>,
     size: Option<Size>,

@@ -233,10 +233,8 @@ pub fn DocLayout() -> impl IntoView {
             drawer_content=drawer_content
             variant=AppbarVariant::builder()
                 .sticky(true)
-                .shadow(Size::Medium.into())
-                .drawer_variant(DrawerVariant::Responsive {
-                    side: HorizontalSide::Left,
-                })
+                .shadow(Size::Medium)
+                .drawer_variant(DrawerVariant::responsive().as_drawer_variant())
                 .build()
         >
 
