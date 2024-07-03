@@ -1,8 +1,8 @@
 # Leptail
-*Component Library for [Leptos](https://github.com/leptos-rs/leptos)*: Component Library that aims to be headless, themeable using [tailwindcss](https://github.com/tailwindlabs/tailwindcss). While being flexible to how developer/designer willing to theme, the library aims to provide off the shelf themes so that one can get started quickly. Read more at [Leptail Core Readme](https://github.com/leptail/leptail/tree/main/leptail).  
+*Component Library for [Leptos](https://github.com/leptos-rs/leptos)*: Component Library that aims to be headless, with a default Design System.   
 
 ## Note
-The project is still in the experimental level. Complete tooling is still being worked out.
+The project is still in the experimental level. Right now, the aim of the project has changed thus will go complete rewrite. Read more at [Leptail Core Readme](https://github.com/leptail/leptail/tree/main/leptail).
 
 
 ## How to build

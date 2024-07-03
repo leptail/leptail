@@ -55,24 +55,27 @@ impl SwitchVariant {
     }
 
     pub fn build(self) -> SwitchTheme {
+        let size = self.size.unwrap_or_default();
+        let color = self.color.unwrap_or_default();
+
         let base_theme = SwitchBaseTheme {
             switch: tw_merge!(
                 "relative rounded-full hover:outline-none",
-                Self::switch_base_color(&self.color.unwrap_or_default()),
+                Self::switch_base_color(&color),
                 // match self.color {
                 //     Some(color) => Self::switch_color(&color),
                 //     None => Self::switch_color(&Color::default()),
                 // },
-                Self::switch_size(&self.size.unwrap_or_default())
+                Self::switch_size(&size)
             ),
             icon_container: tw_merge!(
                 "absolute transition-all duration-150",
-                Self::icon_size(&self.size.unwrap_or_default())
+                Self::icon_size(&size)
             ),
         };
 
         let on_modifier = SwitchBaseTheme {
-            switch: tw_merge!("", Self::switch_on_color(&self.color.unwrap_or_default()),),
+            switch: tw_merge!("", Self::switch_on_color(&color),),
             icon_container: tw_merge!("left-[50%]"),
         };
 

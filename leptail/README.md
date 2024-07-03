@@ -1,193 +1,56 @@
 # Component Library for Leptos
-Component Library that aims to be headless, themeable using tailwindcss. While being flexible to how developer/designer willing to theme, the library aims to provide off the shelf themes so that one can get started quickly. It also provides(or exposes) `struct` for theme to provide a(some) kind of design system for designer to maintain the consistency across their app.  
+Headless Component Library with Default Design System.  
 
-## Inputs
-- [ ] Autocomplete
-- [ ] Button
-- [ ] Button Group
-- [ ] Checkbox
-- [ ] Floating Action Button
-- [ ] Radio Group
-- [ ] Rating
-- [ ] Select
-- [ ] Slider
-- [x] Switch
-- [ ] Text Field
-- [ ] Transfer List
-- [ ] Toggle Button
+## Complete refactoring of the project 
+When the project was conceived, I had a small expectation from it. All I wanted was a component library that works with SSR(at that time there was none) and be kind of headless(so that other users besides me can use it with different themes/designs). My preferred way of styling was through tailwindcss! That is what I wanted to support. Little did I know at that time what kind of rabbit hole I was getting into. I wrote a basic component switch(since I was also new to the rust ecosystem altogether) to start experimenting. While writing the switch component, I started to search regarding best practices for that component. Then bumped on to WAI-ARIA guidelines, then on to react-aria implementation, then to radixUI etc, etc. However, I went ahead with development and created a couple of more(drawer and appbar) components. Fiddled around with themming to create component variants etc. After finishing(more are less) the work with variant ergonomics etc, there was a moment of reflection with what has been done so far. So I went into the rabbit hole, and started questioning all the design decisions, etc even to the simple question such as why did I even choose tailwind to provide themes? Out of the reflection, I came out with the following thought.
 
-## Data display
-- [ ] Avatar
-- [ ] Badge
-- [ ] Chip
-- [ ] Divider
-- [ ] Icons 
-- [ ] List
-- [ ] Table
-- [ ] Tooltip
-- [ ] Typography
+1. Accessibility is hard! It needs a lot of testing.
+2. Design system is another beast!
 
-## Feedback
-- [ ] Alert
-- [ ] Backdrop
-- [ ] Dialog
-- [ ] Progress
-- [ ] Skeleton
-- [ ] Snackbar
+Also, while reading on the web, I came across stories about the time spent by [Adobe team on combobox](https://react-spectrum.adobe.com/blog/building-a-combobox.html), and [radix team on dropdown implementation](https://www.youtube.com/watch?v=lY-RQjWeweo&t=1395s). With the limited time, it is not worth re-inventing the entire wheel but rather build on top of what people have done already. With that in mind, the next refactor or ground-up implementation will have the following structure.
 
-## Surfaces
-- [ ] Accordion
-- [x] App Bar
-- [ ] Card
-- [ ] Paper
+1. Core API, (similar to aria-hooks, react stately, zag)
+2. Primitive Component (similar to aria components or radix primitives, floating-ui)
+3. Design System and Components ([radix themes](https://github.com/radix-ui/themes), et al)
+4. Things which are neither part of components or design-system(built using above three), provide it as part of building block(or examples) and let people copy paste(like ShadcnUI)
 
-## Navigation
-- [ ] Bottom Navigation
-- [ ] Breadcrumbs
-- [x] Drawer
-- [ ] Link
-- [ ] Menu
-- [ ] Pagination
-- [ ] Speed Dial
-- [ ] Stepper
-- [ ] Tabs
+With the above structure, some of the things are fixed as broad guidelines.
+1. Follow [react-aria](https://github.com/adobe/react-spectrum) for core API (mostly because I believe they have tested things extensively)
+2. [Open props](https://open-props.style/) looks promising for a design system. That coupled with Radix theme, chakra or MUI base can help to design the API.
+3. Will probably need some tooling like compile time css in js such as [linaria](https://github.com/callstack/linaria), [compliedcssinjs](https://compiledcssinjs.com/), [vanilla extract](https://github.com/vanilla-extract-css/vanilla-extract), [sitches](https://stitches.dev/).
+4. Follow Rust's philosophy. Only pay for what you use! Means no unused css or code. Use rust lang features. 
+5. Make it easier to build the component outside of leptail (using core apis) and publish. Others can still import and use it.
+6. Afterall, it should also work with tailwindcss :). It is important for library adoption. But don't sweat it with the default theme or full blown design system using tailwindcss. 
 
-## Layout
-- [ ] Box
-- [ ] Container 
-- [ ] Grid v2
-- [ ] Flex
-- [ ] New
-- [ ] Stack
-- [ ] Image List
-- [ ] Hidden
+*Needs further investigation:*
+1. API design of [headlessui](https://github.com/tailwindlabs/headlessui), [Floating UI](https://github.com/floating-ui/floating-ui), [radix primitives](https://github.com/radix-ui/primitives), [BaseUI](https://github.com/mui/base-ui), [ArkUI](https://github.com/chakra-ui/ark)
+2. [Zag](https://github.com/chakra-ui/zag) vs aria hooks/stately.
+3. How should the animation work? Open props does provide nice animations. But do we need more than that? How does floatingUI handle it?
+4. How does LTR and RTL work?
+5. Can it be composable? How easy will it be??
+6. The difference between react and leptos as framework that enforce constraint on component API design
+7. What about internationalisation? How do they work in terms of accessibility?
+8. What about people who wants to create a [facade over the library](https://old.reddit.com/r/reactjs/comments/1ai7yi2/good_examples_of_component_libraries_built_on_top/kotbpmu/)? How will that work?
+9. How much of the HTML structure will be fixed? Headless v/s unstyled! 
 
-## Utils
-- [ ] Click-Away Listener
-- [ ] CSS Baseline
-- [ ] Modal
-- [ ] No SSR
-- [ ] Popover
-- [ ] Popper
-- [ ] Portal
-- [ ] Textarea Autosize
-- [ ] Transitions
-- [ ] useMediaQuery
+*Nice goal to have:*
+1. Whatever you do, make it performant! Not a bloated thing. Even the big app built with it should score 100% on lighthouse(ha ha... lol)
 
-## MUI X
-- [ ] Data Grid
-- [ ] Date & Time Pickers
-
-## Lab
-- [ ] Masonry
-- [ ] Timeline
-- [ ] Tree View
+*References:*
+1. [Use of attributes for styling](https://pdx.su/blog/2023-07-27-use-css-attributes/)
+2. The [article comparing aria with radix](https://www.dhiwise.com/post/react-aria-vs-radix-ui-what-best-ui-toolkit) lists the following features as common among them
+   1. Accessibility
+   2. Headless/Unstyled
+   3. Behaviour Hooks
+   4. Composability
+   5. Focus Management
+   6. State Management
+3. There is a real world comparison between [styled component vs css modules](https://pustelto.com/blog/css-vs-css-in-js-perf/)
 
 
 
-## TODO: 
-0. Core system:                                                                                                 -- 
-    1. Separate the component from the leptail design system.                                                   -- 
-    2. Define rules to create leptail component.                                                                -- 
-    3. That means anyone can create leptail component, and publish.                                             -- 
-    4. AppTheme will be deprectated and every component will get the theme on their own.                        -- done
-    5. Provide a helper method to provide the system default theme...                                           -- 
-    6. Should there be a marker trait called as leptail theme??? How does it solve any problem?                 -- 
-1. Components                                                                                                   --
-    1. Core                                                                                                     --
-        1. Variant need to be passed as reactive signal                                                         -- done
-        2. Keyboard integration and accessability (use leptos_use)                                              --
-        3. All the component theme class should have modifiers for each state                                   -- 
-    2. Appbar                                                                                                   --
-        1. Add footer and aside                                                                                 --
-        2. Make screen reader content as component property (optional)                                          -- 
-        3. Aria properties for hamburger and close buttons                                                      -- 
-        4. What are the aria best practices for appbar??                                                        -- 
-        5. Move sr-only class as part of the theme; Currently it's not headless                                 -- 
-        6. All the component theme class should have modifiers for each state                                   -- 
-    2. Drawer                                                                                                   -- 
-        0. Do the code review and optimize                                                                      -- 
-        1. Add finegrained animation                                                                            -- 
-        2. What are the aria best practices for drawer??                                                        -- 
-        3. All the component theme class should have modifiers for each state                                   -- 
-    3. Switch Component                                                                                         -- 
-        0. Do the code review and optimize                                                                      -- 
-        1. Use attr spreding for tabindex, etc                                                                  -- 
-        2. How should the underlying input element (i.e form element) should be handled?                        --
-        3. What are the aria best practices for switch??                                                        -- 
-        4. on_icon and off_icon may not be needed since it is part of the theme, and variant can provide it     -- 
-    4. Overlay                                                                                                  -- 
-        1. Do the code review and optimize                                                                      -- 
-        2. Move it and make it part of the core(primitive) leptail component                                    --
-2. Themes                                                                                                       --
-    0. Investigate if using https://github.com/Oyelowo/twust is helpful                                         --
-    1. Complete the theming for existing components and test it                                                 --
-    2. Review and refactor the theme generation code.                                                           --           
-    3. Gradiance and Moonlight theme should be equivalent                                                       --
-    4. Appbar                                                                                                   --
-        1. Provide system default                                                                               --
-        2. Setter method for optional values, follow switch theme pattern                                       -- done
-        3. Improve the theme                                                                                    -- 
-    5. Drawer: improve the theme                                                                                --
-        1. Use builder pattern                                                                                  -- done
-        2. Improve the theme                                                                                    --
-    3. Switch Component                                                                                         --
-        1. Use builder pattern                                                                                  -- done 
-        2. Improve the theme                                                                                    -- 
-3. Build Tool                                                                                                   --
-    1. Leptail library and theme installation should be easy to do                                              -- 
-    2. There should be a option to merge app's tailwind config with theme's tailwind config                     --  
-    3. Reduce the CSS bundle size. It's very high                                                               --
-        0. Safelist pattern in tailwind config is increasing the bundle size; Find a ways to avoid it           --  
-        1. The moonlight theme takes: 6.5M(uncompressed), 430k(gzip), 160k(br)                                  --
-        2. The gradiance theme takes: 172k(uncompressed), 24k(gzip), 11k(br)                                    --
-4. Demo/Documentaiton                                                                                           -- 
-    0. Show the demo of component for each theme in tab instead of one after the one.                           --
-        1. Switch Doc                                                                                           -- 
-        2. Drawer Doc                                                                                           -- 
-        3. Appbar Doc                                                                                           -- 
-        4. Overlay Doc                                                                                          -- 
-    1. Allow user to dynamically change the variants in documentation                                           --
-    2. Add installation(or getting started) instructions                                                        --
-    3. Serve the optimized static files (https://github.com/leptos-rs/cargo-leptos/pull/165)                    --
-
-
-
-## Design Decisions
-1. Arguments about component variants should be provided by theme! 
-    1. Thirdparty theme provider will have more flexibility, thus increasing the innovation 
-    2. Variants are not really part of reactivity; thus it's not part of core component lib
-    3. Switching theme may need to change code especially if provided by thirdparty
-    4. Performance: 
-    5. Bundle Size:  
-2. Component Ergonomics 
-    1. How should state be passed? 
-        -- Follow how leptonic is doing
-    2. How should the event be handled 
-        -- For state change event follow how leptonic is doing. For other types of event think about it
-    3. How should ARIA work?
-        -- Best is wrap ARIA related configuration in a option of struct and pass it 
-    4. How should keyboard events should be handled? 
-        -- todo:
-    5. How should focus be handled?
-        -- todo:
-    6. How should onLoad events be registered?
-        -- todo: 
-    7. Who should provide the Icons? 
-        -- Use a fallback icons from the leptos icons. 
-        -- Icons should be provided by theme; but optional 
-        -- Icons can also be provided by the library users. 
-3. How should the Documentaion work? Especially with themes? 
-    1. There should be basic doumentation for the component usage. 
-    2. Theme should provide it's own documentation with variants and variant builder API example. 
-    3. Questions:
-        1. Will there be change of theme or switch theme in the main documentation section?  
-
-
-
-
-## Design best practices
-When developing headless UI components, which are UI components that provide functionality without dictating the visual presentation, there are several key considerations to keep in mind to ensure their effectiveness and reusability:
+## Best practices
+Copied from somewhere on the web. 
 
 **Accessibility:** Accessibility should be a top priority. Ensure that the component is fully accessible to users with disabilities. Use semantic HTML elements and provide appropriate ARIA attributes and roles. Test with screen readers and keyboard navigation to ensure a seamless experience.
 
@@ -227,3 +90,86 @@ When developing headless UI components, which are UI components that provide fun
 
 **Performance Profiling:** Provide guidance on how to profile and optimize the component's performance, including strategies for lazy loading and code splitting.
 
+
+# List of component the MUI has
+## Inputs
+- [ ] Autocomplete
+- [ ] Button
+- [ ] Button Group
+- [ ] Checkbox
+- [ ] Floating Action Button
+- [ ] Radio Group
+- [ ] Rating
+- [ ] Select
+- [ ] Slider
+- [ ] Switch
+- [ ] Text Field
+- [ ] Transfer List
+- [ ] Toggle Button
+
+## Data display
+- [ ] Avatar
+- [ ] Badge
+- [ ] Chip
+- [ ] Divider
+- [ ] Icons 
+- [ ] List
+- [ ] Table
+- [ ] Tooltip
+- [ ] Typography
+
+## Feedback
+- [ ] Alert
+- [ ] Backdrop
+- [ ] Dialog
+- [ ] Progress
+- [ ] Skeleton
+- [ ] Snackbar
+
+## Surfaces
+- [ ] Accordion
+- [ ] App Bar
+- [ ] Card
+- [ ] Paper
+
+## Navigation
+- [ ] Bottom Navigation
+- [ ] Breadcrumbs
+- [ ] Drawer
+- [ ] Link
+- [ ] Menu
+- [ ] Pagination
+- [ ] Speed Dial
+- [ ] Stepper
+- [ ] Tabs
+
+## Layout
+- [ ] Box
+- [ ] Container 
+- [ ] Grid v2
+- [ ] Flex
+- [ ] New
+- [ ] Stack
+- [ ] Image List
+- [ ] Hidden
+
+## Utils
+- [ ] Click-Away Listener
+- [ ] CSS Baseline
+- [ ] Modal
+- [ ] No SSR
+- [ ] Popover
+- [ ] Popper
+- [ ] Portal
+- [ ] Textarea Autosize
+- [ ] Transitions
+- [ ] useMediaQuery
+
+## MUI X
+- [ ] Data Grid
+- [ ] Date & Time Pickers
+
+## Lab
+- [ ] Masonry
+- [ ] Timeline
+- [ ] Tree View

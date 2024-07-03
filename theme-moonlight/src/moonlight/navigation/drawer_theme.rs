@@ -60,10 +60,10 @@ impl TemporaryDrawer {
         };
 
         let base_wrapper_side = match self.side {
-            Side::Left => tw_merge!("h-full", width, "top-0 left-0", inset_class),
-            Side::Right => tw_merge!("h-full", width, "top-0 right-0", inset_class),
-            Side::Top => tw_merge!("w-full", height, "top-0 right-0 left-0", inset_class),
-            Side::Bottom => tw_merge!("w-full", height, "bottom-0 right-0 left-0", inset_class),
+            Side::Left => tw_merge!("h-full", width, "top-0 left-0"),
+            Side::Right => tw_merge!("h-full", width, "top-0 right-0"),
+            Side::Top => tw_merge!(height, "w-full", "top-0 right-0 left-0"),
+            Side::Bottom => tw_merge!(height, "w-full", "bottom-0 right-0 left-0"),
         };
 
         let minimized_wrapper_side = match self.side {
@@ -84,6 +84,7 @@ impl TemporaryDrawer {
             wrapper: tw_merge!(
                 "z-[101] fixed overflow-x-hidden transition-all duration-300 ease-out",
                 base_wrapper_side,
+                inset_class,
             ),
             inner: tw_merge!("h-full w-full", bg_gradient, inset_inner_class),
         };

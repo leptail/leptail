@@ -60,10 +60,10 @@ impl TemporaryDrawer {
         };
 
         let base_wrapper_side = match self.side {
-            Side::Left => tw_merge!("h-full", width, "top-0 left-0", inset_class),
-            Side::Right => tw_merge!("h-full", width, "top-0 right-0", inset_class),
-            Side::Top => tw_merge!("w-full", height, "top-0 right-0 left-0", inset_class),
-            Side::Bottom => tw_merge!("w-full", height, "bottom-0 right-0 left-0", inset_class),
+            Side::Left => tw_merge!("h-full", width, "top-0 left-0"),
+            Side::Right => tw_merge!("h-full", width, "top-0 right-0"),
+            Side::Top => tw_merge!(height, "w-full", "top-0 right-0 left-0"),
+            Side::Bottom => tw_merge!(height, "w-full", "bottom-0 right-0 left-0"),
         };
 
         let minimized_wrapper_side = match self.side {
@@ -84,6 +84,7 @@ impl TemporaryDrawer {
             wrapper: tw_merge!(
                 "z-[101] fixed overflow-x-hidden transition-all duration-300 ease-out",
                 base_wrapper_side,
+                inset_class,
             ),
             inner: tw_merge!("h-full w-full", bg_gradient, inset_inner_class),
         };
@@ -120,34 +121,36 @@ impl ResponsiveDrawer {
         let width = "w-80";
         let bg_gradient = DrawerVariant::background();
 
-        let base_wrapper_side = match self.side {
-            HorizontalSide::Left => "top-0 left-0 md:top-auto md:left-auto",
-            HorizontalSide::Right => "top-0 right-0 md:top-auto md:right-auto",
-        };
-
-        let minimized_wrapper_side = match self.side {
-            HorizontalSide::Left => "-translate-x-full md:translate-x-0",
-            HorizontalSide::Right => "translate-x-full md:translate-x-0",
-        };
-
-        let maximized_wrapper_side = "translate-x-0";
-
         let base = DrawerBaseTheme {
             wrapper: tw_merge!(
                 "z-[101] md:z-[1] fixed md:relative overflow-x-hidden md:overflow-x-visible transition-all duration-300 ease-out  h-full flex flex-col shrink-0",
                 "h-full",
                 width,
-                base_wrapper_side,
+                match self.side {
+                    HorizontalSide::Left => "top-0 left-0 md:top-auto md:left-auto",
+                    HorizontalSide::Right => "top-0 right-0 md:top-auto md:right-auto",
+                },
             ),
-            inner: tw_merge!("md:bg-transparent dark:md:bg-transparent shrink-0", "h-full", width, bg_gradient),
+            inner: tw_merge!(
+                "md:bg-transparent dark:md:bg-transparent shrink-0", 
+                "h-full", 
+                width, 
+                bg_gradient
+            ),
         };
 
         let minimized_modifier = DrawerBaseTheme {
-            wrapper: tw_merge!(minimized_wrapper_side),
+            wrapper: tw_merge!(
+                "",
+                match self.side {
+                    HorizontalSide::Left => "-translate-x-full md:translate-x-0",
+                    HorizontalSide::Right => "translate-x-full md:translate-x-0",
+                }
+            ),
             inner: String::default(),
         };
         let maximized_modifier = DrawerBaseTheme {
-            wrapper: tw_merge!(maximized_wrapper_side),
+            wrapper: tw_merge!("translate-x-0"),
             inner: String::default(),
         };
 
@@ -266,30 +269,26 @@ impl DrawerVariant {
 
     // common theme accross variants
     fn build_staggered_drawer(side: &HorizontalSide, mini_drawer: bool) -> DrawerTheme {
-        let minimized_width = if mini_drawer {
-            "w-0 md:w-[48px]"
-        } else {
-            "w-0"
-        };
+
+        let minimized_width = if mini_drawer { "w-0 md:w-[48px]" } else { "w-0" };
+        let maximized_width = "w-[320px]";
+
         let translate_x = if mini_drawer {
             "-translate-x-[320px] md:-translate-x-[0px] "
         } else {
             "-translate-x-[320px] "
         };
-        let maximized_width = "w-[320px]";
 
         let bg_gradient = Self::background();
-
-        let base_wrapper_side = match side {
-            HorizontalSide::Left => "top-0 left-0 md:top-auto md:left-auto",
-            HorizontalSide::Right => "top-0 right-0 md:top-auto md:right-auto",
-        };
 
         let base = DrawerBaseTheme {
             wrapper: tw_merge!(
                 "z-[101] md:z-[1] fixed md:relative transition-all duration-300 ease-out h-full flex flex-col shrink-0 overflow-x-hidden",
                 "h-full", 
-                base_wrapper_side,
+                match side {
+                    HorizontalSide::Left => "top-0 left-0 md:top-auto md:left-auto",
+                    HorizontalSide::Right => "top-0 right-0 md:top-auto md:right-auto",
+                },
             ),
             inner: tw_merge!("md:bg-transparent dark:md:bg-transparent shrink-0", bg_gradient),
         };
