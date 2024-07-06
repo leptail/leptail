@@ -1,124 +1,86 @@
-use leptail::*;
-use leptos::*;
-use leptos_icons::*;
-use leptos_meta::*;
-use leptos_router::*;
+pub mod errors;
+pub mod pages;
 
-pub mod leptail_doc;
-use crate::leptail_doc::doc_routes::DocRoutes;
-use crate::leptail_doc::themes::gradiance::gradiance_routes::GradianceRoutes;
-use crate::leptail_doc::themes::moonlight::moonlight_routes::MoonlightRoutes;
-pub mod error_template;
+use crate::errors::AppError;
+use crate::pages::error_template::ErrorTemplate;
+use crate::pages::home::Home;
+
+use leptos::prelude::*;
+use leptos_meta::*;
+use leptos_router::{
+    components::{FlatRoutes, Route, Router, Routes},
+    StaticSegment,
+};
+use pages::error_example::ExampleErrors;
+
+stylance::import_style!(lib_styles, "lib.module.scss");
+
+pub fn shell(options: LeptosOptions) -> impl IntoView {
+    view! {
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <AutoReload options=options.clone()/>
+                <HydrationScripts options/>
+                <link rel="stylesheet" id="leptos" href="/pkg/start-axum-workspace.css"/>
+                <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
+                <MetaTags/>
+            </head>
+            <body>
+                <App/>
+            </body>
+        </html>
+    }
+}
 
 #[component]
 pub fn App() -> impl IntoView {
-    // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/start-axum-workspace.css"/>
-
         <Router>
-            <main>
-                <Routes>
-                    <Route path="" view=|| view! { <EmptyLayout/> }>
-                        <Route path="" view=|| view! { <AppLayout/> }>
-                            <Route path="" view=|| view! { <HomePage/> }/>
-                        </Route>
-                        <DocRoutes path="doc"/>
-                        <GradianceRoutes path="theme/gradiance"/>
-                        <MoonlightRoutes path="theme/moonlight"/>
-                    </Route>
-                </Routes>
+            <nav class=lib_styles::nav>
+                <div class=lib_styles::logo>
+                    <a href="/">"Leptail"</a>
+                </div>
+                <div class=lib_styles::menu>
+                    <ul>
+                        <li>
+                            <a href="/error">Err!</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class=lib_styles::main>
+                <div class="">
+                    <Routes fallback=|| {
+                        let mut errors = Errors::default();
+                        errors.insert_with_default_key(AppError::NotFound);
+                        view! { <ErrorTemplate errors/> }.into_view()
+                    }>
+                        // <Route path=StaticSegment("") view=|| view! { <AppLayout/> }>
+                        <Route path=StaticSegment("") view=Home/>
+                        <Route path=StaticSegment("/error") view=ExampleErrors/>
+                    // </Route>
+                    </Routes>
+
+                </div>
             </main>
         </Router>
     }
 }
 
-#[component]
-fn EmptyLayout() -> impl IntoView {
-    view! {
-        <div>
-            <Outlet/>
-        </div>
-    }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn AppLayout() -> impl IntoView {
-    provide_context(leptail_theme_gradiance::AppbarVariant::default_variant());
-    provide_context(leptail_theme_gradiance::OverlayVariant::default_variant());
-    provide_context(leptail_theme_gradiance::DrawerVariant::default_variant());
-
-    // provide_context(leptail_theme_moonlight::build_theme());
-    // let theme = use_context::<AppTheme>().unwrap_or_default();
-
-    let nav_link_class = "px-4 py-2 text-left flex w-full items-start hover:bg-purple-100 hover:dark:bg-purple-900 no-underline hover:no-underline transition-colors duration-100 cursor-pointer";
-    // let icon_class = "-my-2 -ml-4 w-12 p-3";
-    let nav_text_class = "flex-1";
-
-    let drawer_content = move || {
-        view! {
-            <div>
-                <ul class="list-reset">
-                    <li>
-                        <A href=DocRoutes::Overview class=nav_link_class>
-                            <span class=nav_text_class>"Documentation"</span>
-                        </A>
-                    </li>
-                </ul>
-            </div>
-        }
-    };
-
-    let toolbar_content = || {
-        view! {
-            <div class="flex flex-row items-end space-x-4 self-center">
-                <div>
-                    <A href="" class="font-bold text-2xl">
-                        "Leptail"
-                    </A>
-                </div>
-                <div class="hidden md:block">
-                    <A href=DocRoutes::Overview class="text-blue-800 dark:text-blue-400">
-                        "Documentation"
-                    </A>
-                </div>
-            </div>
-        }
-    };
-
-    let (is_drawer_open, set_drawer_open) = create_signal(false);
-
-    view! {
-        <Body class=leptail_theme_gradiance::BodyTheme::default_variant().get_body().to_string()/>
-        <Appbar
-            is_open=is_drawer_open
-            set_open=set_drawer_open
-            toolbar_content=toolbar_content
-            drawer_title=|| view! { <div></div> }
-            drawer_content=drawer_content
-        >
-            <div>
-                <Outlet/>
-            </div>
-        </Appbar>
-    }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    view! {
-        <Title text="Leptail: Headless with default styled component library for Leptos"/>
-        <div class="flex flex-col content-center gap-5 my-10">
-            <h1>"Welcome to Leptail!"</h1>
-        </div>
-        <div class="flex content-center justify-center">
-            <A href=DocRoutes::Overview class="text-blue-800 dark:text-blue-400">
-                "Documentation"
-            </A>
-        </div>
-    }
-}
+// #[component]
+// pub fn AppLayout() -> impl IntoView {
+//     view! {
+//         <main>
+//             <div class="">
+//                 <div class="">
+//                     <Outlet/>
+//                 </div>
+//             </div>
+//         </main>
+//     }
+// }

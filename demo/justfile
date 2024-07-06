@@ -1,0 +1,13 @@
+default:
+    @just --list
+
+dev:
+	stylance --watch app & cargo leptos watch --hot-reload
+
+release: 
+    stylance app 
+    cargo leptos build --release -P  
+
+prod: 
+    @just release
+    ./target/release/server

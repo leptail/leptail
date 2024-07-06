@@ -1,0 +1,69 @@
+:root {
+    font-family: var(--font-geometric-humanist);
+    --link-font-size: 0.875rem;
+    --nav-block-size: var(--size-10);
+    view-transition-name: none;
+
+    --surface-1: black;
+}
+
+.nav {
+    display: flex;
+    gap: var(--size-3);
+    padding-inline: var(--size-fluid-3);
+    padding-block: var(--size-4);
+    align-items: center;
+    block-size: var(--nav-block-size);
+
+    // & button {
+    //     font-size: var(--font-size-5);
+    //     background-color: inherit;
+    //     color: white;
+    // }
+
+    // & a {
+    //     color: white;
+    // }
+
+    .logo {
+        max-inline-size: calc(var(--size-11) + var(--size-2));
+
+        & a {
+            font-size: var(--font-size-5);
+        }
+    }
+
+    .menu {
+        margin-left: var(--size-fluid-3);
+
+        & ul {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            padding: 0;
+            gap: var(--size-7);
+
+            block-size: 100%;
+            padding-block: var(--size-6);
+        }
+
+        & a {
+            color: white;
+            font-size: var(--font-size-4);
+            inline-size: 100%;
+            margin: 0;
+
+            text-decoration-color: var(--brand);
+            text-underline-offset: 0.5ex;
+        }
+
+    }
+}
+
+
+.main {
+    display: grid;
+    place-content: center;
+    min-block-size: calc(100dvh - var(--nav-block-size));
+    background: var(--gradient-29);
+}

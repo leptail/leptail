@@ -1,63 +1,116 @@
-use app::*;
-use axum::{routing::post, Router};
-use fileserv::file_and_error_handler;
-use leptos::*;
-use leptos_axum::{generate_route_list, LeptosRoutes};
+// use app::*;
+// use axum::{routing::post, Router};
+// use fileserv::file_and_error_handler;
+// use leptos::*;
+// use leptos_axum::{generate_route_list, LeptosRoutes};
 
-pub mod fileserv;
+// pub mod fileserv;
 
 
+// #[tokio::main]
+// async fn main() {
+// // #[cfg(feature = "ssr")]
+// // #[shuttle_runtime::main]
+// // async fn axum() {
+//     simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
+
+//     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
+//     // For deployment these variables are:
+//     // <https://github.com/leptos-rs/start-axum#executing-a-server-on-a-remote-machine-without-the-toolchain>
+//     // Alternately a file can be specified such as Some("Cargo.toml")
+//     // The file would need to be included with the executable when moved to deployment
+//     let conf = get_configuration(None).await.unwrap();
+//     let leptos_options = conf.leptos_options;
+//     let addr = leptos_options.site_addr;
+//     let routes = generate_route_list(App);
+ 
+//     let app = Router::new()
+//         .leptos_routes(&leptos_options, routes, App)
+//         .fallback(file_and_error_handler)
+//         .with_state(leptos_options);
+
+//     // run our app with hyper
+//     // `axum::Server` is a re-export of `hyper::Server`
+//     log::info!("listening on http://{}", &addr);
+//     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+//     axum::serve(listener, app.into_make_service())
+//         .await
+//         .unwrap();
+
+// }
+
+
+// #[cfg(feature = "ssr")]
+mod ssr_imports {
+    use axum::extract::State;
+    pub use axum::{
+        body::Body as AxumBody,
+        extract::Path,
+        http::Request,
+        response::{IntoResponse, Response},
+        routing::get,
+        Router,
+    };
+    use app::shell;
+    pub use app::App;
+    use leptos::{config::LeptosOptions, context::provide_context};
+    pub use leptos_axum::{generate_route_list, LeptosRoutes};
+
+    // This custom handler lets us provide Axum State via context
+    pub async fn custom_handler(
+        Path(id): Path<String>,
+        State(options): State<LeptosOptions>,
+        req: Request<AxumBody>,
+    ) -> Response {
+        let handler = leptos_axum::render_app_to_stream_with_context(
+            move || {
+                provide_context(id.clone());
+            },
+            move || shell(options.clone()),
+        );
+        handler(req).await.into_response()
+    }
+}
+
+// #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-// #[cfg(feature = "ssr")]
-// #[shuttle_runtime::main]
-// async fn axum() {
-    simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
+    use app::shell;
+    use leptos::config::get_configuration;
+    use ssr_imports::*;
 
-    // Setting get_configuration(None) means we'll be using cargo-leptos's env values
-    // For deployment these variables are:
-    // <https://github.com/leptos-rs/start-axum#executing-a-server-on-a-remote-machine-without-the-toolchain>
-    // Alternately a file can be specified such as Some("Cargo.toml")
-    // The file would need to be included with the executable when moved to deployment
-    let conf = get_configuration(None).await.unwrap();
+    // Setting this to None means we'll be using cargo-leptos and its env vars
+    let conf = get_configuration(None).unwrap();
     let leptos_options = conf.leptos_options;
     let addr = leptos_options.site_addr;
     let routes = generate_route_list(App);
 
     // build our application with a route
-    // let app = Router::new()
-    //     .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
-    //     .leptos_routes(&leptos_options, routes, App)
-    //     .fallback(file_and_error_handler)
-    //     .with_state(leptos_options);
-
-    // // run our app with hyper
-    // // `axum::Server` is a re-export of `hyper::Server`
-    // log::info!("listening on http://{}", &addr);
-    // axum::Server::bind(&addr)
-    //     .serve(app.into_make_service())
-    //     .await
-    //     .unwrap();
-
-
     let app = Router::new()
-        .leptos_routes(&leptos_options, routes, App)
-        .fallback(file_and_error_handler)
+        .route("/special/:id", get(custom_handler))
+        .leptos_routes(&leptos_options, routes, {
+            let leptos_options = leptos_options.clone();
+            move || shell(leptos_options.clone())
+        })
+        .fallback(leptos_axum::file_and_error_handler(shell))
         .with_state(leptos_options);
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
-    log::info!("listening on http://{}", &addr);
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
+    println!("listening on http://{}", &addr);
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     axum::serve(listener, app.into_make_service())
         .await
         .unwrap();
-
 }
 
+// this is if we were using client-only rending with Trunk
 // #[cfg(not(feature = "ssr"))]
 // pub fn main() {
-//     // no client-side main function
-//     // unless we want this to work with e.g., Trunk for a purely client-side app
-//     // see lib.rs for hydration function instead
+//     // This example cannot be built as a trunk standalone CSR-only app.
+//     // The server is needed to demonstrate the error statuses.
 // }
+
+
+
+

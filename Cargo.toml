@@ -1,25 +1,16 @@
 [workspace]
-members = [
-    "leptail",
-    "tailwind-utils",
-    "theme-moonlight",
-    "theme-gradiance",
-    "leptail_build",
-]
+members = ["leptail_core", "leptail_component", "leptail_system"]
 
 # dependencies
 [workspace.dependencies]
-leptos = { version = "0.6.12", features = ["nightly"] }
-leptos_meta = { version = "0.6.12", features = ["nightly"] }
-leptos_router = { version = "0.6.12", features = ["nightly"] }
-leptos_axum = { version = "0.6.12" }
+leptos = { version = "0.7.0-alpha", features = ["nightly"] }
+leptos_router = { version = "0.7.0-alpha", features = ["nightly"] }
 leptos_icons = { version = "0.3.0", features = [] }
 icondata = "0.3.0"
-tailwind_fuse = { version = "0.3.0" }
 
-leptail = { path = "./leptail" }
-leptail_theme_gradiance = { path = "./theme-gradiance" }
-leptail_theme_moonlight = { path = "./theme-moonlight" }
+leptail_core = { path = "./leptail_core" }
+leptail_component = { path = "./leptail_component" }
+leptail_system = { path = "./leptail_system" }
 
 
 # TODO: Clean up the dependencies: clean build once and verify; 

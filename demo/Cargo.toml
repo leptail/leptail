@@ -20,21 +20,19 @@ lto = true
 opt-level = 'z'
 
 
-
-
 # dependencies
 [workspace.dependencies]
-leptos = { version = "0.6.9", features = ["nightly"] }
-leptos_meta = { version = "0.6.9", features = ["nightly"] }
-leptos_router = { version = "0.6.9", features = ["nightly"] }
-leptos_axum = { version = "0.6.9" }
+leptos = { version = "0.7.0-alpha", features = ["nightly"] }
+leptos_meta = { version = "0.7.0-alpha", features = [] }
+leptos_router = { version = "0.7.0-alpha", features = ["nightly"] }
+leptos_axum = { version = "0.7.0-alpha" }
 leptos_icons = { version = "0.3.0", features = [] }
+stylance = { version = "0.5.1", features = ["nightly"] }
 icondata = "0.3.0"
-tailwind_fuse = { version = "0.3.0" }
 
-leptail = { path = "../leptail" }
-leptail_theme_moonlight = { path = "../theme-moonlight" }
-leptail_theme_gradiance = { path = "../theme-gradiance" }
+
+leptail_component = { path = "../leptail_component" }
+leptail_system = { path = "../leptail_system" }
 
 
 axum = "0.7"
@@ -94,15 +92,13 @@ style-file = "style/main.scss"
 # The tailwind input file.
 #
 # Optional, Activates the tailwind build
-tailwind-input-file = "style/tailwind.css"
+# tailwind-input-file = "style/tailwind.css"
 
 # The tailwind config file.
 #
 # Optional, defaults to "tailwind.config.js" which if is not present
 # is generated for you
-# tailwind-config-file = "tailwind.config.moonlight.js"
-# tailwind-config-file = "tailwind.config.gradiance.js"
-tailwind-config-file = "tailwind.config.js"
+# tailwind-config-file = "tailwind.config.js"
 
 # Assets source dir. All files found here will be copied and synchronized to site-root.
 # The assets-dir cannot have a sub directory with the same name/path as site-pkg-dir.
@@ -136,6 +132,8 @@ env = "PROD"
 #
 # Optional. Can be over-ridden with the command line parameter --bin-features
 bin-features = []
+# bin-features = ["ssr"]
+
 
 # If the --no-default-features flag should be used when compiling the bin target
 #
@@ -146,6 +144,7 @@ bin-default-features = false
 #
 # Optional. Can be over-ridden with the command line parameter --lib-features
 lib-features = []
+# lib-features = ["hydrate"]
 
 # If the --no-default-features flag should be used when compiling the lib target
 #
