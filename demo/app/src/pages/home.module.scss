@@ -1,4 +1,9 @@
+@use "pkg:open-props/open-props.min.css";
+@use "pkg:open-props/normalize.min.css";
+@use "pkg:open-props/buttons.min.css";
+
+
 .hero {
     display: flex;
-    gap: var(--size-4)
+    gap: var(--size-3)
 }

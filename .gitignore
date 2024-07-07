@@ -12,9 +12,7 @@ pkg
 demo/node_modules/
 demo/test-results/
 demo/end2end/playwright-report/
-demo/playwright/.cache/
-demo/package.json
-demo/pnpm-lock.yaml
+demo/playwright/.cache/ 
 demo/style/stylance
 demo/style/bundle.scss
 

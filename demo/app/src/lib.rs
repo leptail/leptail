@@ -13,7 +13,7 @@ use leptos_router::{
 };
 use pages::error_example::ExampleErrors;
 
-stylance::import_style!(lib_styles, "lib.module.scss");
+stylance::import_style!(lib_style, "lib.module.scss");
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
@@ -24,7 +24,7 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <AutoReload options=options.clone()/>
                 <HydrationScripts options/>
-                <link rel="stylesheet" id="leptos" href="/pkg/start-axum-workspace.css"/>
+                <link rel="stylesheet" id="leptos" href="/pkg/leptail-demo.css"/>
                 <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
                 <MetaTags/>
             </head>
@@ -41,11 +41,11 @@ pub fn App() -> impl IntoView {
 
     view! {
         <Router>
-            <nav class=lib_styles::nav>
-                <div class=lib_styles::logo>
+            <nav class=lib_style::nav>
+                <div class=lib_style::logo>
                     <a href="/">"Leptail"</a>
                 </div>
-                <div class=lib_styles::menu>
+                <div class=lib_style::menu>
                     <ul>
                         <li>
                             <a href="/error">Err!</a>
@@ -53,7 +53,7 @@ pub fn App() -> impl IntoView {
                     </ul>
                 </div>
             </nav>
-            <main class=lib_styles::main>
+            <main class=lib_style::main>
                 <div class="">
                     <Routes fallback=|| {
                         let mut errors = Errors::default();

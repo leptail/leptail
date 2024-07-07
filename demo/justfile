@@ -1,12 +1,14 @@
 default:
     @just --list
 
-dev:
+# TODO: `stylance --watch app` does not get killed after `crtl + c` command 
+# --pkg-importer=node for bundling with @use and node packages 
+dev: 
 	stylance --watch app & cargo leptos watch --hot-reload
 
 release: 
     stylance app 
-    cargo leptos build --release -P  
+    cargo leptos build --release -P -vv
 
 prod: 
     @just release

@@ -51,24 +51,48 @@ With the above structure, some of the things are fixed as broad guidelines.
 
 
 ### TODO:
-1. Restructure the code (Remove old code)                                           -- 
-   1. Delete everything and create the new structure                                -- done
-   2. Upgrade to leptos 0.7                                                         -- done
-   3. Try out open props and stylance ind demo                                      -- done
-2. Implement Switch component                                                       --
-   1. Necessary core API                                                            -- 
-   2. Switch as component                                                           -- 
-      1. API design                                                                 -- 
-         1. As part of form component                                               --
-         2. As standalone component                                                 --  
-      2. A18y                                                                       --
-      3. Internationalization                                                       --
-      4. LTR / RTL                                                                  --
-   3. Styled component                                                              --
-      1. Install [stylance](https://github.com/basro/stylance-rs)                   --
-      2. Use OpenProps                                                              --
-   4. Example or documentation                                                      --
-3. Testing outside of letptail                                                      --
+1. Restructure the code (Remove old code)                                                    -- 
+   1. Delete everything and create the new structure                                         -- done
+   2. Upgrade to leptos 0.7                                                                  -- done
+   3. Try out open props and stylance in the demo                                            -- 
+      1. Optimize the build process for open props                                           -- 
+         1. bundle all the files together [ref:1]                                            -- partial
+         2. Should be able to selectively use open props on each module.css [ref:2]          -- partial
+         3. Pruge css (low priority) [ref:3]                                                 -- 
+         4. serve minified resources in release mode                                         -- 
+         5. Modifications to community build tools                                           -- 
+            1. Cargo-letpos:                                                                 -- 
+               0. Update the sass dependancy to 1.77.5                                       -- done 
+               1. Make the `-pkg-importer` option as configurable                            -- 
+               2. Test the upgraded sass dependancy (latest: 1.77.5)                         -- 
+            2. Stylance-rs:                                                                  -- 
+               1. Bundling should put all the `@use` together thus Dart-sass can work        --  
+      2. Build tooling                                                                       -- 
+         1. Add documentation of NPM package of open-props                                   -- done
+         2. Justfile for dev doesn't kill the stylance process on `crtl + c` kill command    -- 
+2. Implement Switch component                                                                --
+   1. Necessary core API                                                                     -- 
+   2. Switch as component                                                                    -- 
+      1. API design                                                                          -- 
+         1. As part of form component                                                        --
+         2. As standalone component                                                          --  
+      2. A18y                                                                                --
+      3. Internationalization                                                                --
+      4. LTR / RTL                                                                           --
+   3. Styled component                                                                       --
+      1. Install [stylance](https://github.com/basro/stylance-rs)                            --
+      2. Use OpenProps                                                                       --
+   4. Example and documentation                                                              --
+3. Testing outside of letptail                                                               --
+
+#### Referance
+1. There are two ways of bundling the css with Stylance.    
+   1. With `output_file` (This feature is broken for `@use` fetature of sass) 
+      -- `scss_prelude` of Stylance may work. Chek that feature 
+   2. With `output_dir`. (This works reasonably well with modification to cargo-leptos project)
+2. works with sytlance `output_dir`
+3. Stylance-rs `output_dir` with Dart-Sass mitigates redundant `@use`       
+
 
 
 ## Best practices

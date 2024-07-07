@@ -1,7 +1,7 @@
 use leptos::prelude::*;
 use leptos_meta::Title;
 
-stylance::import_style!(home, "home.module.scss");
+stylance::import_style!(home_style, "home.module.scss");
 
 #[component]
 pub fn Home() -> impl IntoView {
@@ -11,7 +11,7 @@ pub fn Home() -> impl IntoView {
     view! {
         <Title text="Leptos"/>
 
-        <div class=home::hero>
+        <div class=home_style::hero>
             <button on:click=move |_| set_value.update(|value| *value += 1) class="">
                 "+"
             </button>

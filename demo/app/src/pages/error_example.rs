@@ -1,13 +1,8 @@
 use crate::errors::AppError;
 use crate::pages::error_template::ErrorTemplate;
-use crate::pages::home::Home;
 
 use leptos::prelude::*;
 use leptos_meta::Title;
-use leptos_router::{
-    components::{FlatRoutes, Route, Router, Routes},
-    StaticSegment,
-};
 
 #[server(CauseInternalServerError, "/api")]
 pub async fn cause_internal_server_error() -> Result<(), ServerFnError> {

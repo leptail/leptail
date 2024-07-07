@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      open-props:
+        specifier: ^1.7.5
+        version: 1.7.5
+
+packages:
+
+  open-props@1.7.5:
+    resolution: {integrity: sha512-DajjLQDJgIa0i+QdB2q5M8lNLo2ICk+DbDh4TsqNsT1tAO8Zm8F7dndSkLMQkobT98lbvDMMpJWO8NT0ibjrjA==}
+
+snapshots:
+
+  open-props@1.7.5: {}
