@@ -2,7 +2,7 @@
 *Component Library for [Leptos](https://github.com/leptos-rs/leptos)*: Component Library that aims to be headless, with a default Design System.   
 
 ## Note
-The project is still in the experimentation level. Right now, the objectives of the project has changed thus will go through a complete rewrite. Read more at [Leptail Core Readme](https://github.com/leptail/leptail/tree/main/leptail_quark).
+The project is still in the experimentation level. Right now, the objectives of the project has changed thus will go through a complete rewrite. Read more at [Leptail Core Readme](https://github.com/leptail/leptail/tree/main/leptail_core).
 
 
 

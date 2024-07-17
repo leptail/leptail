@@ -41,11 +41,13 @@ console_error_panic_hook = "0.1.7"
 console_log = "1.0.0"
 http = "1"
 log = "0.4.21"
-simple_logger = "4.3.3"
+simple_logger = "5.0.0"
 thiserror = "1.0.58"
 tokio = { version = "1.36.0", features = ["full"] }
 tower = { version = "0.4.13", features = ["full"] }
 tower-http = { version = "0.5", features = ["full"] }
+rust-embed = "8.4.0"
+# memory-serve = "0.5.0"
 wasm-bindgen = "=0.2.92"
 web-sys = "0.3.64"
 
@@ -61,6 +63,9 @@ shuttle-axum = { version = "0.43.0" }
 [profile.wasm-release]
 inherits = "release"
 opt-level = 'z'
+# opt-level = 's'
+# Note that, surprisingly enough, opt-level = "s" can sometimes result in smaller binaries than opt-level = "z". Always measure!
+# ref: https://rustwasm.github.io/docs/book/reference/code-size.html
 lto = true
 codegen-units = 1
 

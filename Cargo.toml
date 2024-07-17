@@ -5,6 +5,8 @@ members = ["leptail_core", "leptail_component", "leptail_system"]
 [workspace.dependencies]
 leptos = { version = "0.7.0-alpha", features = ["nightly"] }
 leptos_router = { version = "0.7.0-alpha", features = ["nightly"] }
+# leptos = { version = "0.6.12", features = ["nightly"] }
+# leptos_router = { version = "0.6.12", features = ["nightly"] }
 leptos_icons = { version = "0.3.0", features = [] }
 icondata = "0.3.0"
 

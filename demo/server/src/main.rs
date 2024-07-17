@@ -1,44 +1,6 @@
-// use app::*;
-// use axum::{routing::post, Router};
-// use fileserv::file_and_error_handler;
-// use leptos::*;
-// use leptos_axum::{generate_route_list, LeptosRoutes};
-
-// pub mod fileserv;
-
-
-// #[tokio::main]
-// async fn main() {
-// // #[cfg(feature = "ssr")]
-// // #[shuttle_runtime::main]
-// // async fn axum() {
-//     simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
-
-//     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
-//     // For deployment these variables are:
-//     // <https://github.com/leptos-rs/start-axum#executing-a-server-on-a-remote-machine-without-the-toolchain>
-//     // Alternately a file can be specified such as Some("Cargo.toml")
-//     // The file would need to be included with the executable when moved to deployment
-//     let conf = get_configuration(None).await.unwrap();
-//     let leptos_options = conf.leptos_options;
-//     let addr = leptos_options.site_addr;
-//     let routes = generate_route_list(App);
- 
-//     let app = Router::new()
-//         .leptos_routes(&leptos_options, routes, App)
-//         .fallback(file_and_error_handler)
-//         .with_state(leptos_options);
-
-//     // run our app with hyper
-//     // `axum::Server` is a re-export of `hyper::Server`
-//     log::info!("listening on http://{}", &addr);
-//     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-//     axum::serve(listener, app.into_make_service())
-//         .await
-//         .unwrap();
-
-// }
-
+// mod fileserv;
+use tower_http::services::ServeDir;
+// use memory_serve::{load_assets, MemoryServe};
 
 // #[cfg(feature = "ssr")]
 mod ssr_imports {
@@ -72,6 +34,11 @@ mod ssr_imports {
     }
 }
 
+
+// #[derive(rust_embed::RustEmbed)]
+// #[folder = "../target/site/"]
+// struct Assets;
+
 // #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
@@ -85,6 +52,16 @@ async fn main() {
     let addr = leptos_options.site_addr;
     let routes = generate_route_list(App);
 
+    // TODO: the hardcoding of target site is brittel. Move to rust embed method
+    let static_files = ServeDir::new("./target/site/")
+        .precompressed_br()
+        .precompressed_gzip();
+
+    // let memory_router = MemoryServe::new(load_assets!("../target/site"))
+    //     .index_file(Some("index.html"))
+    //     .into_router();
+
+
     // build our application with a route
     let app = Router::new()
         .route("/special/:id", get(custom_handler))
@@ -92,7 +69,14 @@ async fn main() {
             let leptos_options = leptos_options.clone();
             move || shell(leptos_options.clone())
         })
+        // TODO: serve the static file using rust_embed with caching policy instead from the file system; 
+        // Follow the method described in [a cargo-leptos PR](https://github.com/leptos-rs/cargo-leptos/pull/165)
+        // Also, there is an alternative way of serving using [memory_serve](https://github.com/tweedegolf/memory-serve)
+        .fallback_service(static_files)
+        // At the moment it's either leptos' file_and_error_handler will work or static_files ServeDir works but not both
+        // without the below fallback, pages like 404 doesn't work
         .fallback(leptos_axum::file_and_error_handler(shell))
+        // .fallback(fileserv::file_and_error_handler)
         .with_state(leptos_options);
 
     // run our app with hyper

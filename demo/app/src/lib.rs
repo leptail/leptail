@@ -22,10 +22,10 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
             <head>
                 <meta charset="utf-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                <AutoReload options=options.clone()/>
-                <HydrationScripts options/>
                 <link rel="stylesheet" id="leptos" href="/pkg/leptail-demo.css"/>
                 <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
+                <AutoReload options=options.clone()/>
+                <HydrationScripts options/>
                 <MetaTags/>
             </head>
             <body>

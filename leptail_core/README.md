@@ -14,6 +14,7 @@ Also, while reading on the web, I came across stories about the time spent by [A
 3. Design System and Components ([radix themes](https://github.com/radix-ui/themes), et al)
 4. Things which are neither part of components or design-system(built using above three), provide it as part of building block(or examples) and let people copy paste(like ShadcnUI)
 
+
 With the above structure, some of the things are fixed as broad guidelines.
 1. Follow [react-aria](https://github.com/adobe/react-spectrum) for core API (mostly because I believe they have tested things extensively)
 2. [Open props](https://open-props.style/) looks promising for a design system. That coupled with Radix theme, chakra or MUI base can help to design the API.
@@ -21,8 +22,10 @@ With the above structure, some of the things are fixed as broad guidelines.
 4. Follow Rust's philosophy. Only pay for what you use! Means no unused css or code. Use rust lang features. 
 5. Make it easier to build the component outside of leptail (using core apis) and publish. Others can still import and use it.
 6. Afterall, it should also work with tailwindcss :). It is important for library adoption. But don't sweat it with the default theme or full blown design system using tailwindcss. 
+7. It should work with all the fetarues provided by leptos such as CSR, SSR, Island etc
 
-*Needs further investigation:*
+
+**Needs further investigation:**
 1. API design of [headlessui](https://github.com/tailwindlabs/headlessui), [Floating UI](https://github.com/floating-ui/floating-ui), [radix primitives](https://github.com/radix-ui/primitives), [BaseUI](https://github.com/mui/base-ui), [ArkUI](https://github.com/chakra-ui/ark)
 2. [Zag](https://github.com/chakra-ui/zag) vs aria hooks/stately.
 3. How should the animation work? Open props does provide nice animations. But do we need more than that? How does floatingUI handle it?
@@ -34,10 +37,11 @@ With the above structure, some of the things are fixed as broad guidelines.
 9. How much of the HTML structure will be fixed? Headless v/s unstyled! 
 
 
-*Nice goal to have:*
+**Nice goal to have:**
 1. Whatever you do, make it performant! Not a bloated thing. Even the big app built with it should score 100% on lighthouse(ha ha... lol)
 
-*References:*
+
+**References:**
 1. [Use of attributes for styling](https://pdx.su/blog/2023-07-27-use-css-attributes/)
 2. The [article comparing aria with radix](https://www.dhiwise.com/post/react-aria-vs-radix-ui-what-best-ui-toolkit) lists the following features as common among them
    1. Accessibility
@@ -47,10 +51,12 @@ With the above structure, some of the things are fixed as broad guidelines.
    5. Focus Management
    6. State Management
 3. There is a real world comparison between [styled component vs css modules](https://pustelto.com/blog/css-vs-css-in-js-perf/)
-4. [Atomic/Functional CSS v/ CSS Module](https://www.fcss.club/manifesto) comparision of performance. 
+4. [Atomic/Functional CSS v/ CSS Module](https://www.fcss.club/manifesto) comparision of performance.
+5. [Radix Primitives: Philosophy and Guiding Principles](https://github.com/radix-ui/primitives/blob/main/philosophy.md)
 
 
 ### TODO:
+<pre>
 1. Restructure the code (Remove old code)                                                    -- 
    1. Delete everything and create the new structure                                         -- done
    2. Upgrade to leptos 0.7                                                                  -- done
@@ -59,7 +65,7 @@ With the above structure, some of the things are fixed as broad guidelines.
          1. bundle all the files together [ref:1]                                            -- partial
          2. Should be able to selectively use open props on each module.css [ref:2]          -- partial
          3. Pruge css (low priority) [ref:3]                                                 -- 
-         4. serve minified resources in release mode                                         -- 
+         4. Serve minified resources in release mode [ref:4]                                 --  
          5. Modifications to community build tools                                           -- 
             1. Cargo-letpos:                                                                 -- 
                0. Update the sass dependancy to 1.77.5                                       -- done 
@@ -70,29 +76,49 @@ With the above structure, some of the things are fixed as broad guidelines.
       2. Build tooling                                                                       -- 
          1. Add documentation of NPM package of open-props                                   -- done
          2. Justfile for dev doesn't kill the stylance process on `crtl + c` kill command    -- 
-2. Implement Switch component                                                                --
+2. Implement Select component                                                                -- 
    1. Necessary core API                                                                     -- 
-   2. Switch as component                                                                    -- 
+   2. Select as component                                                                    -- 
       1. API design                                                                          -- 
-         1. As part of form component                                                        --
+         1. As part of form component                                                        -- 
          2. As standalone component                                                          --  
-      2. A18y                                                                                --
-      3. Internationalization                                                                --
-      4. LTR / RTL                                                                           --
-   3. Styled component                                                                       --
-      1. Install [stylance](https://github.com/basro/stylance-rs)                            --
-      2. Use OpenProps                                                                       --
-   4. Example and documentation                                                              --
-3. Testing outside of letptail                                                               --
+      2. A18y                                                                                -- 
+      3. Internationalization                                                                -- 
+      4. LTR / RTL                                                                           -- 
+   3. Styled component                                                                       -- 
+      1. Install [stylance](https://github.com/basro/stylance-rs)                            -- 
+      2. Use OpenProps                                                                       -- 
+   4. Example and documentation                                                              -- 
+   5. Proper test cases for each apis                                                        --
+3. Testing outside of letptail                                                               -- 
 
-#### Referance
+
+
+
+#### Ref
 1. There are two ways of bundling the css with Stylance.    
    1. With `output_file` (This feature is broken for `@use` fetature of sass) 
       -- `scss_prelude` of Stylance may work. Chek that feature 
    2. With `output_dir`. (This works reasonably well with modification to cargo-leptos project)
 2. works with sytlance `output_dir`
 3. Stylance-rs `output_dir` with Dart-Sass mitigates redundant `@use`       
+4. There are a multiple ways of working with serving static files. 
+   1. [as written in cargo-leptos PR](https://github.com/leptos-rs/cargo-leptos/pull/165) 
+      1. Either use rust_embed or tower::ServerDir 
+      2. It works, but the fallback route of 404 isn't working. 
+      With leptos 0.7 it has become a bit complex make fallback work.
+   2. [memory_serve](https://github.com/tweedegolf/memory-serve)             
 
+</pre>
+
+## Project Structure 
+### Leptail Core 
+1. The React aria Defines the hooks like useState; Example: useSwitchState. 
+
+
+### Leptail Component 
+
+### Leptail System 
 
 
 ## Best practices
