@@ -1,5 +1,5 @@
 use leptos::prelude::Callback;
-use web_sys::Element;
+use web_sys::{Element, FocusEvent, KeyboardEvent};
 
 pub enum HoverPointerType {
     Mouse,
@@ -54,3 +54,81 @@ pub struct PressEvent {
     /// it can call `continue_propagation()` to allow a parent to handle it.
     continue_propagation: Callback<()>,
 }
+
+pub enum LongPressEventType {
+    LongPressStart,
+    LongPressEnd,
+    LongPress,
+}
+pub struct LongPressEvent {
+    /// The type of long press event being fired.
+    event_type: PressEventType,
+    /// Long press event payload.
+    payload: PressEventPayload,
+}
+
+pub enum HoverEventType {
+    HoverStart,
+    HoverEnd,
+}
+
+pub struct HoverEvent {
+    /// The type of hover event being fired.
+    event_type: HoverEventType,
+    /// The pointer type that triggered the hover event.
+    pointer_type: HoverPointerType,
+    /// The target element of the hover event.
+    target: Element,
+}
+
+pub struct KeyboardEvents {
+    /// Handler that is called when a key is pressed.
+    on_key_down: Option<Callback<KeyboardEvent, ()>>,
+    /// Handler that is called when a key is released.
+    on_key_up: Option<Callback<KeyboardEvent, ()>>,
+}
+
+pub struct FocusEvents {
+    /// Handler that is called when the element receives focus.
+    on_focus: Option<Callback<FocusEvent, ()>>,
+    /// Handler that is called when the element loses focus.
+    on_blur: Option<Callback<FocusEvent, ()>>,
+    /// Handler that is called when the element's focus status changes.
+    on_focus_change: Option<Callback<bool, ()>>,
+}
+
+pub struct HoverEvents {
+    /// Handler that is called when a hover interaction starts.
+    on_hover_start: Option<Callback<HoverEvent, ()>>,
+    /// Handler that is called when a hover interaction ends.
+    on_hover_end: Option<Callback<HoverEvent, ()>>,
+    /// Handler that is called when the hover state changes.
+    on_hover_change: Option<Callback<bool, ()>>,
+}
+
+pub struct PressEvents {
+    /// Handler that is called when the press is released over the target.
+    on_press: Option<Callback<PressEvent, ()>>,
+    /// Handler that is called when a press interaction starts.
+    on_press_start: Option<Callback<PressEvent, ()>>,
+    /// Handler that is called when a press interaction ends, either
+    /// over the target or when the pointer leaves the target.
+    on_press_end: Callback<PressEvent, ()>,
+    /// Handler that is called when the press state changes.
+    on_press_change: Callback<bool, ()>,
+    /// Handler that is called when a press is released over the target, regardless of
+    /// whether it started on the target or not.
+    on_press_up: Callback<PressEvent, ()>,
+}
+
+// TODO: FocusableProps
+// TODO: BaseMoveEvent
+// TODO: MoveStartEvent
+// TODO: MoveMoveEvent
+// TODO: MoveEndEvent
+// TODO: MoveEvent: enum
+
+// TODO: MoveEvents
+
+// TODO: ScrollEvent
+// TODO: ScrollEvents
