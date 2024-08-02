@@ -1,4 +1,4 @@
-use leptos::prelude::Callback;
+use leptos::prelude::{Callback, MaybeProp};
 use web_sys::{Element, FocusEvent, KeyboardEvent};
 
 pub enum HoverPointerType {
@@ -121,14 +121,61 @@ pub struct PressEvents {
     on_press_up: Callback<PressEvent, ()>,
 }
 
-// TODO: FocusableProps
-// TODO: BaseMoveEvent
-// TODO: MoveStartEvent
-// TODO: MoveMoveEvent
-// TODO: MoveEndEvent
-// TODO: MoveEvent: enum
+// TODO: FocusWithinEvents from solid aria
 
-// TODO: MoveEvents
+pub struct FocusableProps {
+    focus_events: FocusEvents,
+    keyboard_events: KeyboardEvents,
+    auto_focus: MaybeProp<bool>, // TODO: should this be MaybeProp or Option<MaybeSignal>?
+}
 
-// TODO: ScrollEvent
-// TODO: ScrollEvents
+pub struct BaseMoveEvent {
+    /// The pointer type that triggered the move event.
+    pointer_type: PointerType,
+    /// Keyboard modifier was held during the move event.
+    key_modifiers: KeyModifiers,
+}
+
+pub struct MoveStartEvent {
+    payload: BaseMoveEvent,
+}
+
+pub struct MoveMoveEvent {
+    /// The amount moved in the X direction since the last event.
+    delta_x: usize,
+    /// The amount moved in the Y direction since the last event.
+    delta_y: usize,
+    payload: BaseMoveEvent,
+}
+
+pub struct MoveEndEvent {
+    payload: BaseMoveEvent,
+}
+
+pub enum MoveEventType {
+    // TODO: should it include the payload?
+    Start,
+    Move,
+    End,
+}
+
+pub struct MoveEvents {
+    /// Handler that is called when a move interaction starts.
+    on_move_start: Option<Callback<MoveStartEvent, ()>>,
+    /// Handler that is called when the element is moved.
+    on_move: Option<Callback<MoveMoveEvent, ()>>,
+    /// Handler that is called when a move interaction ends.
+    on_move_end: Option<Callback<MoveMoveEvent, ()>>,
+}
+
+pub struct ScrollEvent {
+    /// The amount moved in the X direction since the last event.
+    delta_x: usize,
+    /// The amount moved in the Y direction since the last event.
+    delta_y: usize,
+}
+
+pub struct ScrollEvents {
+    /// Handler that is called when the scroll wheel moves.
+    on_scroll: Option<Callback<ScrollEvent, ()>>,
+}
