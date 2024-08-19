@@ -100,7 +100,7 @@ With the above structure, some of the things are fixed as broad guidelines.
    1. With `output_file` (This feature is broken for `@use` fetature of sass) 
       -- `scss_prelude` of Stylance may work. Chek that feature 
    2. With `output_dir`. (This works reasonably well with modification to cargo-leptos project)
-2. works with sytlance `output_dir`
+2. works with sytlance `output_dir` 
 3. Stylance-rs `output_dir` with Dart-Sass mitigates redundant `@use`       
 4. There are a multiple ways of working with serving static files. 
    1. [as written in cargo-leptos PR](https://github.com/leptos-rs/cargo-leptos/pull/165) 
@@ -112,6 +112,8 @@ With the above structure, some of the things are fixed as broad guidelines.
 </pre>
 
 ## Project Structure 
+The project structure follows React Spectrum project closely. Read more about the [architecture of React Spectrum](https://react-spectrum.adobe.com/architecture.html). 
+
 ### Leptail Core 
 1. The React aria Defines the hooks like useState; Example: useSwitchState. 
 

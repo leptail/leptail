@@ -1,6 +1,8 @@
 use leptos::prelude::{Callback, MaybeProp};
 use web_sys::{Element, FocusEvent, KeyboardEvent};
 
+// TODO: create BaseEvent that extends SyntheticEvent
+
 pub enum HoverPointerType {
     Mouse,
     Pen,
